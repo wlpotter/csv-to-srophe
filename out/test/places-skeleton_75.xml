@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:svg="http://www.w3.org/2000/svg" xmlns:srophe="https://srophe.app" xmlns:syriaca="http://syriaca.org" xml:lang="en" >
+    <teiHeader>
+        <fileDesc>
+            <titleStmt><!-- Note: title[@level="a"] will be created via templating script from names marked as headword-->
+                <editor role="creator" ref="http://syriaca.org/documentation/editors.xml#dschwartz">Daniel L. Schwartz</editor>
+                <respStmt>
+                    <resp>URI minted and initial data collected by</resp>
+                    <name ref="http://syriaca.org/documentation/editors.xml#dschwartz">Daniel L. Schwartz</name>
+                </respStmt>
+            </titleStmt>
+            <publicationStmt>
+                <!-- Note: the numerical sequence of the URI should be sufficient. The CSV parse script is able to mint this, but adding the full URI with an author form is more difficult. Perhaps have this elsehwere? -->
+                <idno type="URI">75</idno>
+            </publicationStmt>
+        </fileDesc>
+        <revisionDesc status="draft">
+            <change who="http://syriaca.org/documentation/editors.xml#dschwartz" when="2021-10-06-04:00">CREATED: place</change><!-- the @when attribute is crucial for creating the publication date -->
+        </revisionDesc>
+    </teiHeader>
+    <text>
+        <body>
+            <listPlace>
+                <place type="settlement">
+                    <!-- note: placeName xml:ids will be created via templating script using the final order of names (of the form "place\d+-\d+ = URI-numerical sequence -->
+                    <placeName xml:lang="en" srophe:tags="#syriaca-headword" resp="http://syriaca.org">Doliche</placeName>
+                    <placeName xml:lang="syr" srophe:tags="#syriaca-headword" resp="http://syriaca.org">ܕܠܘܟ</placeName>
+                    <placeName xml:lang="en" source="#bib75-1">Dulūk</placeName>
+                    <!-- note: abstract xml:ids will be created via templating script using the final order of names -->
+                    <desc type="abstract" xml:lang="en">A town west of the Euphrates, north of Aleppo, and northeast of Cyrrhus.</desc>
+                    <!-- zero-or-more idno elements. The first idno will eventually be script-generated as the Syriaca URI (e.g., <idnot type="URI">http://syriaca.org/place/75</idno> -->
+                    <idno type="URI">http://pleiades.stoa.org/places/658455</idno>
+                    <idno type="URI">http://en.wikipedia.org/wiki/Dülük</idno>
+                    <idno type="URI">http://dbpedia.org/resource/Dülük</idno>
+                    <!-- elements that are missing:
+                        - other descs that aren't the abstract
+                    - location
+                        - type=gps and nested elements (not handled by CSV yet)
+                            - and handling when subtype= representative; and also handling when there are multiple (alternates and preferred). Also handle with the author form.
+                        - type = measure with nested measure and offset (not handled by CSV yet). This is quite the heavy lift...
+                        - type = nested (e.g., nested region or settlement); (handled by CSV)...but temporal attributes are not supported (they go on the location elements. Make sure we figure out if requiring ISO format or converting.
+                    - event
+                        - other: not currently handled by the CSV (could be event1.en | notBefore.event1 | notAfter.event1 etc. (can be assumed to be 'other' unless called attestation1.en))
+                            - is att.datable
+                        - attestations (can this be gotten from the bibls??) (event[@type="attestation"])
+                            - is att.datable
+                            - take xml:id of attestation75-1, etc.  (this can be machined in)
+                            - @source pointing to a bibl
+                            - link with @target to the @xml:id of the placeName or state. This would require having xml:id'd placeName or states...Fine for CSV but not for author mode.
+                            - have a p with "attestation of x in y-bibl" (name is in foreign with xml:lang; work is in title with level=m)
+                        - state elements
+                            - confession
+                                state[@type="confession"] with a source and a label (can be a dropdown in the author form because comes from documentation/confessions.xml) (these need to be converted to hrefs using the xml:id... but that's a separate issue)
+                            - existence
+                                - simply state[@type="existence"] with att.datable. The precision match is a bit convoluted I think...at least for CSV and maybe for author as well
+                            - notes (only incerta and disambiguation covered by CSV and even then only rudimentarily: i.e. can't handle multiple of a type, can't handle the kind of linking of incerta, disambiguation, deprecation, etc.
+                                - the linking comes from target and refers to xml:ids...so we would need to add xml:id values
+                                - deprecation seems to be a special case of the linking with @target
+                                - disambiguation is the only one that could be auto-generated (e.g., give the 'disambiguated URI' and you could say, 'not the same place as <placeName ref="URI">...</placeName>(iand include , <placeName>, or... and so forth for multiple)')
+                                - CSV problem: can't have nested elements in a text node coming from a CSV cell as the tags will be escaped
+                            - relation elements...Not in CSV. easy to implement in both I think
+                    -->
+                    <!-- unlike placeName and abstracts, bibl xml:ids are required for the sources to work. Not sure how to do this yet with the author forms. But the CSV parser works well for this. -->
+                    <bibl xml:id="bib75-1">
+                        <ptr target="http://syriaca.org/bibl/4"/>
+                        <citedRange unit="pp">553</citedRange>
+                    </bibl>
+                </place>
+            </listPlace>
+        </body>
+    </text>
+</TEI>
