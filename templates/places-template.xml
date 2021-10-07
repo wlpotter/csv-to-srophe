@@ -86,10 +86,6 @@
         </profileDesc>
     </teiHeader>
     <text>
-        <body><!--WLP: perhaps just leave as an empty body? -->
-            <listPlace>
-                <place/>
-            </listPlace>
-        </body>
+        <body/>
     </text>
 </TEI>
