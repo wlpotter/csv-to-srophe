@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<meta>
+    <config>
+        <!-- Configuration data for file inputs and outputs -->
+        <io>
+            <!-- The path on your local harddrive to where this repository is located -->
+            <localRepositoryUrl></localRepositoryUrl>
+            <!-- The url of where the remote copy of the repository is stored on GitHub.
+                  This value is used as a fall-back in case the localRepositoryUrl cannot be accessed.-->
+            <remoteRepositoryUrl></remoteRepositoryUrl>
+            <!-- The input path specifies either the directory where skeleton xml files are housed or a CSV file to be parsed into xml skeletons. 
+                  This can either be a location on your local harddrive or point to files accessible through the internet (e.g., "https://raw.githubusercontent.com/srophe/draft-data/master/config.xml"
+                  If reading files stored within the same local repository as the xquery scripts, you may supply relative paths rather than aboslute ones, e.g. "/csv/input/records-to-process.csv". However, if the app fails to resolve the localRepositoryUrl, you may need to supply an absolute path for this element
+                  The @type attribute specifies either "csv" or "collection", which the app uses to determine what to do with the element's text-node.
+                  The @separator attribute specifies the separator used in a CSV file. Valid values are: 'comma', 'tab', 'pipe' (referring to the character, '|'), or 'semicolon'.
+                  -->
+            <inputPath type="csv" separator="tab"></inputPath>
+            <!-- The output paths specify locations on your local harddrive to store the results of processing.
+                  If writing files to the same local repository as the xquery scripts, you may supply relative paths rather than aboslute ones, e.g. "/csv/output/". However, if the app fails to resolve the localRepositoryUrl, you may need to supply an absolute path for this element
+            -->
+            <outputPath></outputPath>
+            <!-- This element controls the output either to 'console', for testing and debugging, or to 'file', i.e. when storing the results of processing as new TEI records.-->
+            <fileOrConsole></fileOrConsole>
+        </io>
+        <!-- specifies the type of data to be processed. Corresponds to the collections listed in meta/config/collections/collection/@name -->
+        <collectionType>places</collectionType>
+        <!-- 
+            Contains metadata describing responsibility for data creation
+        -->
+        <responsibility>
+            <!-- These two elements contain the editor ID portion of the editor URI and the human-readable name of the person responsible for creating the CSV or skeleton xml files. -->
+            <creatorId>dschwartz</creatorId>
+            <creatorNameString>Daniel L. Schwartz</creatorNameString>
+            <!-- Provides the description to be used in the tei:respStmt/tei:resp for the creation of the xml record -->
+            <respDescription>URI minted and initial data collected by</respDescription>
+            <!-- note: change-log message should be collection-specific (e.g., "CREATED: place") -->
+        </responsibility>
+        <collections>
+            <collection name="places" record-URI-pattern="https://syriaca.org/place/" template="/templates/places-template.xml"/>
+            <!-- persons may be difficult if we need separate for saints and for authors -->
+        </collections>
+        <!--
+            Contains project-level metadata for Syriaca.org. These will rarely change
+            -->
+        <syriacaMetadata>
+            <!-- The URI base for the editors.xml document. This will rarely need to change -->
+            <editorUriBase>https://syriaca.org/documentation/editors.xml</editorUriBase>
+            <editorFileUri></editorFileUri> <!-- needed? -->
+            <baseLanguage>en</baseLanguage>
+        </syriacaMetadata>
+    </config>
+</meta>

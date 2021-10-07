@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<configuration>
-  <inputFileUrl>https://raw.githubusercontent.com/srophe/draft-data/master/data/TSVTransformsXQuery/placesToTransform.tsv</inputFileUrl>
-  <localPath>temp/syriaca/</localPath>
-  <outputTo>file</outputTo>
-  <mintedString>Daniel L. Schwartz</mintedString>
-  <mintedUri>http://syriaca.org/documentation/editors.xml#dschwartz</mintedUri>
-</configuration>
