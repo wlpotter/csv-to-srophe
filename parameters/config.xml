@@ -36,7 +36,7 @@
             <!-- note: change-log message should be collection-specific (e.g., "CREATED: place") -->
         </responsibility>
         <collections>
-            <collection name="places" record-URI-pattern="https://syriaca.org/place/" template="/templates/places-template.xml"/>
+            <collection name="places" record-URI-base="https://syriaca.org/place/" template="/templates/places-template.xml"/>
             <!-- persons may be difficult if we need separate for saints and for authors -->
         </collections>
         <!--
