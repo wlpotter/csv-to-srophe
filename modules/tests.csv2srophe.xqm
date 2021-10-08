@@ -29,11 +29,13 @@ declare variable $csv2srophe-test:local-csv-uri :=
   
 declare %unit:test function csv2srophe-test:load-csv-from-local()
 {
-  unit:assert-equals(csv2srophe:load-csv($csv2srophe-test:local-csv-uri, "	", true ()),
-                     "")
+  (: tests that the text node of the uri of the first data row is 3058 :)
+  unit:assert-equals(string(csv2srophe:load-csv($csv2srophe-test:local-csv-uri,
+                                         "	",
+                                         true ())[1]/uri/text()),
+                     "3058")
 };
 
-(:
-- test load from remote
-- test that load from remote and load locally of the same file produce equiv results
-:)
+(:  test load from remote :)
+(: test that load from remote and load locally of the same file produce equiv results :)
+

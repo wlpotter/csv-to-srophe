@@ -95,6 +95,8 @@ as element()*
                          map { 'header' : $header,'separator' : $delimiter })
   return $xmlDoc/csv/record
 };
+
+
 (:
 Functions for this module
 - get csv data (creates a sequence of rows)
