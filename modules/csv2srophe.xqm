@@ -12,8 +12,17 @@ xquery version "3.0";
 :                  to create TEI-compliant Srophe records.
 :)
 
-(:
-ADD XQDOC COMMENTS HERE (SEE STYLE GUIDE P 14)
+(:~ 
+: This module provides the functions that transform rows of csv data
+: into XML snippets that can be merged with entity templates to create
+: TEI-compliant Srophe records.
+: This module makes use of BaseX's CSV parsing module. It is otherwise
+: implementation independent.
+: The CSV headers should be formatted as described in the documentation
+: @see !!!MISSING LINK TO DOCUMENTATION OF CSV FORMAT
+:
+: @author William L. Potter
+: @version 1.0
 :)
 module namespace csv2srophe="http://wlpotter.github.io/ns/csv2srophe";
 
@@ -37,7 +46,7 @@ import module namespace config="http://wlpotter.github.io/ns/config" at "config.
 :)
 declare function csv2srophe:load-csv($url as xs:string,
                                      $delimeter as xs:string,
-                                     $header as xs:string)
+                                     $header as xs:boolean)
 as element()*
 {
   let $recordSeq :=  if (starts-with($url, "http")) then
@@ -63,7 +72,16 @@ as element()*
   return $xmlDoc/csv/record
 };
 (:~ 
-: Returns a 
+: Returns a sequence of XML elements representing CSV input data stored at $url
+: Returned data looks like:
+: <record>
+:   <firstColumnHeader>cellValue</firstColumnHeader>
+:   <secondColumnHeader>cellValue</secondColumnHeader>
+: </record>,
+: <record>
+:   <firstColumnHeader>cellValue</firstColumnHeader>
+:   <secondColumnHeader>cellValue</secondColumnHeader>
+: </record>
 : @param $url the absolute path to a csv file on the local machine
 : :)
 declare function csv2srophe:load-csv-local($url as xs:string,
@@ -73,7 +91,9 @@ as element()*
 {
   (: For Windows paths, change "\" to "/" :)
   let $url := fn:replace($url, "\\", "/")
-  return csv:doc($url,  map { 'header' : $header,'separator' : $delimiter })
+  let $xmlDoc := csv:doc($url,
+                         map { 'header' : $header,'separator' : $delimiter })
+  return $xmlDoc/csv/record
 };
 (:
 Functions for this module
