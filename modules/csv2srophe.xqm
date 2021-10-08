@@ -96,11 +96,67 @@ as element()*
   return $xmlDoc/csv/record
 };
 
+(:~ 
+: Given the url of a csv file, returns a sequence of strings corresponding
+: to the column headers of the CSV file.
+: 
+:)
+declare function csv2srophe:get-csv-column-headers($url as xs:string,
+                                                   $delimiter as xs:string)
+as xs:string*
+{
+  let $xmlDoc := csv2srophe:load-csv($url, $delimiter, false ())
+  let $headers := $xmlDoc[1]
+  return $headers//text()
+};
 
+declare function csv2srophe:get-data($url as xs:string,
+                                     $delimiter as xs:string)
+as element()*
+{
+  let $data :=  csv2srophe:load-csv($url, $delimiter, true ())
+  return $data
+};
+
+(:~
+: Returns a sequence that looks like the following. It relates the strings
+: used in the CSV column headers to the XML tag names in the data
+: <map>
+:   <string>New place/add data</string>
+:   <name>New_place_add_data</name>
+: </map>
+: <map>
+:   <string>uri</string>
+:   <name>uri</name>
+: </map>
+: <map>
+:   <string>Possible URI</string>
+:   <name>Possible_URI</name>
+: </map>
+: ...
+:
+: @author Steve Baskauf
+: @author William L. Potter
+:)
+declare function csv2srophe:create-header-map($url as xs:string,
+                                              $delimiter as xs:string)
+as element()*
+{
+  let $headers := csv2srophe:get-csv-column-headers($url, $delimiter)
+  let $firstDataRow := csv2srophe:get-data($url, $delimiter)[1]
+  let $headerElementNames := $firstDataRow/*/name()
+  let $headerMap := 
+    for $header at $pos in $headers
+    return (<map>
+             {
+              <string>{$header}</string>,
+              <name>{$headerElementNames[$pos]}</name>
+             }
+            </map>)
+ return $headerMap
+};
 (:
 Functions for this module
-- get csv data (creates a sequence of rows)
-- get csv headers (used in header map creation?)
 - create header map
 
 row-specific functions

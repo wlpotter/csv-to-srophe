@@ -27,7 +27,13 @@ import module namespace config="http://wlpotter.github.io/ns/config" at "config.
 declare variable $csv2srophe-test:local-csv-uri :=
   $config:nav-base || "in/test/test.csv";
   
-declare %unit:test function csv2srophe-test:load-csv-from-local()
+declare variable $csv2srophe-test:header-map-node-to-compare :=
+<map>
+  <string>New place/add data</string>
+  <name>New_place_add_data</name>
+</map>;
+  
+declare %unit:test function csv2srophe-test:load-csv-with-a-local-file()
 {
   (: tests that the text node of the uri of the first data row is 3058 :)
   unit:assert-equals(string(csv2srophe:load-csv($csv2srophe-test:local-csv-uri,
@@ -36,6 +42,29 @@ declare %unit:test function csv2srophe-test:load-csv-from-local()
                      "3058")
 };
 
+declare %unit:test function csv2srophe-test:get-column-headers-from-local-file()
+{
+  (: tests that the third column header is the string "Possible URI":)
+  unit:assert-equals(string(csv2srophe:get-csv-column-headers($csv2srophe-test:local-csv-uri,
+                                         "	")[3]),
+                     "Possible URI")
+};
+
+declare %unit:test function csv2srophe-test:get-data-from-local-file()
+{
+  (: tests that the first record's name2.en was correctly constructed :)
+  unit:assert-equals(csv2srophe:get-data($csv2srophe-test:local-csv-uri,
+                                         "	")[1]/name2.en,
+                     <name2.en>Trabzon</name2.en>)
+};
+
+declare %unit:test function csv2srophe-test:create-header-map-from-local-file()
+{
+  (: tests correct construction of header map node(s) :)
+  unit:assert-equals(csv2srophe:create-header-map($csv2srophe-test:local-csv-uri,
+                                         "	")[1],
+                     $csv2srophe-test:header-map-node-to-compare)
+};
 (:  test load from remote :)
 (: test that load from remote and load locally of the same file produce equiv results :)
 
