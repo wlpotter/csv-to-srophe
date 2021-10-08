@@ -17,7 +17,7 @@ module namespace config="http://wlpotter.github.io/ns/config";
 
 
 (: creates and stores the xml config document. NOTE: assumes proper cloning of repo. perhaps use try-catch and fall back on github remote? Think about how to test these cases :)
-declare variable $config:config-file := doc("../parameters/config");
+declare variable $config:config-file := doc("../parameters/config.xml");
 
 declare variable $config:nav-base := 
   let $pathToLocalRepo := 
