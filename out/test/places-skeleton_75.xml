@@ -9,10 +9,6 @@
                     <name ref="http://syriaca.org/documentation/editors.xml#dschwartz">Daniel L. Schwartz</name>
                 </respStmt>
             </titleStmt>
-            <publicationStmt>
-                <!-- Note: the numerical sequence of the URI should be sufficient. The CSV parse script is able to mint this, but adding the full URI with an author form is more difficult. Perhaps have this elsehwere? -->
-                <idno type="URI">75</idno>
-            </publicationStmt>
         </fileDesc>
         <revisionDesc status="draft">
             <change who="http://syriaca.org/documentation/editors.xml#dschwartz" when="2021-10-06-04:00">CREATED: place</change><!-- the @when attribute is crucial for creating the publication date -->
@@ -29,6 +25,7 @@
                     <!-- note: abstract xml:ids will be created via templating script using the final order of names -->
                     <desc type="abstract" xml:lang="en">A town west of the Euphrates, north of Aleppo, and northeast of Cyrrhus.</desc>
                     <!-- zero-or-more idno elements. The first idno will eventually be script-generated as the Syriaca URI (e.g., <idnot type="URI">http://syriaca.org/place/75</idno> -->
+                    <idno type="URI">https://syriaca.org/place/75</idno>
                     <idno type="URI">http://pleiades.stoa.org/places/658455</idno>
                     <idno type="URI">http://en.wikipedia.org/wiki/Dülük</idno>
                     <idno type="URI">http://dbpedia.org/resource/Dülük</idno>
