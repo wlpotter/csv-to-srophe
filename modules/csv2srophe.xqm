@@ -27,9 +27,15 @@ xquery version "3.0";
 module namespace csv2srophe="http://wlpotter.github.io/ns/csv2srophe";
 
 
+import module namespace functx="http://www.functx.com";
 import module namespace config="http://wlpotter.github.io/ns/config" at "config.xqm";
 
 (: note that it makes use of Basex's CSV module. Note also that you should declare output options. :)
+
+
+(: ----------------------------------------- :)
+(: functions for processing a full CSV document :)
+(: ----------------------------------------- :)
 
 (:~ 
 : loads a CSV file and returns an xml document
@@ -54,7 +60,7 @@ as element()*
                   else
                     csv2srophe:load-csv-local($url, $delimeter, $header)
   return $recordSeq
-};
+}; (: NOTE: potential refactor: have -remote and -local return xmlDocs and return the sequence only from the load-csv function :)
 
 (:~ 
 : @see https://github.com/HeardLibrary/digital-scholarship/tree/master/code/file
@@ -155,24 +161,227 @@ as element()*
             </map>)
  return $headerMap
 };
-(:
-Functions for this module
-- create header map
 
-row-specific functions
-- create names index
-- create abstract index
-- create headword index
-- get-uri-from-row
-- create publication stmt idno?? (or leave for templating)
-- creating title from headwords can wait for templating
-- creator and respStmts
-- revisionDesc creation
-- create bibl seq, remove redundant, make bibl elements
-- create idno list
-- shared note types?
-- create skeleton function (and associated building functions)
+(:~ 
+: Returns a sequence that looks like this:
+: 
+: <name>
+:   <langCode>en</langCode>
+:   <textNodeColumnElementName>name2.en</textNodeColumnElementName>
+:   <sourceUriElementName>sourceURI.name2</sourceUriElementName>
+:   <pagesElementName>pages.name2</pagesElementName>
+: </name>
+: <name>
+:   <langCode>syr</langCode>
+:   <textNodeColumnElementName>name3.syr</textNodeColumnElementName>
+:   <sourceUriElementName>sourceURI.name3</sourceUriElementName>
+:   <pagesElementName>pages.name3</pagesElementName>
+: </name>
+: 
+: The names index stores a sequence of columns where entity names are kept.
+: It is used, for each row of data, to create a list of entity name elements,
+: depending on the entity type (e.g. <placeName/>)
+: 
+: @author Steve Baskauf
+: @author William L. Potter
 :)
+declare function csv2srophe:create-names-index($headerMap as element()+)
+as element()*
+{
+  for $nameColumn in $headerMap
+  let $columnString := $nameColumn/string/string()
+  let $leftOfDot := tokenize($columnString,'\.')[1]
+  let $langCode := tokenize($columnString,'\.')[2]
+  return if (substring(tokenize($columnString,'\.')[1],1,4) = 'name') then
+  <name>{
+      <langCode>{$langCode}</langCode>,
+      <textNodeColumnElementName>
+        {$nameColumn/name/string()}
+      </textNodeColumnElementName>,
+      
+      for $uriColumn in $headerMap   (: find the element name of the sourceURI column :)
+      return if ($uriColumn/string/string() = 'sourceURI.'||$leftOfDot)
+             then <sourceUriElementName>{$uriColumn/name/string()}</sourceUriElementName>
+             else (),
+      for $pagesColumn in $headerMap   (: find the element name of the sourceURI column :)
+      return if ($pagesColumn/string/string() = 'pages.'||$leftOfDot)
+             then <pagesElementName>{$pagesColumn/name/string()}</pagesElementName>
+             else ()
+    }</name>
+  else 
+   ()
+};
+
+(:~
+: Returns a sequence looks like this:
+:
+: <headword>
+:   <langCode>en</langCode>
+:   <textNodeColumnElementName>headword.en</textNodeColumnElementName>
+: </headword>
+: <headword>
+:   <langCode>syr</langCode>
+:   <textNodeColumnElementName>headword.syr</textNodeColumnElementName>
+: </headword>
+: 
+: The headword index stores a sequence of columns where entity headwords
+: are kept. It is used, for each row of data, to create a list of entity
+: headwords which are tagged with @srophe:tags="#syriaca-headword". These
+: headwords are also used to construct the tei:titleStmt/tei:title[@level="a"].
+: 
+: @author Steve Baskauf
+: @author William L. Potter
+:)
+declare function csv2srophe:create-headword-index($headerMap as element()+)
+as element()*
+{
+  for $nameColumn in $headerMap
+  let $columnString := $nameColumn/string/string()
+  let $leftOfDot := tokenize($columnString,'\.')[1]
+  let $langCode := tokenize($columnString,'\.')[2]
+  return if (substring(tokenize($columnString,'\.')[1],1,8) = 'headword') then
+    <headword>{
+      <langCode>{$langCode}</langCode>,
+      <textNodeColumnElementName>
+        {$nameColumn/name/string()}
+      </textNodeColumnElementName>
+    }</headword>
+  else 
+   ()
+};
+
+(:~
+: returns a sequence that looks like this:
+:
+: <abstract>
+:   <langCode>en</langCode>
+:   <textNodeColumnElementName>abstract.en</textNodeColumnElementName>
+:   <sourceUriElementName>sourceURI.abstract.en</sourceUriElementName>
+:   <pagesElementName>pages.abstract.en</pagesElementName>
+: </abstract>
+:
+: The abstract index stores a sequence of columns where entity abstracts
+: are kept. It is used, for each row of data, to create a list of entity
+: abstracts which contain a short description of the entity.
+: Although at present Syriaca entities only contain English language abstracts,
+: abstracts in multiple languages are handled by this module.
+: 
+: @author Steve Baskauf
+: @author William L. Potter
+:
+:)
+
+declare function csv2srophe:create-abstract-index($headerMap as element()+)
+as element()*
+{
+  for $nameColumn in $headerMap
+  let $columnString := $nameColumn/string/string()
+  let $leftOfDot := tokenize($columnString,'\.')[1]
+  let $langCode := tokenize($columnString,'\.')[2]
+  return if (substring(tokenize($columnString,'\.')[1],1,8) = 'abstract') then
+    <abstract>{
+      <langCode>{$langCode}</langCode>,
+      <textNodeColumnElementName>
+        {$nameColumn/name/string()}
+      </textNodeColumnElementName>,
+  
+      for $uriColumn in $headerMap   (: find the element name of the sourceURI column :)
+      return if ($uriColumn/string/string() = 'sourceURI.'||$leftOfDot||'.'||$langCode)
+             then <sourceUriElementName>{$uriColumn/name/string()}</sourceUriElementName>
+             else (),
+      for $pagesColumn in $headerMap   (: find the element name of the sourceURI column :)
+      return if ($pagesColumn/string/string() = 'pages.'||$leftOfDot||'.'||$langCode)
+             then <pagesElementName>{$pagesColumn/name/string()}</pagesElementName>
+             else ()
+    }</abstract>
+  else 
+   ()
+};
+
+(: ----------------------------------------- :)
+(: functions for processing individual data rows into skeleton tei records :)
+(: ----------------------------------------- :)
+
+(: Note: the majority of elements are constructed by entity-specific modules,
+:  e.g. csv2places.xqm. In this module are functions that create elements
+:  shared across the majority of entity types.
+:)
+
+(:~ 
+: Returns the URI 
+: @param $row a single row of data, as produced by the get-data function.
+: @see get-data()
+: @param $entityUriBase is the entity-specific portion of the record's URI, e.g.
+: 'https://syriaca.org/place/'. This is stored in the config.xml
+: @see https://raw.githubusercontent.com/wlpotter/csv-to-srophe/main/parameters/config.xml?token=AKQNYWRGCSE5YEEJDKDHJJTBMRIIO;/meta/config/collections/collection/@record-URI-base
+NOTE: the token can be removed once the module is public. :)
+declare function csv2srophe:get-uri-from-row($row as element(), 
+                                             $entityUriBase as xs:string*)
+as xs:string
+{
+  let $uri := $row/uri/text()
+  return $entityUriBase || $uri
+};
+                             
+(:~ 
+: Returns a sequence that looks like this:
+: <source>
+:   <uri></uri>
+:   <pg></pg>
+: </source>
+: <source>
+:   <uri></uri>
+:   <pg></pg>
+: </source>
+:
+: Creates a sequence of all the unique sources based on source URI and cited range.
+: At present expects citations as pages, though this will be fixed.
+: The source sequence is used to create the bibl elements and to properly create
+: @ref attributes for various entity data, such as entity names.
+:
+: @author Steve Baskauf
+: @author William L. Potter
+:
+:)
+(: NOTE: should refactor to handle non-page references? :)
+declare function csv2srophe:create-sources-index-for-row($row as element(),
+                                                         $headerMap as element()+)
+as element()*
+{
+  (: Find every possible reference in the row and add it to a sequence :)
+  let $sources :=
+    for $source in $headerMap  (: loop through each item in the header map sequence :)
+    let $sourceUriColumnName := $source/name/text()  (: get the XML element name :)
+    let $sourceUri := functx:trim($row/*[name() = $sourceUriColumnName]/text())  (: find the value for that column :)
+    where substring($source/string/text(),1,9) = 'sourceURI' and $sourceUri != '' (: screen for right header string and skip over empty elements :)
+    let $lastPartColString := substring($source/string/text(),10)  (: find the last part of the sourceUri column header label :)
+    let $sourcePgColumnString := 'pages'||$lastPartColString  (: construct the column label for the page source :)
+    let $sourcePgColumnName :=
+        for $sourcePage in $headerMap    (: find the column string that matches the constructed on :)
+        where $sourcePgColumnString = $sourcePage/string/text()
+        return $sourcePage/name/text()     (: return the XML tag name for the matching column string :)
+    let $sourcePage := functx:trim($row/*[name() = $sourcePgColumnName]/text())
+    return (<source><uri>{$sourceUri}</uri><pg>{$sourcePage}</pg></source>)
+    
+     (: remove redundant sources :)
+    return functx:distinct-deep($sources)
+};
+(:
+- creator editor and respStmts (for now from config; consider a pull from a column?)
+- revisionDesc creation
+- create-bibl-index
+  - create-full-bibl-index
+  - remove-redundant-sources
+- make-bibl-elements
+- create-idno-list
+  - including: create-record-idno, which could be useful elsewhere
+:)
+
+(: ----------------------------------------- :)
+(: constructing the skeleton (Most of this takes place in the extensions of this module) :)
+(: ----------------------------------------- :)
+
+
 
 (: Elements needed from this module
 
