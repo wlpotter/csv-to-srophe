@@ -406,35 +406,93 @@ as element()*
       </idno>
   return ($selfIdno, $otherIdnos)
 };
+
+(: I'm not sure these final functions should be in this module. They are more
+: generic than just csv transform. Perhaps separate out into some util library? :)
+
+declare function csv2srophe:build-editor-node($editorUri as xs:string,
+                                              $editorNameString as xs:string,
+                                              $role as xs:string)
+as element()
+{
+  let $editorNode := 
+  <editor xmlns="http://www.tei-c.org/ns/1.0" role="{$role}" ref="{$editorUri}">
+    {$editorNameString}
+  </editor>
+  return $editorNode
+};
+
+declare function csv2srophe:build-respStmt-node($personUri as xs:string,
+                                              $personNameString as xs:string,
+                                              $resp as xs:string)
+as element()
+{
+  let $respNode := <resp xmlns="http://www.tei-c.org/ns/1.0">{$resp}</resp>
+  let $name := <name xmlns="http://www.tei-c.org/ns/1.0" ref="{$personUri}">{$personNameString}</name>
+  return <respStmt xmlns="http://www.tei-c.org/ns/1.0">{$respNode, $name}</respStmt>
+};
+
+declare function csv2srophe:create-revisionDesc($change-log as element()*, 
+                                                $status as xs:string)
+as element()
+{
+  
+};
+
+(: ----------------------------------------- :)
+(: LATER DEVELOPMENT :)
+(: ----------------------------------------- :)
+
 (:
-- creator editor and respStmts (for now from config; consider a pull from a column?)
-- revisionDesc creation
+: The below functions area copied from Steve Baskauf's original transform.
+: They are somewhat patched together and hard-coded. I believe further
+: development would benefit from writing functions in this module that create
+: note lists (incerta, disambiguation, etc.). These could require a change
+: in the csv so the headers are like: note1.incerta.en; note2.disambiguation.en; etc.
+: This would allow uris, etc. to be treated as sourceUri.note1 and pages.note1,
+: so the sources could be simplified.
+: This would also allow multiple languages and separate the index generation from
+: the encoding of the elements -- i.e., different entity modules could handle
+: where top put the various notes (this is how names, headwords, etc. are handled)
+: However, given that our current needs do not require transform of notes, I am
+: delaying development of these functions until they are needed.
+: - William L. Potter, 2021-10-11
 :)
+(: create the disambiguation element. It's a bit unclear whether there can be multiple values or multiple languages, or if source is required. :)
+(: let $disambiguation := 
+    for $dis in $headerMap 
+    let $text := local:trim($document/*[name() = $dis/name/text()]/text()) (: look up the text in that column
+    where $dis/string/text() = 'note.disambiguation' and $text != '' screen for correct column and skip over empty elements
+    let $disUri := local:trim($document/*[name() = 'sourceURI.note.disambiguation']/text())  this is a hack that just pulls the text from the sourcURI column.  Use the lookup method if it gets more complicated
+    let $disPg := local:trim($document/*[name() = 'pages.note.disambiguation']/text())  this is a hack that just pulls the text from the pages column.  Use the lookup method if it gets more complicated
+    let $sourceAttribute := 
+        if ($disUri != '')
+        then
+            for $src at $srcNumber in $sources  step through the source index
+            where  $disUri = $src/uri/text() and $disPg = $src/pg/text()  URI and page from columns must match with iterated item in the source index
+            return '#bib'||$uriLocalName||'-'||$srcNumber    create the last part of the source attribute
+        else ()
+    return  this is also a hack and can't handle disambiguations in other languages
+        if ($disUri = '')
+        then <note xmlns = "http://www.tei-c.org/ns/1.0" type="disabmiguation" xml:lang="en">{$text}</note>
+        else <note xmlns = "http://www.tei-c.org/ns/1.0" type="disabmiguation" xml:lang="en" source="{$sourceAttribute}">{$text}</note> :)
 
-(: ----------------------------------------- :)
-(: constructing the skeleton (Most of this takes place in the extensions of this module) :)
-(: ----------------------------------------- :)
-
-
-
-(: Elements needed from this module
-
-header
-- editor[@role="creator"]
--respStmt for creation
-- revisionDesc
-
-body
-- place/@type (created by a collection-specific extension e.g. csv2places.xqm)
-- headwords
-- names (specifically placeName, persName, etc. depending)
-- abstract
-- places need nested locations (csv2places.xqm)
-- uri for record as an idno
-- other idno list
-- notes (incerta, disambiguation, perhaps other shared note types; otherwise farm out to collection-specific functions)
-- bibl list
-
-NOTE: The actual placing of the body elements will depend on the entity type
-
-:)
+(: create the incerta element. All the same issues with the disambituation element are here.  This is basically a cut and paste of disambiguation :)
+(: let $incerta := 
+    for $inc in $headerMap 
+    let $text := local:trim($document/*[name() = $inc/name/text()]/text()) look up the text in that column
+    where $inc/string/text() = 'note.incerta' and $text != '' screen for correct column and skip over empty elements
+    let $incUri := local:trim($document/*[name() = 'sourceURI.note.incerta']/text())  this is a hack that just pulls the text from the sourcURI column.  Use the lookup method if it gets more complicated
+    let $incPg := local:trim($document/*[name() = 'pages.note.incerta']/text())  this is a hack that just pulls the text from the pages column.  Use the lookup method if it gets more complicated
+    let $sourceAttribute := 
+        if ($incUri != '')
+        then
+            for $src at $srcNumber in $sources  step through the source index
+            where  $incUri = $src/uri/text() and $incPg = $src/pg/text()  URI and page from columns must match with iterated item in the source index
+            return '#bib'||$uriLocalName||'-'||$srcNumber    create the last part of the source attribute
+        else ''
+    return  this is also a hack and can't handle disambiguations in other languages
+        if ($incUri = '')
+        then <note xmlns = "http://www.tei-c.org/ns/1.0" type="incerta" xml:lang="en">{$text}</note>
+        else <note xmlns = "http://www.tei-c.org/ns/1.0" type="incerta" xml:lang="en" source="{$sourceAttribute}">{$text}</note>
+:):)

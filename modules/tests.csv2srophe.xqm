@@ -178,3 +178,13 @@ declare %unit:test function csv2srophe-test:create-idno-sequence-for-row-check-o
                                                               "https://syriaca.org/place/")[2],
                      $csv2srophe-test:idno-node-to-compare)
 };
+
+declare %unit:test function csv2srophe-test:build-editor-node() {
+  unit:assert-equals(csv2srophe:build-editor-node("https://syriaca.org/documentation/editors.xml#wpotter", "William L. Potter", "creator"),
+                     <editor xmlns="http://www.tei-c.org/ns/1.0" role="creator" ref="https://syriaca.org/documentation/editors.xml#wpotter">William L. Potter</editor>)
+};
+
+declare %unit:test function csv2srophe-test:build-respStmt() {
+  unit:assert-equals(csv2srophe:build-respStmt-node("https://syriaca.org/documentation/editors.xml#wpotter", "William L. Potter", "URI minted and initial data collected by"),
+  <respStmt xmlns="http://www.tei-c.org/ns/1.0"><resp>URI minted and initial data collected by</resp><name ref="https://syriaca.org/documentation/editors.xml#wpotter">William L. Potter</name></respStmt>)
+};
