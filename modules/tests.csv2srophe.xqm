@@ -79,6 +79,10 @@ declare variable $csv2srophe-test:idno-node-to-compare :=
 declare variable $csv2srophe-test:self-idno-node-to-compare :=
 <idno xmlns="http://www.tei-c.org/ns/1.0" type="URI">https://syriaca.org/place/3059</idno>;
 
+declare variable $csv2srophe-test:revisionDesc-from-config :=
+<revisionDesc xmlns="http://www.tei-c.org/ns/1.0" status="draft">
+  {$config:change-log}
+</revisionDesc>;
 
 
 declare %unit:test function csv2srophe-test:load-csv-with-a-local-file()
@@ -179,12 +183,20 @@ declare %unit:test function csv2srophe-test:create-idno-sequence-for-row-check-o
                      $csv2srophe-test:idno-node-to-compare)
 };
 
-declare %unit:test function csv2srophe-test:build-editor-node() {
+declare %unit:test function csv2srophe-test:build-editor-node() 
+{
   unit:assert-equals(csv2srophe:build-editor-node("https://syriaca.org/documentation/editors.xml#wpotter", "William L. Potter", "creator"),
                      <editor xmlns="http://www.tei-c.org/ns/1.0" role="creator" ref="https://syriaca.org/documentation/editors.xml#wpotter">William L. Potter</editor>)
 };
 
-declare %unit:test function csv2srophe-test:build-respStmt() {
+declare %unit:test function csv2srophe-test:build-respStmt() 
+{
   unit:assert-equals(csv2srophe:build-respStmt-node("https://syriaca.org/documentation/editors.xml#wpotter", "William L. Potter", "URI minted and initial data collected by"),
   <respStmt xmlns="http://www.tei-c.org/ns/1.0"><resp>URI minted and initial data collected by</resp><name ref="https://syriaca.org/documentation/editors.xml#wpotter">William L. Potter</name></respStmt>)
+};
+
+declare %unit:test function csv2srophe-test:build-revisionDesc-from-config()
+{
+  unit:assert-equals(csv2srophe:build-revisionDesc($config:change-log, "draft"), 
+                     $csv2srophe-test:revisionDesc-from-config)
 };

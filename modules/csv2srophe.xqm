@@ -432,11 +432,15 @@ as element()
   return <respStmt xmlns="http://www.tei-c.org/ns/1.0">{$respNode, $name}</respStmt>
 };
 
-declare function csv2srophe:create-revisionDesc($change-log as element()*, 
+declare function csv2srophe:build-revisionDesc($change-log as element()*, 
                                                 $status as xs:string)
 as element()
 {
-  
+  let $revisionDesc :=
+  <revisionDesc xmlns="http://www.tei-c.org/ns/1.0" status="{$status}">
+  {$change-log}
+  </revisionDesc>
+  return $revisionDesc
 };
 
 (: ----------------------------------------- :)
