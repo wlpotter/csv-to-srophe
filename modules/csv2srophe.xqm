@@ -319,7 +319,7 @@ declare function csv2srophe:get-uri-from-row($row as element(),
                                              $entityUriBase as xs:string*)
 as xs:string
 {
-  let $uri := $row/uri/text()
+  let $uri := functx:trim($row/uri/text())
   return $entityUriBase || $uri
 };
                              
@@ -366,15 +366,49 @@ as element()*
      (: remove redundant sources :)
     return functx:distinct-deep($sources)
 };
+
+(:~ 
+: Returns a sequence of tei:bibl elements of the following form:
+: <bibl xmlns="" xml:id="bib78-1">
+:   <ptr target="http://syriaca.org/bibl/1"
+:   <citedRange unit="p">8</citedRange>
+: </bibl>
+:)
+declare function csv2srophe:create-bibl-sequence($row as element(),
+                                                         $headerMap as element()+)
+as element()*
+{
+  let $sources := csv2srophe:create-sources-index-for-row($row, $headerMap)
+  let $uriLocalName := csv2srophe:get-uri-from-row($row, "")
+  for $source at $number in $sources
+    let $sourceUri := $source/uri/text()
+    let $sourcePageRange := $source/*:pg/text()
+    return
+    <bibl xmlns="http://www.tei-c.org/ns/1.0" xml:id="bib{$uriLocalName}-{$number}">
+        <ptr target="{$sourceUri}"/>
+        <citedRange unit="p">{$sourcePageRange}</citedRange>
+    </bibl>
+}; (:refactor: handle multiple @unit values in citedRange ("p" can be the default) :)
+
+declare function csv2srophe:create-idno-sequence-for-row($row as element(), $uriBase as xs:string?)
+as element()*
+{
+  let $selfUri := csv2srophe:get-uri-from-row($row, $uriBase)
+  let $selfIdno := <idno xmlns="http://www.tei-c.org/ns/1.0" type="URI">
+        {$selfUri}
+      </idno>
+  let $otherIdnos := 
+    for $idno in $row/idno
+    where functx:trim($idno/text()) != ''
+    return
+      <idno xmlns="http://www.tei-c.org/ns/1.0" type="URI">
+        {functx:trim($idno/text())}
+      </idno>
+  return ($selfIdno, $otherIdnos)
+};
 (:
 - creator editor and respStmts (for now from config; consider a pull from a column?)
 - revisionDesc creation
-- create-bibl-index
-  - create-full-bibl-index
-  - remove-redundant-sources
-- make-bibl-elements
-- create-idno-list
-  - including: create-record-idno, which could be useful elsewhere
 :)
 
 (: ----------------------------------------- :)

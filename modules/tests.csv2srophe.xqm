@@ -67,7 +67,20 @@ declare variable $csv2srophe-test:sources-index-node-to-compare :=
   <pg>318</pg>
 </source>;
 
-  
+declare variable $csv2srophe-test:bibl-node-to-compare :=
+<bibl xmlns="http://www.tei-c.org/ns/1.0" xml:id="bib3059-2">
+  <ptr target="http://syriaca.org/bibl/667"/>
+  <citedRange unit="p">318</citedRange>
+</bibl>;
+
+declare variable $csv2srophe-test:idno-node-to-compare :=
+<idno xmlns="http://www.tei-c.org/ns/1.0" type="URI">https://pleiades.stoa.org/places/test</idno>;
+
+declare variable $csv2srophe-test:self-idno-node-to-compare :=
+<idno xmlns="http://www.tei-c.org/ns/1.0" type="URI">https://syriaca.org/place/3059</idno>;
+
+
+
 declare %unit:test function csv2srophe-test:load-csv-with-a-local-file()
 {
   (: tests that the text node of the uri of the first data row is 3058 :)
@@ -143,4 +156,25 @@ declare  %unit:test function csv2srophe-test:create-sources-index-for-row-from-l
   unit:assert-equals(csv2srophe:create-sources-index-for-row($csv2srophe-test:data-row-to-compare,
                                     $csv2srophe-test:header-map-from-local-csv)[2],
                      $csv2srophe-test:sources-index-node-to-compare)
+};
+
+declare %unit:test function csv2srophe-test:create-bibl-sequence-for-row-from-local-csv()
+{
+  unit:assert-equals(csv2srophe:create-bibl-sequence($csv2srophe-test:data-row-to-compare,
+                                    $csv2srophe-test:header-map-from-local-csv)[2],
+                    $csv2srophe-test:bibl-node-to-compare)
+};
+
+declare %unit:test function csv2srophe-test:create-idno-sequence-for-row-check-self-idno()
+{ (: tests that the idno element for the entity record was created correctly :)
+  unit:assert-equals(csv2srophe:create-idno-sequence-for-row($csv2srophe-test:data-row-to-compare,
+                                                             "https://syriaca.org/place/")[1],
+                     $csv2srophe-test:self-idno-node-to-compare)
+};
+
+declare %unit:test function csv2srophe-test:create-idno-sequence-for-row-check-other-idno()
+{ (: tests that the other idno elements were created correctly :)
+  unit:assert-equals(csv2srophe:create-idno-sequence-for-row($csv2srophe-test:data-row-to-compare,
+                                                              "https://syriaca.org/place/")[2],
+                     $csv2srophe-test:idno-node-to-compare)
 };
