@@ -65,6 +65,18 @@ declare variable $config:creator-name-string :=
 declare variable $config:creator-resp-description :=
   $config:config-file//meta/config/responsibility/respDescription/text();
 
+declare variable $config:change-log :=
+  let $changeMessage := 
+    $config:config-file/meta/config/responsibility/changeLog/*[name() = $config:collection-node/@name]/text() 
+    (: get the text node of the changeLog matching the collection's name attribute :)
+  return
+    <change xmlns="http://www.tei-c.org/ns/1.0" when="fn:current-date()" who="{$config:creator-uri}">
+      {$changeMessage}
+    </change>;
+  
+  
+  
+
 declare variable $config:collection-node := (: candidate for try-catch to ensure that a proper collection type is selected :)
   for $collection in $config:config-file/meta/config/collections/collection
   where string($collection/@name) = $config:collection-type

@@ -34,6 +34,12 @@
             <!-- Provides the description to be used in the tei:respStmt/tei:resp for the creation of the xml record -->
             <respDescription>URI minted and initial data collected by</respDescription>
             <!-- note: change-log message should be collection-specific (e.g., "CREATED: place") -->
+            <!-- Change logs (tei:revisionDesc/tei:change/text() are entity-specific and depend on the value of /meta/config/collectionType/text()
+                   The value in //responsibility/creatorId is used for the tei:change/@who editor URI.
+            -->
+            <changeLog>
+                <places>CREATED: place</places>
+            </changeLog>
         </responsibility>
         <collections>
             <collection name="places" record-URI-base="https://syriaca.org/place/" template="/templates/places-template.xml"/>
