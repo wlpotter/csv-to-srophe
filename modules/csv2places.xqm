@@ -85,14 +85,73 @@ declare function csv2places:build-place-node-from-row($row as element(),
                                                       $indices as element()*)
 as node()
 {
-  (:
-  - place type
-  - headwords (from headword index)
-  - placeNames
-  - abstract
-  - nested locations
-  - idno list (csv2srophe)
-  - notes (not currently needed)
-  - bibls
-  :)
+  (: set up references for building elements :)
+  let $headwordIndex := $indices/self::headword
+  let $namesIndex := $indices/self::name
+  let $abstractIndex := $indices/self::abstract
+  let $sources := csv2srophe:create-sources-index-for-row($row, $headerMap)
+  
+  (: build descendant nodes of the tei:place :)
+  let $placeType := csv2places:get-place-type-from-row($row)
+  
+  let $headwords := csv2places:create-headwords($row, $headwordIndex)
+  let $placeNames := csv2places:create-placeNames($row, $namesIndex, $sources)
+  let $abstracts := csv2places:create-abstracts($row, $abstractIndex, $sources)
+  
+  (: currently not handling gps locations or relative locations :)
+  let $nestedLocations := csv2places:create-nested-locations($row)
+  
+  let $idnos := csv2srophe:create-idno-sequence-for-row($row, $config:uri-base)
+  
+  (:currently not handling note creation as not needed for this data :)
+  
+  let $bibls := csv2srophe:create-bibl-sequence($row, $headerMap)
+  let $listBibl := 
+    <listBibl xmlns="http://www.tei-c.org/ns/1.0">
+      {$bibls}
+    </listBibl>
+  
+  (: compose tei:place element and return it :)
+  
+  return 
+  <place xmlns="http://www.tei-c.org/ns/1.0" type="{$placeType}">
+    {$headwords, $placeNames, $abstracts, $nestedLocations, $idnos, $listBibl}
+  </place>
+};
+
+
+declare function csv2places:get-place-type-from-row($row as element())
+as xs:string
+{
+  let $placeType := $row/placeType/text()
+  return functx:trim($placeType)
+};
+
+declare function csv2places:create-headwords($row as element(),
+                                             $headwordIndex as element()*)
+as element()
+{
+  
+};
+
+declare function csv2places:create-placeNames($row as element(),
+                                             $namesIndex as element()*,
+                                             $sourcesIndex as element()*)
+as element()
+{
+  
+};
+
+declare function csv2places:create-abstracts($row as element(),
+                                             $abstract as element()*,
+                                             $sourcesIndex as element()*)
+as element()
+{
+  
+};
+
+declare function csv2places:create-nested-locations($row as element())
+as element()
+{
+  
 };
