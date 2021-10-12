@@ -33,7 +33,7 @@ import module namespace csv2srophe="http://wlpotter.github.io/ns/csv2srophe" at 
 
 
 declare function csv2places:create-place-from-row($row as element(),
-                                                  $headerMap as element(),
+                                                  $headerMap as element()+,
                                                   $indices as element()*)
 as document-node()
 {
@@ -60,9 +60,9 @@ as document-node()
       <listPlace>
         {csv2places:build-place-node-from-row($row, $headerMap, $indices)}
       </listPlace>
-      (: listRelation will go here, but not currently developed as not currently needed. Likely a csv2srophe.xqm function call as it's shared among places, etc. :)
     </body>
   </text>
+  (: listRelation will go below the listPlace, but not currently developed as not currently needed. Likely a csv2srophe.xqm function call as it's shared among places, etc. :)
   
   let $tei := 
   <TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:svg="http://www.w3.org/2000/svg" xmlns:srophe="https://srophe.app" xmlns:syriaca="http://syriaca.org" xml:lang="{$config:base-language}">
@@ -100,7 +100,7 @@ as node()
   let $abstracts := csv2places:create-abstracts($row, $abstractIndex, $sources)
   
   (: currently not handling gps locations or relative locations :)
-  let $nestedLocations := csv2places:create-nested-locations($row)
+  let $nestedLocations := csv2places:create-nested-locations($row, $sources)
   
   let $idnos := csv2srophe:create-idno-sequence-for-row($row, $config:uri-base)
   
@@ -197,8 +197,63 @@ as element()*
   
 };
 
-declare function csv2places:create-nested-locations($row as element())
+(: somewhat hacked-together. Generalize with a look up based on sub-elements (e.g., nestedName.$$$ for settlement, region, etc. :)
+declare function csv2places:create-nested-locations($row as element(), $sourcesIndex as element()*)
 as element()*
 {
-  
+  let $uriLocalName := csv2srophe:get-uri-from-row($row, "")
+  (: here's the settlement child element and it's associated source attribute :)
+let $settlementElement := 
+    let $setName := functx:trim($row/*[name() = 'nestedName.settlement']/text())  (: this is a hack that just pulls the text from the sourcURI column.  Use the lookup method if it gets more complicated :)
+    let $setUri := functx:trim($row/*[name() = 'nestedURI.settlement']/text())
+    let $setRefAttr := if ($setUri != "") then attribute {"ref"} {$setUri}
+    return
+      element {QName("http://www.tei-c.org/ns/1.0", "settlement")} {$setRefAttr, $setName}
+let $settlementSourceAttribute :=
+    let $setSrc := functx:trim($row/*[name() = 'sourceURI.nested.settlement']/text())    
+    let $setPg := functx:trim($row/*[name() = 'pages.nested.settlement']/text())
+    return
+        if ($setSrc != '')
+        then
+            for $src at $srcNumber in $sourcesIndex  (: step through the source index :)
+            where  $setSrc = $src/uri/text() and $setPg = $src/pg/text()  (: URI and page from columns must match with iterated item in the source index :)
+            return '#bib'||$uriLocalName||'-'||$srcNumber    (: create the last part of the source attribute :)
+        else ''
+
+(: here's the region child element and it's associated source attribute :)
+let $regionElement :=
+    let $regName := functx:trim($row/*[name() = 'nestedName.region']/text())  (: this is a hack that just pulls the text from the sourcURI column.  Use the lookup method if it gets more complicated :)
+    let $regUri := functx:trim($row/*[name() = 'nestedURI.region']/text())
+    let $regRefAttr := if ($regUri != "") then attribute {"ref"} {$regUri}
+     return
+       element {QName("http://www.tei-c.org/ns/1.0", "region")} {$regRefAttr, $regName}
+let $regionSourceAttribute :=
+    let $regSrc := functx:trim($row/*[name() = 'sourceURI.nested.region']/text())    
+    let $regPg := functx:trim($row/*[name() = 'pages.nested.region']/text())
+    return
+        if ($regSrc != '')
+        then
+            for $src at $srcNumber in $sourcesIndex  (: step through the source index :)
+            where  $regSrc = $src/uri/text() and $regPg = $src/pg/text()  (: URI and page from columns must match with iterated item in the source index :)
+            return '#bib'||$uriLocalName||'-'||$srcNumber    (: create the last part of the source attribute :)
+        else ''
+
+(: now we need to build the source attribute from one or more of the sources representing the child elements :)
+
+let $separator :=   (: the separator needs to be the empty string if only one of the child elements has a source.  If they both do, the separator needs to be a single space :)
+    if ($settlementSourceAttribute != '' and $regionSourceAttribute != '')
+    then ' '
+    else ''
+let $locationAttribute := $settlementSourceAttribute||$separator||$regionSourceAttribute
+
+(: we have all the pieces to build the nested location element now.  If the $locationAttribute isn't an empty string, there is a ref for one or the other nested type, so use that as the test :)
+
+    return
+    if ($locationAttribute != '')
+    then 
+        <location xmlns="http://www.tei-c.org/ns/1.0" type="nested" source="{$locationAttribute}">{
+            $settlementElement,
+            $regionElement
+      }</location>
+    else ()
 };

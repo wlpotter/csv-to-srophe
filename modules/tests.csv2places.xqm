@@ -26,6 +26,7 @@ import module namespace config="http://wlpotter.github.io/ns/config" at "config.
 
 
 declare namespace srophe="https://srophe.app";
+declare namespace tei="http://www.tei-c.org/ns/1.0";
 (:
 trying to test the overall function will require setting up the indices and headermap.
 And a fake data row.
@@ -54,10 +55,18 @@ declare variable $csv2places-test:sources-index-for-sample-row :=
   csv2srophe:create-sources-index-for-row($csv2places-test:data-row-to-compare, $csv2places-test:header-map-stub);
 (: add variable for test output of the resultant skeleton record :)
 
+declare variable $csv2places-test:skeleton-record-to-compare-output :=
+  let $pathToDoc := $config:nav-base || "out/test/place3059-skeleton_test.xml"
+  return doc($pathToDoc);
 
-declare %unit:test %unit:ignore function  csv2places-test:build-place-node-from-row(){
-(: can be toggled to test what final output should look like. Need to make the skeleton by hand and store as a variable above. :)
-    unit:assert-equals(csv2places:build-place-node-from-row($csv2places-test:data-row-to-compare, $csv2places-test:header-map-stub, ($csv2places-test:names-index-stub, $csv2places-test:headword-index-stub, $csv2places-test:abstract-index-stub)), <place></place>)
+declare %unit:test function csv2places-test:create-place-from-row-using-test-row() {
+  unit:assert-equals(csv2places:create-place-from-row($csv2places-test:data-row-to-compare, $csv2places-test:header-map-stub, ($csv2places-test:names-index-stub, $csv2places-test:headword-index-stub, $csv2places-test:abstract-index-stub)),
+                    $csv2places-test:skeleton-record-to-compare-output)
+};
+
+declare %unit:test function  csv2places-test:build-place-node-from-row(){
+    unit:assert-equals(csv2places:build-place-node-from-row($csv2places-test:data-row-to-compare, $csv2places-test:header-map-stub, ($csv2places-test:names-index-stub, $csv2places-test:headword-index-stub, $csv2places-test:abstract-index-stub)),
+                       $csv2places-test:skeleton-record-to-compare-output//tei:place)
 };
 
 declare %unit:test function csv2places-test:get-place-type-from-row-using-local-csv() {
@@ -77,4 +86,12 @@ declare %unit:test function csv2places-test:create-names-from-local-csv-data() {
 declare %unit:test function csv2places-test:create-abstracts-from-local-csv-data() {
   unit:assert-equals(csv2places:create-abstracts($csv2places-test:data-row-to-compare, $csv2places-test:abstract-index-stub, $csv2places-test:sources-index-for-sample-row)[1], 
   <desc xmlns="http://www.tei-c.org/ns/1.0" type="abstract" xml:id="abstract3059-1" xml:lang="en" source="#bib3059-1">A monastery at Tagais</desc>)
+};
+
+declare %unit:test function csv2places-test:create-nested-locations-from-local-csv-data() {
+  unit:assert-equals(csv2places:create-nested-locations($csv2places-test:data-row-to-compare, $csv2places-test:sources-index-for-sample-row)[1], 
+  <location xmlns="http://www.tei-c.org/ns/1.0" type="nested" source="#bib3059-1">
+    <settlement ref="http://syriaca.org/place/1475"/>
+    <region/>
+  </location>)
 };
