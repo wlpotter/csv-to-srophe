@@ -308,6 +308,22 @@ as element()*
 :  shared across the majority of entity types.
 :)
 
+(:~
+: Returns a subset of the $index that only includes columns that are not empty
+: in the given $row.
+: NEEDS TESTS
+:)
+declare function csv2srophe:get-non-empty-index-from-row($row as element(),
+                                                         $index as element()*)
+as element()*
+{
+    let $nonEmptyIndex := for $val in $index
+    let $element := functx:trim($row/*[name() = $val/textNodeColumnElementName/text()]/text())
+    return if ($element != '')
+            then $val
+            else ()
+    return $nonEmptyIndex
+};
 (:~ 
 : Returns the URI 
 : @param $row a single row of data, as produced by the get-data function.
@@ -435,6 +451,34 @@ as element()
             {$xmlLang, $xmlId, $headwordAttr, $sourceAttr, $textNode}
   
   
+};
+
+(:~
+: Returns an abstract element based on input options.
+: Note: $elementName required as persons, places, etc. construct abstracts differently
+: This is due to the way TEI allows and disallows certain element nesting. E.g.,
+: tei:desc can appear in a tei:place but not a tei:person, so a tei:note[@type="abstract"]
+: is used in the latter case.
+:)
+declare function csv2srophe:build-abstract-element($textNode as xs:string,
+                                                   $elementName as xs:string,
+                                                   $entityUri as xs:string,
+                                                   $language as xs:string,
+                                                   $source as xs:string?,
+                                                   $abstractPositionInSequence as xs:integer)
+as element()
+{
+  let $id := if($entityUri != "") then 
+              attribute {"xml:id"} {"abstract" || $entityUri || "-" || $abstractPositionInSequence}
+  let $type := attribute {"type"} {"abstract"}
+  let $xmlLang := attribute {"xml:lang"} {$language}
+  let $sourceAttr := if($source != "") then
+                        attribute {"source"} {"#" || $source}
+                     else
+                        attribute {"resp"} {"https://syriaca.org"}
+  return element {QName("http://www.tei-c.org/ns/1.0", $elementName)}
+                  {$type, $id, $xmlLang, $sourceAttr, $textNode}
+
 };
 (: I'm not sure these final functions should be in this module. They are more
 : generic than just csv transform. Perhaps separate out into some util library? :)

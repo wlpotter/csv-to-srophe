@@ -227,3 +227,15 @@ declare %unit:test function csv2srophe-test:build-name-element-taxonomy-regular-
   unit:assert-equals(csv2srophe:build-name-element("Afterlife", "gloss", "afterlife", "en", "", false (), 3),
   <gloss xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en" resp="https://syriaca.org">Afterlife</gloss>)
 };
+
+declare %unit:test function csv2srophe-test:build-abstract-element-as-desc-with-source()
+{
+  unit:assert-equals(csv2srophe:build-abstract-element("Lorem ipsum", "desc", "3059", "en", "bib3059-3", 1),
+  <desc xmlns="http://www.tei-c.org/ns/1.0" type="abstract" xml:id="abstract3059-1" xml:lang="en" source="#bib3059-3">Lorem ipsum</desc>)
+};
+
+declare %unit:test function csv2srophe-test:build-abstract-element-as-note-with-no-source()
+{
+  unit:assert-equals(csv2srophe:build-abstract-element("Lorem ipsum", "note", "3059", "en", "", 1),
+  <note xmlns="http://www.tei-c.org/ns/1.0" type="abstract" xml:id="abstract3059-1" xml:lang="en" resp="https://syriaca.org">Lorem ipsum</note>)
+};
