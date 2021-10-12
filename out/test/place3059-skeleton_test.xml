@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns:svg="http://www.w3.org/2000/svg" xmlns:srophe="https://srophe.app" xmlns:syriaca="http://syriaca.org" xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en" >
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <editor role="creator" ref="https://syriaca.org/documentation/editors.xml#dschwartz">Daniel L. Schwartz</editor>
+                <respStmt>
+                    <resp>URI minted and initial data collected by</resp>
+                    <name ref="https://syriaca.org/documentation/editors.xml#dschwartz">Daniel L. Schwartz</name>
+                </respStmt>
+            </titleStmt>
+        </fileDesc>
+        <revisionDesc status="draft">
+            <change who="https://syriaca.org/documentation/editors.xml#dschwartz" when="2021-10-12-04:00">CREATED: place</change>
+        </revisionDesc>
+    </teiHeader>
+    <text>
+        <body>
+            <listPlace>
+                <place type="monastery">
+                    <placeName xml:lang="en" xml:id="name3059-1" srophe:tags="#syriaca-headword" resp="https://syriaca.org">Monastery at Tagais</placeName>
+                    <placeName xml:lang="syr" xml:id="name3059-2" srophe:tags="#syriaca-headword" resp="https://syriaca.org">ܕܝܪܐ ܕܒܛܐܓܐܝܣ</placeName>
+                    <placeName xml:lang="syr" xml:id="name3059-3" source="#bib3059-2">ܕܝܪܐ ܕܒܛܐܓܐܝܣ</placeName>
+                    <desc type="abstract" xml:id="abstract3059-1" xml:lang="en" source="#bib3059-1">A monastery at Tagais</desc>
+                    <location type="nested" source="#bib3059-1">
+                        <settlement ref="http://syriaca.org/place/1475"/>
+                        <region/>
+                    </location>
+                    <idno type="URI">https://syriaca.org/place/3059</idno>
+                    <idno type="URI">https://pleiades.stoa.org/places/test</idno>
+                    <listBibl>
+                        <bibl xml:id="bib3059-1">
+                            <ptr target="http://syriaca.org/bibl/669"/>
+                            <citedRange unit="p">283</citedRange>
+                        </bibl>
+                        <bibl xml:id="bib3059-2">
+                            <ptr target="http://syriaca.org/bibl/667"/>
+                            <citedRange unit="p">318</citedRange>
+                        </bibl>
+                    </listBibl>
+                </place>
+            </listPlace>
+        </body>
+    </text>
+</TEI>
