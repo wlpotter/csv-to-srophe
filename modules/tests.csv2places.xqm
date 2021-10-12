@@ -24,6 +24,8 @@ import module namespace csv2srophe="http://wlpotter.github.io/ns/csv2srophe" at 
 import module namespace csv2places="http://wlpotter.github.io/ns/csv2places" at "csv2places.xqm";
 import module namespace config="http://wlpotter.github.io/ns/config" at "config.xqm";
 
+
+declare namespace srophe="https://srophe.app";
 (:
 trying to test the overall function will require setting up the indices and headermap.
 And a fake data row.
@@ -48,14 +50,31 @@ declare variable $csv2places-test:abstract-index-stub :=
 declare variable $csv2places-test:data-row-to-compare :=
   csv2srophe:get-data($csv2places-test:local-csv-uri, "	")[3];
  
+declare variable $csv2places-test:sources-index-for-sample-row :=
+  csv2srophe:create-sources-index-for-row($csv2places-test:data-row-to-compare, $csv2places-test:header-map-stub);
 (: add variable for test output of the resultant skeleton record :)
 
 
-declare %unit:ignore %unit:test function  csv2places-test:build-place-node-from-row(){
-  
+declare %unit:test %unit:ignore function  csv2places-test:build-place-node-from-row(){
+(: can be toggled to test what final output should look like. Need to make the skeleton by hand and store as a variable above. :)
+    unit:assert-equals(csv2places:build-place-node-from-row($csv2places-test:data-row-to-compare, $csv2places-test:header-map-stub, ($csv2places-test:names-index-stub, $csv2places-test:headword-index-stub, $csv2places-test:abstract-index-stub)), <place></place>)
 };
 
 declare %unit:test function csv2places-test:get-place-type-from-row-using-local-csv() {
   unit:assert-equals(csv2places:get-place-type-from-row($csv2places-test:data-row-to-compare), "monastery")
 };
 
+declare %unit:test function csv2places-test:create-headwords-from-local-csv-data() {
+  unit:assert-equals(csv2places:create-headwords($csv2places-test:data-row-to-compare, $csv2places-test:headword-index-stub)[2], 
+                    <placeName xmlns="http://www.tei-c.org/ns/1.0" xml:lang="syr" xml:id="name3059-2" srophe:tags="#syriaca-headword" resp="https://syriaca.org">ܕܝܪܐ ܕܒܛܐܓܐܝܣ</placeName>)
+};
+
+declare %unit:test function csv2places-test:create-names-from-local-csv-data() {
+  unit:assert-equals(csv2places:create-placeNames($csv2places-test:data-row-to-compare, $csv2places-test:names-index-stub, $csv2places-test:sources-index-for-sample-row, 2)[1], 
+  <placeName xmlns="http://www.tei-c.org/ns/1.0" xml:lang="syr" xml:id="name3059-3" source="#bib3059-2">ܕܝܪܐ ܕܒܛܐܓܐܝܣ</placeName>)
+};
+
+declare %unit:test function csv2places-test:create-abstracts-from-local-csv-data() {
+  unit:assert-equals(csv2places:create-abstracts($csv2places-test:data-row-to-compare, $csv2places-test:abstract-index-stub, $csv2places-test:sources-index-for-sample-row)[1], 
+  <desc xmlns="http://www.tei-c.org/ns/1.0" type="abstract" xml:id="abstract3059-1" xml:lang="en" source="#bib3059-1">A monastery at Tagais</desc>)
+};

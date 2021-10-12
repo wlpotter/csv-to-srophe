@@ -65,7 +65,7 @@ as document-node()
   </text>
   
   let $tei := 
-  <TEI xmlns="http://www.tei-c.org/ns/1.0" xml:lang="{$config:base-language}">
+  <TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:svg="http://www.w3.org/2000/svg" xmlns:srophe="https://srophe.app" xmlns:syriaca="http://syriaca.org" xml:lang="{$config:base-language}">
     {$teiHeader, $text}
   </TEI>
   return document {$tei}
@@ -95,7 +95,8 @@ as node()
   let $placeType := csv2places:get-place-type-from-row($row)
   
   let $headwords := csv2places:create-headwords($row, $headwordIndex)
-  let $placeNames := csv2places:create-placeNames($row, $namesIndex, $sources)
+  let $numHeadwords := count($headwords)
+  let $placeNames := csv2places:create-placeNames($row, $namesIndex, $sources, $numHeadwords)
   let $abstracts := csv2places:create-abstracts($row, $abstractIndex, $sources)
   
   (: currently not handling gps locations or relative locations :)
@@ -129,29 +130,75 @@ as xs:string
 
 declare function csv2places:create-headwords($row as element(),
                                              $headwordIndex as element()*)
-as element()
+as element()+
 {
-  
+  let $uriLocalName := csv2srophe:get-uri-from-row($row, "")
+  (: get the column information for this row's non-empty headwords :)
+  let $nonEmptyHeadwordIndex := csv2srophe:get-non-empty-index-from-row($row, $headwordIndex)
+
+  return
+    for $headword at $number in $nonEmptyHeadwordIndex
+    let $text := functx:trim($row/*[name() = $headword/textNodeColumnElementName/text()]/text()) (: look up the headword for that language :)
+    where $text != '' (: skip the headword columns that are empty :)
+    let $langAttrib := functx:trim($headword/langCode/text())
+    return csv2srophe:build-name-element($text, "placeName", $uriLocalName, $langAttrib, "", true (), $number)
+
 };
 
 declare function csv2places:create-placeNames($row as element(),
                                              $namesIndex as element()*,
-                                             $sourcesIndex as element()*)
+                                             $sourcesIndex as element()*,
+                                             $enumerationOffset as xs:integer)
 as element()
 {
+  let $uriLocalName := csv2srophe:get-uri-from-row($row, "")
   
+  (: get the column information for this row's non-empty names :)
+  let $nonEmptyNamesIndex := csv2srophe:get-non-empty-index-from-row($row, $namesIndex)
+  
+  return
+    for $name at $number in $nonEmptyNamesIndex     (: loop through each of the names in various languages :)
+    let $text := functx:trim($row/*[name() = $name/textNodeColumnElementName/text()]/text()) (: look up the name for that column :)
+    let $nameSourceUri := functx:trim($row/*[name() = $name/sourceUriElementName/text()]/text())  (: look up the URI that goes with the name column :)
+    let $nameSourcePg := functx:trim($row/*[name() = $name/pagesElementName/text()]/text())  (: look up the page that goes with the name column :)
+    let $sourceAttr := 
+        for $src at $srcNumber in $sourcesIndex  (: step through the source index :)
+        where  $nameSourceUri = $src/uri/text() and $nameSourcePg = $src/pg/text()  (: URI and page from columns must match with iterated item in the source index :)
+        return "bib" || $uriLocalName||'-'||$srcNumber    (: create the last part of the source attribute :)
+    let $langAttr := functx:trim($name/langCode/text())
+    return csv2srophe:build-name-element($text, "placeName", $uriLocalName, $langAttr, $sourceAttr, false (), $number + $enumerationOffset)
 };
 
 declare function csv2places:create-abstracts($row as element(),
-                                             $abstract as element()*,
+                                             $abstractIndex as element()*,
                                              $sourcesIndex as element()*)
-as element()
+as element()*
 {
+  let $uriLocalName := csv2srophe:get-uri-from-row($row, "")
+  
+  (: get the column information for this row's non-empty abstracts :)
+  let $nonEmptyAbstractIndex := csv2srophe:get-non-empty-index-from-row($row, $abstractIndex)
+  
+  return
+    for $abstract at $number in $abstractIndex
+    let $text := functx:trim($row/*[name() = $abstract/textNodeColumnElementName/text()]/text()) (: look up the abstract from that column :)
+    where $text != ''   (: skip the abstract columns that are empty :)
+    let $abstractSourceUri := functx:trim($row/*[name() = $abstract/sourceUriElementName/text()]/text())  (: look up the URI that goes with the abstract column :)
+    let $abstractSourcePg := functx:trim($row/*[name() = $abstract/pagesElementName/text()]/text())  (: look up the page that goes with the name column :)
+    let $languageAttr := functx:trim($abstract/*:langCode/text()) (: look up the language code for the current abstract :)
+    let $sourceAttr := 
+        if ($abstractSourceUri != '')
+        then
+            for $src at $srcNumber in $sourcesIndex  (: step through the source index :)
+            where  $abstractSourceUri = $src/uri/text() and $abstractSourcePg = $src/pg/text()  (: URI and page from columns must match with iterated item in the source index :)
+            return 'bib'||$uriLocalName||'-'||$srcNumber    (: create the last part of the source attribute :)
+        else ()
+    return csv2srophe:build-abstract-element($text, "desc", $uriLocalName, $languageAttr, $sourceAttr, $number)
   
 };
 
 declare function csv2places:create-nested-locations($row as element())
-as element()
+as element()*
 {
   
 };
