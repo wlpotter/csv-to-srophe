@@ -405,7 +405,11 @@ as element()*
         <ptr target="{$sourceUri}"/>
         <citedRange unit="p">{$sourcePageRange}</citedRange>
     </bibl>
-}; (:refactor: handle multiple @unit values in citedRange ("p" can be the default) :)
+}; (:refactor: handle multiple @unit values in citedRange ("p" can be the default) 
+
+Refactor: add a function that matches source values and returns the correct bibl source attribute based on input data
+csv2srophe:get-source-attribute-for-node($matchUri, $matchPages) -- once you make the more complex @unit handling, this can become $matchRangeType, $matchRangeValue or something similar
+:)
 
 declare function csv2srophe:create-idno-sequence-for-row($row as element(), $uriBase as xs:string?)
 as element()*
