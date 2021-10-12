@@ -23,6 +23,9 @@ module namespace csv2srophe-test="http://wlpotter.github.io/ns/csv2srophe-test";
 import module namespace csv2srophe="http://wlpotter.github.io/ns/csv2srophe" at "csv2srophe.xqm";
 import module namespace config="http://wlpotter.github.io/ns/config" at "config.xqm";
 
+
+declare namespace srophe="https://srophe.app";
+
 (: a tab-separated CSV file :)
 declare variable $csv2srophe-test:local-csv-uri :=
   $config:nav-base || "in/test/test.csv";
@@ -199,4 +202,28 @@ declare %unit:test function csv2srophe-test:build-revisionDesc-from-config()
 {
   unit:assert-equals(csv2srophe:build-revisionDesc($config:change-log, "draft"), 
                      $csv2srophe-test:revisionDesc-from-config)
+};
+
+declare %unit:test function csv2srophe-test:build-name-element-placeName-headword-english() 
+{
+  unit:assert-equals(csv2srophe:build-name-element("Edessa", "placeName", "78", "en", "", true (), 1),
+  <placeName xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en" xml:id="name78-1" srophe:tags="#syriaca-headword" resp="https://syriaca.org">Edessa</placeName>)
+};
+
+declare %unit:test function csv2srophe-test:build-name-element-placeName-english() 
+{
+  unit:assert-equals(csv2srophe:build-name-element("Edessa", "placeName", "78", "en", "bib78-3", false (), 4),
+  <placeName xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en" xml:id="name78-4" source="#bib78-3">Edessa</placeName>)
+};
+
+declare %unit:test function csv2srophe-test:build-name-element-taxonomy-headword-english() 
+{
+  unit:assert-equals(csv2srophe:build-name-element("Afterlife", "term", "afterlife", "en", "", true (), 1),
+  <term xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en" xml:id="name-afterlife-en" srophe:tags="#syriaca-headword" resp="https://syriaca.org">Afterlife</term>)
+};
+
+declare %unit:test function csv2srophe-test:build-name-element-taxonomy-regular-name-english() 
+{
+  unit:assert-equals(csv2srophe:build-name-element("Afterlife", "gloss", "afterlife", "en", "", false (), 3),
+  <gloss xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en" resp="https://syriaca.org">Afterlife</gloss>)
 };

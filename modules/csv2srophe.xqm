@@ -30,6 +30,7 @@ module namespace csv2srophe="http://wlpotter.github.io/ns/csv2srophe";
 import module namespace functx="http://www.functx.com";
 import module namespace config="http://wlpotter.github.io/ns/config" at "config.xqm";
 
+declare namespace srophe="https://srophe.app";
 (: note that it makes use of Basex's CSV module. Note also that you should declare output options. :)
 
 
@@ -407,6 +408,34 @@ as element()*
   return ($selfIdno, $otherIdnos)
 };
 
+declare function csv2srophe:build-name-element($textNode as xs:string,
+                                               $elementName as xs:string,
+                                               $entityUri as xs:string,
+                                               $language as xs:string,
+                                               $source as xs:string?,
+                                               $isHeadword as xs:boolean,
+                                               $namePositionInSequence as xs:integer)
+as element()
+{
+  let $headwordAttr := if($isHeadword) then
+    attribute {QName("https://srophe.app", "srophe:tags")} {"#syriaca-headword"}
+  let $id := if($elementName != "gloss") then (: glosses are 'alternate names' for taxonomy entities and don't have xml:ids. :)
+                 if($elementName = "term") then (: taxonomy headwords are tei:term elements with the xml:id pattern of 'name-$entityUri-$language' :)
+                   "name-" || $entityUri || "-" || $language (: in this case $entityUri should be the lower-case value of $textNode :)
+                 else
+                   "name" || $entityUri || "-" || $namePositionInSequence (: all other entities have the xml:id pattern of "name$entityUri-$namePositionInSequence":)
+  let $xmlId := if($id != "") then attribute {"xml:id"} {$id}
+  let $xmlLang := attribute {"xml:lang"} {$language}
+  let $sourceAttr := if($source != "") then
+                       attribute {"source"} {"#" || $source}
+                     else
+                       attribute {"resp"} {"https://syriaca.org"}
+  return
+    element {QName("http://www.tei-c.org/ns/1.0", $elementName)} 
+            {$xmlLang, $xmlId, $headwordAttr, $sourceAttr, $textNode}
+  
+  
+};
 (: I'm not sure these final functions should be in this module. They are more
 : generic than just csv transform. Perhaps separate out into some util library? :)
 
