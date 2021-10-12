@@ -70,7 +70,7 @@ declare variable $config:change-log :=
     $config:config-file/meta/config/responsibility/changeLog/*[name() = $config:collection-node/@name]/text() 
     (: get the text node of the changeLog matching the collection's name attribute :)
   return
-    <change xmlns="http://www.tei-c.org/ns/1.0" when="fn:current-date()" who="{$config:creator-uri}">
+    <change xmlns="http://www.tei-c.org/ns/1.0" when="{fn:current-date()}" who="{$config:creator-uri}">
       {$changeMessage}
     </change>;
   
