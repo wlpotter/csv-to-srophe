@@ -44,7 +44,7 @@ declare variable $config:input-file-separator :=
   string($config:config-file/meta/config/io/inputPath/@separator); (: add switch case to turn into the needed options map :)
   
   (: currently assuming a relative path. Will implement other options later. :)
-declare variable $config:outputPath :=
+declare variable $config:output-path :=
   $config:nav-base || $config:config-file/meta/config/io/outputPath/text();
   
 declare variable $config:file-or-console :=
