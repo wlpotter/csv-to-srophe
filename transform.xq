@@ -37,7 +37,7 @@ declare option output:omit-xml-declaration "no";
 declare option file:omit-xml-declaration "no";
 
 let $inputCollection :=
-  if($config:input-type = "csv") then (: csv2srophe:process-csv() :) "csv" (: the process-csv function will return a collection of xml documents :)
+  if($config:input-type = "csv") then csv2srophe:process-csv($config:input-path, $config:csv-input-separator) (: the process-csv function will return a collection of xml documents :)
   else if ($config:input-type = "xml") then collection($config:input-path)
   else  "error: invalid input type selected in config.xml at XPath '/meta/config/io/inputPath/@type'. Should be 'csv' for processing a csv table or 'xml' for processing xml snippet records."
 
