@@ -29,6 +29,7 @@ module namespace csv2srophe="http://wlpotter.github.io/ns/csv2srophe";
 
 import module namespace functx="http://www.functx.com";
 import module namespace config="http://wlpotter.github.io/ns/config" at "config.xqm";
+import module namespace csv2places="http://wlpotter.github.io/ns/csv2places" at "csv2places.xqm";
 
 declare namespace srophe="https://srophe.app";
 (: note that it makes use of Basex's CSV module. Note also that you should declare output options. :)
@@ -38,6 +39,25 @@ declare namespace srophe="https://srophe.app";
 (: functions for processing a full CSV document :)
 (: ----------------------------------------- :)
 
+declare function csv2srophe:process-csv($csvFilePath as xs:string,
+                                        $separator as xs:string)
+as document-node()*
+{
+  let $data := csv2srophe:get-data($csvFilePath, $separator)
+  let $headerMap := csv2srophe:create-header-map($csvFilePath, $separator)
+  
+  let $headwordIndex := csv2srophe:create-headword-index($headerMap)
+  let $namesIndex := csv2srophe:create-names-index($headerMap)
+  let $abstractIndex := csv2srophe:create-abstract-index($headerMap)
+  
+  let $indices := ($headwordIndex, $namesIndex, $abstractIndex)
+  
+  for $row in $data
+    return switch($config:collection-type)
+      case "places" return csv2places:create-place-from-row($row, $headerMap, $indices)
+      default return ""
+};
+                                        
 (:~ 
 : loads a CSV file and returns an xml document
 : The returned element is a sequence of XML nodes with the following pattern:
