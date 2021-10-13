@@ -40,7 +40,7 @@ declare variable $config:input-path :=
 declare variable $config:input-type :=
   string($config:config-file/meta/config/io/inputPath/@type);
   
-declare variable $config:input-file-separator :=
+declare variable $config:csv-input-separator :=
   string($config:config-file/meta/config/io/inputPath/@separator); (: add switch case to turn into the needed options map :)
   
   (: currently assuming a relative path. Will implement other options later. :)
