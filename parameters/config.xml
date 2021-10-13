@@ -14,13 +14,13 @@
                   The @type attribute specifies either "csv" or "collection", which the app uses to determine what to do with the element's text-node.
                   The @separator attribute specifies the separator used in a CSV file. Valid values are: 'comma', 'tab', 'pipe' (referring to the character, '|'), or 'semicolon'.
                   -->
-            <inputPath type="csv" separator="tab"></inputPath>
+            <inputPath type="csv" separator="tab">/in/test/test.csv</inputPath>
             <!-- The output paths specify locations on your local harddrive to store the results of processing.
                   If writing files to the same local repository as the xquery scripts, you may supply relative paths rather than aboslute ones, e.g. "/csv/output/". However, if the app fails to resolve the localRepositoryUrl, you may need to supply an absolute path for this element
             -->
-            <outputPath>C:\Users\anoni\Documents\GitHub\csv-to-srophe\test\out\csv-out\</outputPath>
+            <outputPath>test/out/csv-tests/</outputPath>
             <!-- This element controls the output either to 'console', for testing and debugging, or to 'file', i.e. when storing the results of processing as new TEI records.-->
-            <fileOrConsole></fileOrConsole>
+            <fileOrConsole>file</fileOrConsole>
         </io>
         <!-- specifies the type of data to be processed. Corresponds to the collections listed in meta/config/collections/collection/@name -->
         <collectionType>places</collectionType>
