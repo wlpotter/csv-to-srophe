@@ -41,6 +41,7 @@ let $inputCollection :=
   else if ($config:input-type = "xml") then collection($config:input-path)
   else  "error: invalid input type selected in config.xml at XPath '/meta/config/io/inputPath/@type'. Should be 'csv' for processing a csv table or 'xml' for processing xml snippet records."
 
+let $nothing := if($config:file-or-console = "file") then file:create-dir($config:output-path) (: if writing to file and the output directory doesn't exist, create it :)
 
 
             
@@ -58,6 +59,6 @@ return if(functx:atomic-type($inputCollection) = "xs:string")
          return if($config:file-or-console = "file") then
                  let $docFileName := substring-after($inDocUri, $config:uri-base) || ".xml"
                  let $outputTarget := $config:output-path || $docFileName
-                 return file:write($outputTarget, $outDoc, map { 'omit-xml-declaration': 'no'})
+                 return file:write($outputTarget, $outDoc, map {'method': 'xml', 'omit-xml-declaration': 'no'})
                 else
                   $outDoc
