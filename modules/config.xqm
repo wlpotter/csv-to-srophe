@@ -22,6 +22,8 @@ declare variable $config:config-file := doc("../parameters/config.xml");
 declare variable $config:nav-base := 
   let $pathToLocalRepo := 
     $config:config-file/meta/config/io/localRepositoryUrl/text()
+  (: For Windows paths, change "\" to "/" :)
+  let $pathToLocalRepo := fn:replace($pathToLocalRepo, "\\", "/")
   let $pathToRemoteRepo := 
     $config:config-file/meta/config/io/remoteRepositoryUrl/text()
   return if (file:is-dir($pathToLocalRepo)) then  (: note-to-self: need to indicate that this relies on basex's file module? :)
@@ -32,6 +34,9 @@ declare variable $config:nav-base :=
   (: currently assuming an absolute remote path or a relative path (either remote or local depending on $config:nav-base); will implement other options later :)
 declare variable $config:input-path :=
   let $rawPath := $config:config-file/meta/config/io/inputPath/text()
+  
+  (: For Windows paths, change "\" to "/" :)
+  let $rawPath := fn:replace($rawPath, "\\", "/")
   return if (starts-with($rawPath, "http")) then
             $rawPath
          else
