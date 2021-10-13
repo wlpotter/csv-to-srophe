@@ -149,7 +149,7 @@ declare function csv2places:create-placeNames($row as element(),
                                              $namesIndex as element()*,
                                              $sourcesIndex as element()*,
                                              $enumerationOffset as xs:integer)
-as element()
+as element()+
 {
   let $uriLocalName := csv2srophe:get-uri-from-row($row, "")
   
