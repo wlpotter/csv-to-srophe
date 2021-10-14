@@ -107,16 +107,12 @@ as node()
   (:currently not handling note creation as not needed for this data :)
   
   let $bibls := csv2srophe:create-bibl-sequence($row, $headerMap)
-  let $listBibl := 
-    <listBibl xmlns="http://www.tei-c.org/ns/1.0">
-      {$bibls}
-    </listBibl>
   
   (: compose tei:place element and return it :)
   
   return 
   <place xmlns="http://www.tei-c.org/ns/1.0" type="{$placeType}">
-    {$headwords, $placeNames, $abstracts, $nestedLocations, $idnos, $listBibl}
+    {$headwords, $placeNames, $abstracts, $nestedLocations, $idnos, $bibls}
   </place>
 };
 
