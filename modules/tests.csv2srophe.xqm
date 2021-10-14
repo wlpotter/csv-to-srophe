@@ -80,7 +80,7 @@ declare variable $csv2srophe-test:idno-node-to-compare :=
 <idno xmlns="http://www.tei-c.org/ns/1.0" type="URI">https://pleiades.stoa.org/places/test</idno>;
 
 declare variable $csv2srophe-test:self-idno-node-to-compare :=
-<idno xmlns="http://www.tei-c.org/ns/1.0" type="URI">https://syriaca.org/place/3059</idno>;
+<idno xmlns="http://www.tei-c.org/ns/1.0" type="URI">http://syriaca.org/place/3059</idno>;
 
 declare variable $csv2srophe-test:revisionDesc-from-config :=
 <revisionDesc xmlns="http://www.tei-c.org/ns/1.0" status="draft">
@@ -147,8 +147,8 @@ declare %unit:test function csv2srophe-test:create-abstract-index-from-local-pla
 declare  %unit:test function csv2srophe-test:get-uri-from-row-with-uri-base()
 {
   unit:assert-equals(csv2srophe:get-uri-from-row($csv2srophe-test:data-row-to-compare,
-                                                 "https://syriaca.org/place/"),
-                     "https://syriaca.org/place/3059")
+                                                 "http://syriaca.org/place/"),
+                     "http://syriaca.org/place/3059")
 };
 
 declare  %unit:test function csv2srophe-test:get-uri-from-row-no-uri-base()
@@ -175,27 +175,27 @@ declare %unit:test function csv2srophe-test:create-bibl-sequence-for-row-from-lo
 declare %unit:test function csv2srophe-test:create-idno-sequence-for-row-check-self-idno()
 { (: tests that the idno element for the entity record was created correctly :)
   unit:assert-equals(csv2srophe:create-idno-sequence-for-row($csv2srophe-test:data-row-to-compare,
-                                                             "https://syriaca.org/place/")[1],
+                                                             "http://syriaca.org/place/")[1],
                      $csv2srophe-test:self-idno-node-to-compare)
 };
 
 declare %unit:test function csv2srophe-test:create-idno-sequence-for-row-check-other-idno()
 { (: tests that the other idno elements were created correctly :)
   unit:assert-equals(csv2srophe:create-idno-sequence-for-row($csv2srophe-test:data-row-to-compare,
-                                                              "https://syriaca.org/place/")[2],
+                                                              "http://syriaca.org/place/")[2],
                      $csv2srophe-test:idno-node-to-compare)
 };
 
 declare %unit:test function csv2srophe-test:build-editor-node() 
 {
-  unit:assert-equals(csv2srophe:build-editor-node("https://syriaca.org/documentation/editors.xml#wpotter", "William L. Potter", "creator"),
-                     <editor xmlns="http://www.tei-c.org/ns/1.0" role="creator" ref="https://syriaca.org/documentation/editors.xml#wpotter">William L. Potter</editor>)
+  unit:assert-equals(csv2srophe:build-editor-node("http://syriaca.org/documentation/editors.xml#wpotter", "William L. Potter", "creator"),
+                     <editor xmlns="http://www.tei-c.org/ns/1.0" role="creator" ref="http://syriaca.org/documentation/editors.xml#wpotter">William L. Potter</editor>)
 };
 
 declare %unit:test function csv2srophe-test:build-respStmt() 
 {
-  unit:assert-equals(csv2srophe:build-respStmt-node("https://syriaca.org/documentation/editors.xml#wpotter", "William L. Potter", "URI minted and initial data collected by"),
-  <respStmt xmlns="http://www.tei-c.org/ns/1.0"><resp>URI minted and initial data collected by</resp><name ref="https://syriaca.org/documentation/editors.xml#wpotter">William L. Potter</name></respStmt>)
+  unit:assert-equals(csv2srophe:build-respStmt-node("http://syriaca.org/documentation/editors.xml#wpotter", "William L. Potter", "URI minted and initial data collected by"),
+  <respStmt xmlns="http://www.tei-c.org/ns/1.0"><resp>URI minted and initial data collected by</resp><name ref="http://syriaca.org/documentation/editors.xml#wpotter">William L. Potter</name></respStmt>)
 };
 
 declare %unit:test function csv2srophe-test:build-revisionDesc-from-config()
@@ -207,7 +207,7 @@ declare %unit:test function csv2srophe-test:build-revisionDesc-from-config()
 declare %unit:test function csv2srophe-test:build-name-element-placeName-headword-english() 
 {
   unit:assert-equals(csv2srophe:build-name-element("Edessa", "placeName", "78", "en", "", true (), 1),
-  <placeName xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en" xml:id="name78-1" srophe:tags="#syriaca-headword" resp="https://syriaca.org">Edessa</placeName>)
+  <placeName xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en" xml:id="name78-1" srophe:tags="#syriaca-headword" resp="http://syriaca.org">Edessa</placeName>)
 };
 
 declare %unit:test function csv2srophe-test:build-name-element-placeName-english() 
@@ -219,13 +219,13 @@ declare %unit:test function csv2srophe-test:build-name-element-placeName-english
 declare %unit:test function csv2srophe-test:build-name-element-taxonomy-headword-english() 
 {
   unit:assert-equals(csv2srophe:build-name-element("Afterlife", "term", "afterlife", "en", "", true (), 1),
-  <term xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en" xml:id="name-afterlife-en" srophe:tags="#syriaca-headword" resp="https://syriaca.org">Afterlife</term>)
+  <term xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en" xml:id="name-afterlife-en" srophe:tags="#syriaca-headword" resp="http://syriaca.org">Afterlife</term>)
 };
 
 declare %unit:test function csv2srophe-test:build-name-element-taxonomy-regular-name-english() 
 {
   unit:assert-equals(csv2srophe:build-name-element("Afterlife", "gloss", "afterlife", "en", "", false (), 3),
-  <gloss xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en" resp="https://syriaca.org">Afterlife</gloss>)
+  <gloss xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en" resp="http://syriaca.org">Afterlife</gloss>)
 };
 
 declare %unit:test function csv2srophe-test:build-abstract-element-as-desc-with-source()
@@ -237,5 +237,5 @@ declare %unit:test function csv2srophe-test:build-abstract-element-as-desc-with-
 declare %unit:test function csv2srophe-test:build-abstract-element-as-note-with-no-source()
 {
   unit:assert-equals(csv2srophe:build-abstract-element("Lorem ipsum", "note", "3059", "en", "", 1),
-  <note xmlns="http://www.tei-c.org/ns/1.0" type="abstract" xml:id="abstract3059-1" xml:lang="en" resp="https://syriaca.org">Lorem ipsum</note>)
+  <note xmlns="http://www.tei-c.org/ns/1.0" type="abstract" xml:id="abstract3059-1" xml:lang="en" resp="http://syriaca.org">Lorem ipsum</note>)
 };

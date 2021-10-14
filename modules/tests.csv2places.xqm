@@ -75,7 +75,7 @@ declare %unit:test function csv2places-test:get-place-type-from-row-using-local-
 
 declare %unit:test function csv2places-test:create-headwords-from-local-csv-data() {
   unit:assert-equals(csv2places:create-headwords($csv2places-test:data-row-to-compare, $csv2places-test:headword-index-stub)[2], 
-                    <placeName xmlns="http://www.tei-c.org/ns/1.0" xml:lang="syr" xml:id="name3059-2" srophe:tags="#syriaca-headword" resp="https://syriaca.org">ܕܝܪܐ ܕܒܛܐܓܐܝܣ</placeName>)
+                    <placeName xmlns="http://www.tei-c.org/ns/1.0" xml:lang="syr" xml:id="name3059-2" srophe:tags="#syriaca-headword" resp="http://syriaca.org">ܕܝܪܐ ܕܒܛܐܓܐܝܣ</placeName>)
 };
 
 declare %unit:test function csv2places-test:create-names-from-local-csv-data() {

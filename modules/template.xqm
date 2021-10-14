@@ -33,7 +33,7 @@ declare default element namespace "http://www.tei-c.org/ns/1.0";
 declare namespace srophe="https://srophe.app";
 
 (:~ 
-: @param $recordUri is the full URI of the document, including the URI-base, e.g. "https://syriaca.org/place/78".
+: @param $recordUri is the full URI of the document, including the URI-base, e.g. "http://syriaca.org/place/78".
 : Although this URI is included in a tei:idno element within the $record, its location is not reliable entity-type
 : to entity-type. Thus, rather than risking an inaccurate XPath, this value is passed to the function. :)
 declare function template:merge-record-into-template($record as node(),

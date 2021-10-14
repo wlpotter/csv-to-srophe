@@ -349,7 +349,7 @@ as element()*
 : @param $row a single row of data, as produced by the get-data function.
 : @see get-data()
 : @param $entityUriBase is the entity-specific portion of the record's URI, e.g.
-: 'https://syriaca.org/place/'. This is stored in the config.xml
+: 'http://syriaca.org/place/'. This is stored in the config.xml
 : @see https://raw.githubusercontent.com/wlpotter/csv-to-srophe/main/parameters/config.xml?token=AKQNYWRGCSE5YEEJDKDHJJTBMRIIO;/meta/config/collections/collection/@record-URI-base
 NOTE: the token can be removed once the module is public. :)
 declare function csv2srophe:get-uri-from-row($row as element(), 
@@ -469,7 +469,7 @@ as element()
   let $sourceAttr := if($source != "") then
                        attribute {"source"} {"#" || $source}
                      else
-                       attribute {"resp"} {"https://syriaca.org"}
+                       attribute {"resp"} {"http://syriaca.org"}
   return
     element {QName("http://www.tei-c.org/ns/1.0", $elementName)} 
             {$xmlLang, $xmlId, $headwordAttr, $sourceAttr, $textNode}
@@ -499,7 +499,7 @@ as element()
   let $sourceAttr := if($source != "") then
                         attribute {"source"} {"#" || $source}
                      else
-                        attribute {"resp"} {"https://syriaca.org"}
+                        attribute {"resp"} {"http://syriaca.org"}
   return element {QName("http://www.tei-c.org/ns/1.0", $elementName)}
                   {$type, $id, $xmlLang, $sourceAttr, $textNode}
 

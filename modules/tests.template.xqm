@@ -69,6 +69,6 @@ declare %unit:test function template-test:create-record-title-from-headwords-in-
 
 declare %unit:test function template-test:merge-record-into-template-from-stub()
 { (: this should be working, maybe just whitespace?:)
-  unit:assert-equals(template:merge-record-into-template($template-test:record-to-merge, $template-test:template-to-compare, "https://syriaca.org/place/3059"),
+  unit:assert-equals(template:merge-record-into-template($template-test:record-to-merge, $template-test:template-to-compare, "http://syriaca.org/place/3059"),
                                                          $template-test:output-record-to-compare)
 };
