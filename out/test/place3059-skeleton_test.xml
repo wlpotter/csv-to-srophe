@@ -24,7 +24,6 @@
                     <desc type="abstract" xml:id="abstract3059-1" xml:lang="en" source="#bib3059-1">A monastery at Tagais</desc>
                     <location type="nested" source="#bib3059-1">
                         <settlement ref="http://syriaca.org/place/1475"/>
-                        <region/>
                     </location>
                     <idno type="URI">http://syriaca.org/place/3059</idno>
                     <idno type="URI">https://pleiades.stoa.org/places/test</idno>
