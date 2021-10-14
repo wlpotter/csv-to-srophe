@@ -92,6 +92,5 @@ declare %unit:test function csv2places-test:create-nested-locations-from-local-c
   unit:assert-equals(csv2places:create-nested-locations($csv2places-test:data-row-to-compare, $csv2places-test:sources-index-for-sample-row)[1], 
   <location xmlns="http://www.tei-c.org/ns/1.0" type="nested" source="#bib3059-1">
     <settlement ref="http://syriaca.org/place/1475"/>
-    <region/>
   </location>)
 };

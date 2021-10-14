@@ -203,7 +203,7 @@ let $settlementElement :=
     let $setName := functx:trim($row/*[name() = 'nestedName.settlement']/text())  (: this is a hack that just pulls the text from the sourcURI column.  Use the lookup method if it gets more complicated :)
     let $setUri := functx:trim($row/*[name() = 'nestedURI.settlement']/text())
     let $setRefAttr := if ($setUri != "") then attribute {"ref"} {$setUri}
-    return
+    return if ($setName != "" or $setUri != "") then (: build element only if text node or @ref are non-empty :)
       element {QName("http://www.tei-c.org/ns/1.0", "settlement")} {$setRefAttr, $setName}
 let $settlementSourceAttribute :=
     let $setSrc := functx:trim($row/*[name() = 'sourceURI.nested.settlement']/text())    
@@ -221,7 +221,7 @@ let $regionElement :=
     let $regName := functx:trim($row/*[name() = 'nestedName.region']/text())  (: this is a hack that just pulls the text from the sourcURI column.  Use the lookup method if it gets more complicated :)
     let $regUri := functx:trim($row/*[name() = 'nestedURI.region']/text())
     let $regRefAttr := if ($regUri != "") then attribute {"ref"} {$regUri}
-     return
+     return if($regName != "" or $regUri != "") then (: build element only if text node or @ref are non-empty :)
        element {QName("http://www.tei-c.org/ns/1.0", "region")} {$regRefAttr, $regName}
 let $regionSourceAttribute :=
     let $regSrc := functx:trim($row/*[name() = 'sourceURI.nested.region']/text())    
