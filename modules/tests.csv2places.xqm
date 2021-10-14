@@ -60,11 +60,13 @@ declare variable $csv2places-test:skeleton-record-to-compare-output :=
   return doc($pathToDoc);
 
 declare %unit:test function csv2places-test:create-place-from-row-using-test-row() {
+  (: won't pass because the change/@when element uses fn:current-date() so compare value falls behind if not updated. Need to rewrite test (not tagging %unit:ignore to remind self to update. :)
   unit:assert-equals(csv2places:create-place-from-row($csv2places-test:data-row-to-compare, $csv2places-test:header-map-stub, ($csv2places-test:names-index-stub, $csv2places-test:headword-index-stub, $csv2places-test:abstract-index-stub)),
                     $csv2places-test:skeleton-record-to-compare-output)
 };
 
 declare %unit:test function  csv2places-test:build-place-node-from-row(){
+  (: won't pass because the function outputs xmlns:srophe="https://srophe.app" on the tei:placeNames with srophe:tags="#syriaca-headword". This does not appear on the expected value. Perhaps add it? Need to rewrite test (not tagging %unit:ignore to remind self to update). :)
     unit:assert-equals(csv2places:build-place-node-from-row($csv2places-test:data-row-to-compare, $csv2places-test:header-map-stub, ($csv2places-test:names-index-stub, $csv2places-test:headword-index-stub, $csv2places-test:abstract-index-stub)),
                        $csv2places-test:skeleton-record-to-compare-output//tei:place)
 };
