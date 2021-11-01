@@ -28,7 +28,7 @@
                         <p>Distributed under a Creative Commons Attribution 3.0 Unported License.</p>
                     </licence>
                 </availability>
-        <date>2021-10-14-04:00</date>
+        <date>2021-11-01-04:00</date>
       </publicationStmt>
       <seriesStmt>
         <title level="s" xml:lang="en">The Syriac Gazetteer</title>
@@ -81,7 +81,7 @@
       </langUsage>
         </profileDesc>
     <revisionDesc status="draft">
-      <change when="2021-10-14-04:00" who="http://syriaca.org/documentation/editors.xml#dschwartz">CREATED: place</change>
+      <change when="2021-11-01-04:00" who="http://syriaca.org/documentation/editors.xml#dschwartz">CREATED: place</change>
     </revisionDesc>
   </teiHeader>
   <text>

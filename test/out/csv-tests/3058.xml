@@ -28,7 +28,7 @@
                         <p>Distributed under a Creative Commons Attribution 3.0 Unported License.</p>
                     </licence>
                 </availability>
-        <date>2021-10-14-04:00</date>
+        <date>2021-11-01-04:00</date>
       </publicationStmt>
       <seriesStmt>
         <title level="s" xml:lang="en">The Syriac Gazetteer</title>
@@ -81,7 +81,7 @@
       </langUsage>
         </profileDesc>
     <revisionDesc status="draft">
-      <change when="2021-10-14-04:00" who="http://syriaca.org/documentation/editors.xml#dschwartz">CREATED: place</change>
+      <change when="2021-11-01-04:00" who="http://syriaca.org/documentation/editors.xml#dschwartz">CREATED: place</change>
     </revisionDesc>
   </teiHeader>
   <text>
@@ -94,6 +94,9 @@
           <placeName xml:lang="en" xml:id="name3058-4" resp="http://syriaca.org">Trabzon</placeName>
           <placeName xml:lang="syr" xml:id="name3058-5" source="#bib3058-1">ܛܪܦܙܘܢܛܐ</placeName>
           <desc type="abstract" xml:id="abstract3058-1" xml:lang="en" resp="http://syriaca.org">A settlement on the Black Sea coast</desc>
+          <location type="nested" resp="http://syriaca.org">
+            <region ref="http://syriaca.org/place/633">Pontus</region>
+          </location>
           <idno type="URI">http://syriaca.org/place/3058</idno>
           <idno type="URI">https://pleiades.stoa.org/places/857359</idno>
           <idno type="URI">https://en.wikipedia.org/wiki/Trabzon</idno>
