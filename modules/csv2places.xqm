@@ -15,7 +15,7 @@ xquery version "3.0";
 (:~ 
 : This module provides the functions that transform rows of csv data
 : into XML snippets of Syriaca place records. These snippets can be
-: merged with place-template.xqm via the places.xqm module to create
+: merged with place-template.xml via the template.xqm module to create
 : full, TEI-compliant Syriaca place records.
 :
 : @author William L. Potter
