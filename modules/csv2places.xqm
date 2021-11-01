@@ -251,5 +251,9 @@ let $locationAttribute := $settlementSourceAttribute||$separator||$regionSourceA
             $settlementElement,
             $regionElement
       }</location>
-    else ()
+    else
+       <location xmlns="http://www.tei-c.org/ns/1.0" type="nested" resp="http://syriaca.org">{
+            $settlementElement,
+            $regionElement
+      }</location>
 };
