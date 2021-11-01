@@ -39,10 +39,12 @@
             -->
             <changeLog>
                 <places>CREATED: place</places>
+                <persons>CREATED: person</persons>
             </changeLog>
         </responsibility>
         <collections>
             <collection name="places" record-URI-base="http://syriaca.org/place/" template="/templates/places-template.xml"/>
+            <collection name="persons" record-URI-base="http://syriaca.org/person/" template="/templates/persons-template.xml"/>
             <!-- persons may be difficult if we need separate for saints and for authors -->
         </collections>
         <!--
