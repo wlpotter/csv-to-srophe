@@ -1,0 +1,128 @@
+<!-- missing: what schema associations do we need? -->
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:srophe="https://srophe.app" xmlns:tei="http://www.tei-c.org/ns/1.0" xml:lang="en">
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <sponsor>Syriaca.org: The Syriac Reference Portal</sponsor>
+                <funder>The International Balzan Prize Foundation</funder>
+                <funder>The National Endowment for the Humanities</funder>
+                <editor role="general" ref="http://syriaca.org/documentation/editors.xml#jnsaint-laurent">Jeanne-Nicole Mellon Saint-Laurent</editor>
+                <editor role="general" ref="http://syriaca.org/documentation/editors.xml#dmichelson">David A. Michelson</editor>
+            </titleStmt>
+            <editionStmt>
+                <edition n="1.0"/>
+            </editionStmt>
+            <publicationStmt>
+                <authority>Syriaca.org: The Syriac Reference Portal</authority>
+                <idno type="URI"></idno>
+                <availability>
+                    <licence target="http://creativecommons.org/licenses/by/3.0/">
+                        <p>Distributed under a Creative Commons Attribution 3.0 Unported License.</p>
+                    </licence>
+                </availability>
+            </publicationStmt>
+            <seriesStmt>
+                <seriesStmt>
+                    <title level="s">The Syriac Biographical Dictionary</title>
+                    <editor role="general" ref="http://syriaca.org/documentation/editors.xml#dmichelson">David A. Michelson</editor>
+                    <editor role="associate" ref="http://syriaca.org/documentation/editors.xml#jnsaint-laurent">Jeanne-Nicole Mellon Saint-Laurent</editor>
+                    <editor role="associate" ref="http://syriaca.org/documentation/editors.xml#ngibson">Nathan P. Gibson</editor>
+                    <editor role="associate" ref="http://syriaca.org/documentation/editors.xml#dschwartz">Daniel L. Schwartz</editor>
+                    <respStmt>
+                        <resp>Edited by</resp>
+                        <name type="person" ref="http://syriaca.org/documentation/editors.xml#dmichelson">David A. Michelson</name>
+                    </respStmt>
+                    <respStmt>
+                        <resp>Edited by</resp>
+                        <name type="person" ref="http://syriaca.org/documentation/editors.xml#jnsaint-laurent">Jeanne-Nicole Mellon Saint-Laurent</name>
+                    </respStmt>
+                    <respStmt>
+                        <resp>Edited by</resp>
+                        <name type="person" ref="http://syriaca.org/documentation/editors.xml#ngibson">Nathan P.  Gibson</name>
+                    </respStmt>
+                    <respStmt>
+                        <resp>Edited by</resp>
+                        <name type="person" ref="http://syriaca.org/documentation/editors.xml#dschwartz">Daniel L. Schwartz</name>
+                    </respStmt>
+                    <idno type="URI">http://syriaca.org/persons</idno>
+                    <!-- Note to self: including all three volumes; the script will add a test for the values at /tei:TEI/tei:text/tei:body/tei:listPerson/tei:person/@ana to determine if author and/or saints should be included. 
+                    If saint include volume 1 and don't include volume 3; include the second seriesStmt below
+                    If author include volume 2 and don't include volume 3-->
+                    <biblScope unit="vol" from="1" to="1">
+                        <title level="m">Qadishe: A Guide to the Syriac Saints</title>
+                        <idno type="URI">http://syriaca.org/q</idno>
+                    </biblScope>
+                    <biblScope unit="vol" from="2" to="2">
+                        <title level="m">A Guide to Syriac Authors</title>
+                        <idno type="URI">http://syriaca.org/authors</idno>
+                    </biblScope>
+                    <biblScope unit="vol">3</biblScope>
+                    <!-- below is only included if /tei:TEI/tei:text/tei:body/tei:listPerson/tei:person/@ana has "#syriaca-saint" as one of its values -->
+                </seriesStmt>
+                <title level="s">Gateway to the Syriac Saints</title>
+                <editor role="general" ref="http://syriaca.org/documentation/editors.xml#jnsaint-laurent">Jeanne-Nicole Mellon Saint-Laurent</editor>
+                <editor role="general" ref="http://syriaca.org/documentation/editors.xml#dmichelson">David A. Michelson</editor>
+                <respStmt>
+                    <resp>Edited by</resp>
+                    <name type="person" ref="http://syriaca.org/documentation/editors.xml#jnsaint-laurent">Jeanne-Nicole Mellon Saint-Laurent</name>
+                </respStmt>
+                <respStmt>
+                    <resp>Edited by</resp>
+                    <name type="person" ref="http://syriaca.org/documentation/editors.xml#dmichelson">David A. Michelson</name>
+                </respStmt>
+                <idno type="URI">http://syriaca.org/saints</idno>
+                <biblScope unit="vol" from="1" to="1">
+                    <title level="m">Qadishe: A Guide to the Syriac Saints</title>
+                    <idno type="URI">http://syriaca.org/q</idno>
+                </biblScope>
+            </seriesStmt>
+            <sourceDesc>
+                <p>Born digital.</p>
+            </sourceDesc>
+        </fileDesc>
+        <encodingDesc>
+            <editorialDecl>
+                <p>This record created following the Syriaca.org guidelines.
+                        Documentation available at: <ref target="http://syriaca.org/documentation">http://syriaca.org/documentation</ref>.</p>
+                <interpretation>
+                    <p>Approximate dates described in terms of centuries or partial centuries
+                            have been interpreted as documented in 
+                            <ref target="http://syriaca.org/documentation/dates.html">Syriaca.org Dates</ref>.</p>
+                </interpretation>
+            </editorialDecl>
+            <classDecl>
+                <taxonomy>
+                    <category xml:id="syriaca-headword">
+                        <catDesc>The name used by Syriaca.org for document titles, citation, and
+                                disambiguation. These names have been created according to the
+                                Syriac.org guidelines for headwords: <ref target="http://syriaca.org/documentation/headwords.html">http://syriaca.org/documentation/headwords.html</ref>.</catDesc>
+                    </category>
+                    <category xml:id="syriaca-anglicized">
+                        <catDesc>An anglicized version of a name, included to facilitate
+                                searching.</catDesc>
+                    </category>
+                </taxonomy>
+                <taxonomy>
+                    <category xml:id="syriaca-author">
+                        <catDesc>A person who is relevant to the Guide to Syriac Authors</catDesc>
+                    </category>
+                    <category xml:id="syriaca-saint">
+                        <catDesc>A person who is relevant to the Bibliotheca Hagiographica
+                                Syriaca.</catDesc>
+                    </category>
+                </taxonomy>
+            </classDecl>
+        </encodingDesc>
+        <profileDesc>
+            <langUsage>
+        <p>
+                    Languages codes used in this record follow the Syriaca.org guidelines. Documentation available at: 
+                    <ref target="http://syriaca.org/documentation/langusage.xml">http://syriaca.org/documentation/langusage.xml</ref>
+        </p>
+      </langUsage>
+        </profileDesc>
+    </teiHeader>
+    <text>
+        <body/>
+    </text>
+</TEI>
