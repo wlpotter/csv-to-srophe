@@ -85,38 +85,46 @@ declare function csv2persons:build-person-node-from-row($row as element(),
                                                       $indices as element()*)
 as node()
 {
+  (: get just the numerical portion of the URI :)
+  let $uriLocalName := csv2srophe:get-uri-from-row($row, "")
+  
   (: set up references for building elements :)
   let $headwordIndex := $indices/self::headword
   let $namesIndex := $indices/self::name
   let $abstractIndex := $indices/self::abstract
   let $sources := csv2srophe:create-sources-index-for-row($row, $headerMap)
   
-  (: build descendant nodes of the tei:place :)
+  (: build descendant nodes of the tei:person :)
   
-  let $headwords := csv2places:create-headwords($row, $headwordIndex)
+  let $headwords := csv2persons:create-headwords($row, $headwordIndex)
   let $numHeadwords := count($headwords)
-  let $placeNames := csv2places:create-placeNames($row, $namesIndex, $sources, $numHeadwords)
-  let $abstracts := csv2places:create-abstracts($row, $abstractIndex, $sources)
-  
-  (: currently not handling gps locations or relative locations :)
-  let $nestedLocations := csv2places:create-nested-locations($row, $sources)
-  
+  (: add anonymous-description elements. also need to test that this doesn't break when there **aren't** anon descs :)
+  let $persNames := csv2persons:create-persNames($row, $namesIndex, $sources, $numHeadwords)
   let $idnos := csv2srophe:create-idno-sequence-for-row($row, $config:uri-base)
   
-  (:currently not handling note creation as not needed for this data :)
+  let $abstracts := csv2persons:create-abstracts($row, $abstractIndex, $sources)
+  
+  (: do any of these need indices?? :)
+  let $trait := csv2persons:create-trait($row)
+  let $sex := csv2persons:create-sex-element($row, $sources)
+  let $dates := csv2srophe:create-dates($row, $sources) (: still pending :)
+  
+  (: pending: 
+  - @ana attribute on tei:person for saint, author, etc.
+  :)
   
   let $bibls := csv2srophe:create-bibl-sequence($row, $headerMap)
   
   (: compose tei:place element and return it :)
   
   return 
-  <place xmlns="http://www.tei-c.org/ns/1.0" type="{$placeType}">
-    {$headwords, $placeNames, $abstracts, $nestedLocations, $idnos, $bibls}
-  </place>
+  <person xmlns="http://www.tei-c.org/ns/1.0" xml:id="person-{$uriLocalName}">
+    {$headwords, $persNames, $idnos, $trait, $sex, $dates, $abstracts, $bibls}
+  </person>
 };
 
 
-declare function csv2places:create-headwords($row as element(),
+declare function csv2persons:create-headwords($row as element(),
                                              $headwordIndex as element()*)
 as element()+
 {
@@ -129,15 +137,15 @@ as element()+
     let $text := functx:trim($row/*[name() = $headword/textNodeColumnElementName/text()]/text()) (: look up the headword for that language :)
     where $text != '' (: skip the headword columns that are empty :)
     let $langAttrib := functx:trim($headword/langCode/text())
-    return csv2srophe:build-name-element($text, "placeName", $uriLocalName, $langAttrib, "", true (), $number)
+    return csv2srophe:build-name-element($text, "persName", $uriLocalName, $langAttrib, "", true (), $number)
 
 };
 
-declare function csv2places:create-placeNames($row as element(),
+declare function csv2persons:create-persNames($row as element(),
                                              $namesIndex as element()*,
                                              $sourcesIndex as element()*,
                                              $enumerationOffset as xs:integer)
-as element()+
+as element()*
 {
   let $uriLocalName := csv2srophe:get-uri-from-row($row, "")
   
@@ -154,10 +162,10 @@ as element()+
         where  $nameSourceUri = $src/uri/text() and $nameSourcePg = $src/pg/text()  (: URI and page from columns must match with iterated item in the source index :)
         return "bib" || $uriLocalName||'-'||$srcNumber    (: create the last part of the source attribute :)
     let $langAttr := functx:trim($name/langCode/text())
-    return csv2srophe:build-name-element($text, "placeName", $uriLocalName, $langAttr, $sourceAttr, false (), $number + $enumerationOffset)
+    return csv2srophe:build-name-element($text, "persName", $uriLocalName, $langAttr, $sourceAttr, false (), $number + $enumerationOffset)
 };
 
-declare function csv2places:create-abstracts($row as element(),
+declare function csv2persons:create-abstracts($row as element(),
                                              $abstractIndex as element()*,
                                              $sourcesIndex as element()*)
 as element()*
@@ -181,6 +189,17 @@ as element()*
             where  $abstractSourceUri = $src/uri/text() and $abstractSourcePg = $src/pg/text()  (: URI and page from columns must match with iterated item in the source index :)
             return 'bib'||$uriLocalName||'-'||$srcNumber    (: create the last part of the source attribute :)
         else ()
-    return csv2srophe:build-abstract-element($text, "desc", $uriLocalName, $languageAttr, $sourceAttr, $number)
+    return csv2srophe:build-abstract-element($text, "note", $uriLocalName, $languageAttr, $sourceAttr, $number)
+  
+};
+
+declare function csv2persons:create-trait($row as element())
+as element()?
+{
+  
+};
+
+declare function csv2persons:create-sex-element($row, $sources)
+{
   
 };
