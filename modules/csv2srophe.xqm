@@ -391,6 +391,12 @@ as element()*
     let $sourceUriColumnName := $source/name/text()  (: get the XML element name :)
     let $sourceUri := functx:trim($row/*[name() = $sourceUriColumnName]/text())  (: find the value for that column :)
     where lower-case(substring($source/string/text(),1,9)) = 'sourceuri' and $sourceUri != '' (: screen for right header string and skip over empty elements :)
+    
+    (: add the bibl uri-base if not already there :)
+    let $sourceUri := if(starts-with($sourceUri, "http://syriaca.org/bibl/")
+                         and $sourceUri != "")
+                      then $sourceUri 
+                      else "http://syriaca.org/bibl/" || $sourceUri
     let $lastPartColString := substring($source/string/text(),10)  (: find the last part of the sourceUri column header label :)
     let $sourcePgColumnString := 'pages'||$lastPartColString  (: construct the column label for the page source :)
     let $sourcePgColumnName :=
