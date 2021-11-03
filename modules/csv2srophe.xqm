@@ -390,7 +390,7 @@ as element()*
     for $source in $headerMap  (: loop through each item in the header map sequence :)
     let $sourceUriColumnName := $source/name/text()  (: get the XML element name :)
     let $sourceUri := functx:trim($row/*[name() = $sourceUriColumnName]/text())  (: find the value for that column :)
-    where substring($source/string/text(),1,9) = 'sourceURI' and $sourceUri != '' (: screen for right header string and skip over empty elements :)
+    where lower-case(substring($source/string/text(),1,9)) = 'sourceuri' and $sourceUri != '' (: screen for right header string and skip over empty elements :)
     let $lastPartColString := substring($source/string/text(),10)  (: find the last part of the sourceUri column header label :)
     let $sourcePgColumnString := 'pages'||$lastPartColString  (: construct the column label for the page source :)
     let $sourcePgColumnName :=
