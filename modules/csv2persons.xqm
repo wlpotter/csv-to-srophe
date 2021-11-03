@@ -96,10 +96,10 @@ as node()
   
   (: build descendant nodes of the tei:person :)
   
-  let $headwords := csv2persons:create-headwords($row, $headwordIndex)
+  let $headwords := csv2srophe:build-name-element-sequence($row, $headwordIndex, $sources, "persName", true (), 0)
   let $numHeadwords := count($headwords)
   (: add anonymous-description elements. also need to test that this doesn't break when there **aren't** anon descs :)
-  let $persNames := csv2persons:create-persNames($row, $namesIndex, $sources, $numHeadwords)
+  let $persNames := csv2srophe:build-name-element-sequence($row, $namesIndex, $sources, "persName", false (), $numHeadwords)
   let $idnos := csv2srophe:create-idno-sequence-for-row($row, $config:uri-base)
   
   let $abstracts := csv2persons:create-abstracts($row, $abstractIndex, $sources)
@@ -123,47 +123,6 @@ as node()
   </person>
 };
 
-
-declare function csv2persons:create-headwords($row as element(),
-                                             $headwordIndex as element()*)
-as element()+
-{
-  let $uriLocalName := csv2srophe:get-uri-from-row($row, "")
-  (: get the column information for this row's non-empty headwords :)
-  let $nonEmptyHeadwordIndex := csv2srophe:get-non-empty-index-from-row($row, $headwordIndex)
-
-  return
-    for $headword at $number in $nonEmptyHeadwordIndex
-    let $text := functx:trim($row/*[name() = $headword/textNodeColumnElementName/text()]/text()) (: look up the headword for that language :)
-    where $text != '' (: skip the headword columns that are empty :)
-    let $langAttrib := functx:trim($headword/langCode/text())
-    return csv2srophe:build-name-element($text, "persName", $uriLocalName, $langAttrib, "", true (), $number)
-
-};
-
-declare function csv2persons:create-persNames($row as element(),
-                                             $namesIndex as element()*,
-                                             $sourcesIndex as element()*,
-                                             $enumerationOffset as xs:integer)
-as element()*
-{
-  let $uriLocalName := csv2srophe:get-uri-from-row($row, "")
-  
-  (: get the column information for this row's non-empty names :)
-  let $nonEmptyNamesIndex := csv2srophe:get-non-empty-index-from-row($row, $namesIndex)
-  
-  return
-    for $name at $number in $nonEmptyNamesIndex     (: loop through each of the names in various languages :)
-    let $text := functx:trim($row/*[name() = $name/textNodeColumnElementName/text()]/text()) (: look up the name for that column :)
-    let $nameSourceUri := functx:trim($row/*[name() = $name/sourceUriElementName/text()]/text())  (: look up the URI that goes with the name column :)
-    let $nameSourcePg := functx:trim($row/*[name() = $name/pagesElementName/text()]/text())  (: look up the page that goes with the name column :)
-    let $sourceAttr := 
-        for $src at $srcNumber in $sourcesIndex  (: step through the source index :)
-        where  $nameSourceUri = $src/uri/text() and $nameSourcePg = $src/pg/text()  (: URI and page from columns must match with iterated item in the source index :)
-        return "bib" || $uriLocalName||'-'||$srcNumber    (: create the last part of the source attribute :)
-    let $langAttr := functx:trim($name/langCode/text())
-    return csv2srophe:build-name-element($text, "persName", $uriLocalName, $langAttr, $sourceAttr, false (), $number + $enumerationOffset)
-};
 
 declare function csv2persons:create-abstracts($row as element(),
                                              $abstractIndex as element()*,

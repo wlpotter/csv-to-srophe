@@ -190,13 +190,15 @@ as element()*
 :   <langCode>en</langCode>
 :   <textNodeColumnElementName>name2.en</textNodeColumnElementName>
 :   <sourceUriElementName>sourceURI.name2</sourceUriElementName>
-:   <pagesElementName>pages.name2</pagesElementName>
+:   <citedRangeElementName>citedRange.name2</citedRangeElementName>
+:   <citationUnitElementName>citationUnit.name2</citationUnitElementName>
 : </name>
 : <name>
 :   <langCode>syr</langCode>
 :   <textNodeColumnElementName>name3.syr</textNodeColumnElementName>
 :   <sourceUriElementName>sourceURI.name3</sourceUriElementName>
-:   <pagesElementName>pages.name3</pagesElementName>
+:   <citedRangeElementName>citedRange.name3</citedRangeElementName>
+:   <citationUnitElementName>citationUnit.name3</citationUnitElementName>
 : </name>
 : 
 : The names index stores a sequence of columns where entity names are kept.
@@ -221,12 +223,16 @@ as element()*
       </textNodeColumnElementName>,
       
       for $uriColumn in $headerMap   (: find the element name of the sourceURI column :)
-      return if ($uriColumn/string/string() = 'sourceURI.'||$leftOfDot)
+      return if (lower-case($uriColumn/string/string()) = 'sourceuri.'||$leftOfDot)
              then <sourceUriElementName>{$uriColumn/name/string()}</sourceUriElementName>
              else (),
       for $citedRangeColumn in $headerMap   (: find the element name of the sourceURI column :)
       return if ($citedRangeColumn/string/string() = 'citedRange.'||$leftOfDot)
              then <citedRangeElementName>{$citedRangeColumn/name/string()}</citedRangeElementName>
+             else (),
+      for $citationUnitColumn in $headerMap   (: find the element name of the sourceURI column :)
+      return if ($citationUnitColumn/string/string() = 'citationUnit.'||$leftOfDot)
+             then <citationUnitElementName>{$citationUnitColumn/name/string()}</citationUnitElementName>
              else ()
     }</name>
   else 
@@ -265,7 +271,20 @@ as element()*
       <langCode>{$langCode}</langCode>,
       <textNodeColumnElementName>
         {$nameColumn/name/string()}
-      </textNodeColumnElementName>
+      </textNodeColumnElementName>,
+      
+      for $uriColumn in $headerMap   (: find the element name of the sourceURI column :)
+      return if (lower-case($uriColumn/string/string()) = 'sourceuri.'||$leftOfDot||"."||$langCode)
+             then <sourceUriElementName>{$uriColumn/name/string()}</sourceUriElementName>
+             else (),
+      for $citedRangeColumn in $headerMap   (: find the element name of the sourceURI column :)
+      return if ($citedRangeColumn/string/string() = 'citedRange.'||$leftOfDot||"."||$langCode)
+             then <citedRangeElementName>{$citedRangeColumn/name/string()}</citedRangeElementName>
+             else (),
+      for $citationUnitColumn in $headerMap   (: find the element name of the sourceURI column :)
+      return if ($citationUnitColumn/string/string() = 'citationUnit.'||$leftOfDot||"."||$langCode)
+             then <citationUnitElementName>{$citationUnitColumn/name/string()}</citationUnitElementName>
+             else ()
     }</headword>
   else 
    ()
@@ -305,14 +324,18 @@ as element()*
       <textNodeColumnElementName>
         {$nameColumn/name/string()}
       </textNodeColumnElementName>,
-  
+      
       for $uriColumn in $headerMap   (: find the element name of the sourceURI column :)
-      return if ($uriColumn/string/string() = 'sourceURI.'||$leftOfDot||'.'||$langCode)
+      return if (lower-case($uriColumn/string/string()) = 'sourceuri.'||$leftOfDot)
              then <sourceUriElementName>{$uriColumn/name/string()}</sourceUriElementName>
              else (),
       for $citedRangeColumn in $headerMap   (: find the element name of the sourceURI column :)
-      return if ($citedRangeColumn/string/string() = 'citedRange.'||$leftOfDot||'.'||$langCode)
+      return if ($citedRangeColumn/string/string() = 'citedRange.'||$leftOfDot)
              then <citedRangeElementName>{$citedRangeColumn/name/string()}</citedRangeElementName>
+             else (),
+      for $citationUnitColumn in $headerMap   (: find the element name of the sourceURI column :)
+      return if ($citationUnitColumn/string/string() = 'citationUnit.'||$leftOfDot)
+             then <citationUnitElementName>{$citationUnitColumn/name/string()}</citationUnitElementName>
              else ()
     }</abstract>
   else 
@@ -364,11 +387,13 @@ as xs:string
 : Returns a sequence that looks like this:
 : <source>
 :   <uri></uri>
-:   <pg></pg>
+:   <citedRange></citedRange>
+:   <citationUnit></citationUnit>
 : </source>
 : <source>
 :   <uri></uri>
-:   <pg></pg>
+:   <citedRange></citedRange>
+:   <citationUnit></citationUnit>
 : </source>
 :
 : Creates a sequence of all the unique sources based on source URI and cited range.
@@ -392,11 +417,6 @@ as element()*
     let $sourceUri := functx:trim($row/*[name() = $sourceUriColumnName]/text())  (: find the value for that column :)
     where lower-case(substring($source/string/text(),1,9)) = 'sourceuri' and $sourceUri != '' (: screen for right header string and skip over empty elements :)
     
-    (: add the bibl uri-base if not already there :)
-    let $sourceUri := if(starts-with($sourceUri, "http://syriaca.org/bibl/")
-                         and $sourceUri != "")
-                      then $sourceUri 
-                      else "http://syriaca.org/bibl/" || $sourceUri
     let $lastPartColString := substring($source/string/text(),10)  (: find the last part of the sourceUri column header label :)
     let $citedRangeColumnString := 'citedRange'||$lastPartColString  (: construct the column label for the cited range of the source :)
     let $citedRangeColumnName :=
@@ -424,6 +444,8 @@ as element()*
 :   <ptr target="http://syriaca.org/bibl/1"
 :   <citedRange unit="p">8</citedRange>
 : </bibl>
+: Each bibl can have multiple citedRange elements depending on the number of units.
+: In the csv, these citedRanges and citationUnits should be separated by the "#" character
 :)
 declare function csv2srophe:create-bibl-sequence($row as element(),
                                                          $headerMap as element()+)
@@ -433,6 +455,12 @@ as element()*
   let $uriLocalName := csv2srophe:get-uri-from-row($row, "")
   for $source at $number in $sources
     let $sourceUri := $source/uri/text()
+    
+    (: add the bibl uri-base if not already there :)
+    let $sourceUri := if(starts-with($sourceUri, "http://syriaca.org/bibl/")
+                         and $sourceUri != "")
+                      then $sourceUri 
+                      else "http://syriaca.org/bibl/" || $sourceUri
     let $sourceCitedRange := $source/*:citedRange/text()
     let $sourceCitationUnit := $source/*:citationUnit/text()
     return
@@ -440,6 +468,7 @@ as element()*
         <ptr target="{$sourceUri}"/>
         <citedRange unit="{$sourceCitationUnit}">{$sourceCitedRange}</citedRange>
     </bibl>
+    (: refactor: handle multiple "#"-separated citedRange and citationUnits from the csv :)
 }; (:refactor: handle multiple @unit values in citedRange ("p" can be the default) 
 
 Refactor: add a function that matches source values and returns the correct bibl source attribute based on input data
@@ -461,6 +490,48 @@ as element()*
         {functx:trim($idno/text())}
       </idno>
   return ($selfIdno, $otherIdnos)
+};
+
+(:~ 
+: Returns a sequence of elements that represent entity names of Syriaca entities.
+: 
+: @param $row is the data input row
+: @param $columnIndex is the index of columns to match, e.g. headword, name, etc.
+: @param $sourcesIndex is the index of sources for the row which is used to create
+: the @source attributes for the element.
+: @param $elementName controls what element is created by this script
+:
+: @author William L. Potter
+: @version 1.0
+:
+:)
+declare function csv2srophe:build-name-element-sequence($row as element(), 
+                                                        $columnIndex as element()*, 
+                                                        $sourcesIndex as element()*, 
+                                                        $elementName as xs:string,
+                                                        $isHeadword as xs:boolean,
+                                                        $enumerationOffset as xs:integer)
+as element()*
+{
+  let $uriLocalName := csv2srophe:get-uri-from-row($row, "")
+  
+  (: get the column information for this row's non-empty names :)
+  let $nonEmptyColumnIndex := csv2srophe:get-non-empty-index-from-row($row, $columnIndex)
+  
+  return
+    for $item at $number in $nonEmptyColumnIndex     (: loop through each of the names in various languages :)
+    let $text := functx:trim($row/*[name() = $item/textNodeColumnElementName/text()]/text()) (: look up the name for that column :)
+    let $itemSourceUri := functx:trim($row/*[name() = $item/sourceUriElementName/text()]/text())  (: look up the URI that goes with the name column :)
+    let $itemSourceCitedRange := functx:trim($row/*[name() = $item/citedRangeElementName/text()]/text())  (: look up the citedRange that goes with the name column :)
+    let $itemSourceCitationUnit := functx:trim($row/*[name() = $item/citationUnitElementName/text()]/text())  (: look up the citation unit that goes with the name column :)
+    
+    (: get the @source attribute value by matching the uri, cited range, and citation unit values :)
+    let $sourceAttr := 
+        for $src at $srcNumber in $sourcesIndex  (: step through the source index :)
+        where  $itemSourceUri = $src/*:uri/text() and $itemSourceCitedRange = $src/*:citedRange/text() and $itemSourceCitationUnit = $src/*:citationUnit/text()  (: URI and page from columns must match with iterated item in the source index :)
+        return "bib" || $uriLocalName||'-'||$srcNumber    (: create the last part of the source attribute :)
+    let $langAttr := functx:trim($item/langCode/text())
+    return csv2srophe:build-name-element($text, $elementName, $uriLocalName, $langAttr, $sourceAttr, $isHeadword, $number + $enumerationOffset)
 };
 
 declare function csv2srophe:build-name-element($textNode as xs:string,
