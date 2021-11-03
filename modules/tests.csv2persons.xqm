@@ -66,9 +66,9 @@ declare variable $csv2persons-test:sources-index-for-sample-row-anonymi :=
 declare variable $csv2persons-test:skeleton-record-to-compare-output-anonymi :=
   let $pathToDoc := $config:nav-base || "out/test/person3774-skeleton_test.xml"
   return doc($pathToDoc);
-  
+
 declare %unit:test %unit:ignore function csv2persons-test:create-person-using-anonymi-row() {
-  (: won't pass because the change/@when element uses fn:current-date() so compare value falls behind if not updated. Need to rewrite test (not tagging %unit:ignore to remind self to update. :)
+  (: won't pass because the change/@when attribute uses fn:current-date() so compare value falls behind if not updated. Need to rewrite test (not tagging %unit:ignore to remind self to update. :)
   unit:assert-equals(csv2persons:create-person-from-row($csv2persons-test:data-row-to-compare-anonymi, $csv2persons-test:header-map-stub, ($csv2persons-test:names-index-stub, $csv2persons-test:headword-index-stub, $csv2persons-test:abstract-index-stub)),
                     $csv2persons-test:skeleton-record-to-compare-output-anonymi)
 };
