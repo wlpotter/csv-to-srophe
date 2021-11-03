@@ -546,6 +546,27 @@ as element()
   return $revisionDesc
 };
 
+(: possibly a csv2srophe function if you use it for existence dates, etc.? 
+cases which this could handle
+
+persons:
+- floruit
+- birth
+- death
+- ??
+
+places:
+- state[@type="existence"]
+- state[@type="confession"] (though these can be undated, so possibly this will be separate?)
+  - or a confession can optionally call this function to create it?
+- event[@type="other"]
+- event[@type="attestation"] should likely be handled like confession states as, while they can be dated, the primary purposes is to create the link between work and name
+:)
+(: pending. This should take a data row, probably a date-index (which this module should create) and an index of sources. Based on the date type (type.daten), various elements can be constructed (see the list above). First implement for floruit, death, and birth in persons. Then can add later to handle existence and events and such:)
+declare function csv2srophe:create-dates($row, $sources)
+{
+  
+};
 (: ----------------------------------------- :)
 (: LATER DEVELOPMENT :)
 (: ----------------------------------------- :)
