@@ -44,7 +44,7 @@ declare variable $csv2srophe-test:names-index-node-to-compare :=
   <langCode>syr</langCode>
   <textNodeColumnElementName>name3.syr</textNodeColumnElementName>
   <sourceUriElementName>sourceURI.name3</sourceUriElementName>
-  <pagesElementName>pages.name3</pagesElementName>
+  <citedRangeElementName>citedRange.name3</citedRangeElementName>
 </name>;
 
 declare variable $csv2srophe-test:headword-index-node-to-compare :=
@@ -58,7 +58,7 @@ declare variable $csv2srophe-test:abstract-index-node-to-compare :=
   <langCode>en</langCode>
   <textNodeColumnElementName>abstract.en</textNodeColumnElementName>
   <sourceUriElementName>sourceURI.abstract.en</sourceUriElementName>
-  <pagesElementName>pages.abstract.en</pagesElementName>
+  <citedRangeElementName>citedRange.abstract.en</citedRangeElementName>
 </abstract>;
 
 declare variable $csv2srophe-test:data-row-to-compare :=
@@ -67,7 +67,8 @@ declare variable $csv2srophe-test:data-row-to-compare :=
 declare variable $csv2srophe-test:sources-index-node-to-compare :=
 <source>
   <uri>http://syriaca.org/bibl/667</uri>
-  <pg>318</pg>
+  <citedRange>318</citedRange>
+  <citationUnit>p</citationUnit>
 </source>;
 
 declare variable $csv2srophe-test:bibl-node-to-compare :=

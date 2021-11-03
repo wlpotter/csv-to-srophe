@@ -224,9 +224,9 @@ as element()*
       return if ($uriColumn/string/string() = 'sourceURI.'||$leftOfDot)
              then <sourceUriElementName>{$uriColumn/name/string()}</sourceUriElementName>
              else (),
-      for $pagesColumn in $headerMap   (: find the element name of the sourceURI column :)
-      return if ($pagesColumn/string/string() = 'pages.'||$leftOfDot)
-             then <pagesElementName>{$pagesColumn/name/string()}</pagesElementName>
+      for $citedRangeColumn in $headerMap   (: find the element name of the sourceURI column :)
+      return if ($citedRangeColumn/string/string() = 'citedRange.'||$leftOfDot)
+             then <citedRangeElementName>{$citedRangeColumn/name/string()}</citedRangeElementName>
              else ()
     }</name>
   else 
@@ -310,9 +310,9 @@ as element()*
       return if ($uriColumn/string/string() = 'sourceURI.'||$leftOfDot||'.'||$langCode)
              then <sourceUriElementName>{$uriColumn/name/string()}</sourceUriElementName>
              else (),
-      for $pagesColumn in $headerMap   (: find the element name of the sourceURI column :)
-      return if ($pagesColumn/string/string() = 'pages.'||$leftOfDot||'.'||$langCode)
-             then <pagesElementName>{$pagesColumn/name/string()}</pagesElementName>
+      for $citedRangeColumn in $headerMap   (: find the element name of the sourceURI column :)
+      return if ($citedRangeColumn/string/string() = 'citedRange.'||$leftOfDot||'.'||$langCode)
+             then <citedRangeElementName>{$citedRangeColumn/name/string()}</citedRangeElementName>
              else ()
     }</abstract>
   else 
@@ -398,13 +398,21 @@ as element()*
                       then $sourceUri 
                       else "http://syriaca.org/bibl/" || $sourceUri
     let $lastPartColString := substring($source/string/text(),10)  (: find the last part of the sourceUri column header label :)
-    let $sourcePgColumnString := 'pages'||$lastPartColString  (: construct the column label for the page source :)
-    let $sourcePgColumnName :=
-        for $sourcePage in $headerMap    (: find the column string that matches the constructed on :)
-        where $sourcePgColumnString = $sourcePage/string/text()
-        return $sourcePage/name/text()     (: return the XML tag name for the matching column string :)
-    let $sourcePage := functx:trim($row/*[name() = $sourcePgColumnName]/text())
-    return (<source><uri>{$sourceUri}</uri><pg>{$sourcePage}</pg></source>)
+    let $citedRangeColumnString := 'citedRange'||$lastPartColString  (: construct the column label for the cited range of the source :)
+    let $citedRangeColumnName :=
+        for $citedRange in $headerMap    (: find the column string that matches the constructed on :)
+        where $citedRangeColumnString = $citedRange/string/text()
+        return $citedRange/name/text()     (: return the XML tag name for the matching column string :)
+    let $sourceCitedRange := functx:trim($row/*[name() = $citedRangeColumnName]/text())
+    
+    let $citationUnitColumnString := 'citationUnit'||$lastPartColString  (: construct the column label for the citation unit :)
+    let $citationUnitColumnName :=
+        for $citationUnit in $headerMap    (: find the column string that matches the constructed one :)
+        where $citationUnitColumnString = $citationUnit/string/text()
+        return $citationUnit/name/text()     (: return the XML tag name for the matching column string :)
+    let $sourceCitationUnit := functx:trim($row/*[name() = $citationUnitColumnName]/text())
+    let $sourceCitationUnit := if($sourceCitationUnit = "") then "p" else $sourceCitationUnit (: by default, the citation unit should be 'p' :)
+    return (<source><uri>{$sourceUri}</uri><citedRange>{$sourceCitedRange}</citedRange><citationUnit>{$sourceCitationUnit}</citationUnit></source>)
     
      (: remove redundant sources :)
     return functx:distinct-deep($sources)
@@ -425,11 +433,12 @@ as element()*
   let $uriLocalName := csv2srophe:get-uri-from-row($row, "")
   for $source at $number in $sources
     let $sourceUri := $source/uri/text()
-    let $sourcePageRange := $source/*:pg/text()
+    let $sourceCitedRange := $source/*:citedRange/text()
+    let $sourceCitationUnit := $source/*:citationUnit/text()
     return
     <bibl xmlns="http://www.tei-c.org/ns/1.0" xml:id="bib{$uriLocalName}-{$number}">
         <ptr target="{$sourceUri}"/>
-        <citedRange unit="p">{$sourcePageRange}</citedRange>
+        <citedRange unit="{$sourceCitationUnit}">{$sourceCitedRange}</citedRange>
     </bibl>
 }; (:refactor: handle multiple @unit values in citedRange ("p" can be the default) 
 
