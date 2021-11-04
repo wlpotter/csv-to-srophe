@@ -416,6 +416,7 @@ as element()*
     let $sourceUriColumnName := $source/name/text()  (: get the XML element name :)
     let $sourceUri := functx:trim($row/*[name() = $sourceUriColumnName]/text())  (: find the value for that column :)
     where lower-case(substring($source/string/text(),1,9)) = 'sourceuri' and $sourceUri != '' (: screen for right header string and skip over empty elements :)
+    let $sourceUriElement := <uri>{$sourceUri}</uri>
     
     let $lastPartColString := substring($source/string/text(),10)  (: find the last part of the sourceUri column header label :)
     let $citedRangeColumnString := 'citedRange'||$lastPartColString  (: construct the column label for the cited range of the source :)
@@ -424,6 +425,7 @@ as element()*
         where $citedRangeColumnString = $citedRange/string/text()
         return $citedRange/name/text()     (: return the XML tag name for the matching column string :)
     let $sourceCitedRange := functx:trim($row/*[name() = $citedRangeColumnName]/text())
+    let $sourceCitedRangeElement := <citedRange>{$sourceCitedRange}</citedRange>
     
     let $citationUnitColumnString := 'citationUnit'||$lastPartColString  (: construct the column label for the citation unit :)
     let $citationUnitColumnName :=
@@ -431,8 +433,8 @@ as element()*
         where $citationUnitColumnString = $citationUnit/string/text()
         return $citationUnit/name/text()     (: return the XML tag name for the matching column string :)
     let $sourceCitationUnit := functx:trim($row/*[name() = $citationUnitColumnName]/text())
-    let $sourceCitationUnit := if($sourceCitationUnit = "") then "p" else $sourceCitationUnit (: by default, the citation unit should be 'p' :)
-    return (<source><uri>{$sourceUri}</uri><citedRange>{$sourceCitedRange}</citedRange><citationUnit>{$sourceCitationUnit}</citationUnit></source>)
+    let $sourceCitationUnitElement := if ($sourceCitationUnit != "") then <citationUnit>{$sourceCitationUnit}</citationUnit>
+    return (<source>{$sourceUriElement, $sourceCitedRangeElement, $sourceCitationUnitElement}</source>)
     
      (: remove redundant sources :)
     return functx:distinct-deep($sources)
@@ -462,7 +464,7 @@ as element()*
                       then $sourceUri 
                       else "http://syriaca.org/bibl/" || $sourceUri
     let $sourceCitedRange := $source/*:citedRange/text()
-    let $sourceCitationUnit := $source/*:citationUnit/text()
+    let $sourceCitationUnit := if ($source/*:citationUnit/text() != "") then $source/*:citationUnit/text() else "p"
     return
     <bibl xmlns="http://www.tei-c.org/ns/1.0" xml:id="bib{$uriLocalName}-{$number}">
         <ptr target="{$sourceUri}"/>
@@ -528,7 +530,7 @@ as element()*
     (: get the @source attribute value by matching the uri, cited range, and citation unit values :)
     let $sourceAttr := 
         for $src at $srcNumber in $sourcesIndex  (: step through the source index :)
-        where  $itemSourceUri = $src/*:uri/text() and $itemSourceCitedRange = $src/*:citedRange/text() and $itemSourceCitationUnit = $src/*:citationUnit/text()  (: URI and page from columns must match with iterated item in the source index :)
+        where  $itemSourceUri = $src/*:uri/text() and $itemSourceCitedRange = $src/*:citedRange/text() and string($itemSourceCitationUnit) = string($src/*:citationUnit/text())  (: URI and page from columns must match with iterated item in the source index :)
         return "bib" || $uriLocalName||'-'||$srcNumber    (: create the last part of the source attribute :)
     let $langAttr := functx:trim($item/langCode/text())
     return csv2srophe:build-name-element($text, $elementName, $uriLocalName, $langAttr, $sourceAttr, $isHeadword, $number + $enumerationOffset)
