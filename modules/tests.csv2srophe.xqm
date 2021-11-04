@@ -64,14 +64,14 @@ declare variable $csv2srophe-test:abstract-index-node-to-compare :=
 declare variable $csv2srophe-test:data-row-to-compare :=
   csv2srophe:get-data($csv2srophe-test:local-csv-uri, "	")[3];
  
-declare variable $csv2srophe-test:sources-index-node-to-compare :=
+declare variable $csv2srophe-test:sources-index-node-to-compare-single :=
 <source>
   <uri>http://syriaca.org/bibl/667</uri>
   <citedRange>318</citedRange>
   <citationUnit>p</citationUnit>
 </source>;
 
-declare variable $csv2srophe-test:bibl-node-to-compare :=
+declare variable $csv2srophe-test:bibl-node-to-compare-single :=
 <bibl xmlns="http://www.tei-c.org/ns/1.0" xml:id="bib3059-2">
   <ptr target="http://syriaca.org/bibl/667"/>
   <citedRange unit="p">318</citedRange>
@@ -163,14 +163,14 @@ declare  %unit:test function csv2srophe-test:create-sources-index-for-row-from-l
 {
   unit:assert-equals(csv2srophe:create-sources-index-for-row($csv2srophe-test:data-row-to-compare,
                                     $csv2srophe-test:header-map-from-local-csv)[2],
-                     $csv2srophe-test:sources-index-node-to-compare)
+                     $csv2srophe-test:sources-index-node-to-compare-single)
 };
 
 declare %unit:test function csv2srophe-test:create-bibl-sequence-for-row-from-local-csv()
 {
   unit:assert-equals(csv2srophe:create-bibl-sequence($csv2srophe-test:data-row-to-compare,
                                     $csv2srophe-test:header-map-from-local-csv)[2],
-                    $csv2srophe-test:bibl-node-to-compare)
+                    $csv2srophe-test:bibl-node-to-compare-single)
 };
 
 declare %unit:test function csv2srophe-test:create-idno-sequence-for-row-check-self-idno()

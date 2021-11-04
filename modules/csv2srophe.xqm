@@ -184,6 +184,61 @@ as element()*
 };
 
 (:~ 
+: Returns a sequence of elements containing the column names of 
+: data associated with a specific data type. Used to create specific
+: header indices, such as the names index and headwords index.
+: 
+: @param $columnName controls which columns are returned
+: @headerMap is the sequence of elements created by 
+: csv2srophe:create-header-map
+: 
+: @author William L. Potter
+: @version 1.0
+:)
+declare function csv2srophe:create-column-index($columnName as xs:string, 
+                                                $headerMap as element()+,
+                                                $rightOfDotLabel as xs:string)
+as element()*
+{
+  for $column in $headerMap
+  let $columnString := $column/string/string()
+  let $leftOfDot := tokenize($columnString,'\.')[1]
+  let $rightOfDot := tokenize($columnString,'\.')[2]
+  (: instead use the length of the input string  :)
+  return if (substring(tokenize($columnString,'\.')[1],1,string-length($columnName)) = $columnName) then
+  element {$columnName} 
+  {
+    element {$rightOfDotLabel} {$rightOfDot},
+    element {"textNodeColumnElementName"} {$column/name/string()},
+    csv2srophe:associate-source-data-columns($leftOfDot, $headerMap, $rightOfDot)
+   }
+  
+};
+
+declare function csv2srophe:associate-source-data-columns($parentColumnName as xs:string,
+                                                          $headerMap as element()+,
+                                                          $parentNameExtension as xs:string?)
+as element()*
+{
+  (: loop through each column in the header map and find the uri, cited range, and citation unit columns associated with the $parentColumnName :)
+  for $column in $headerMap
+  let $sourceUriElement := 
+    (: the or-operator allows for cases, like abstract.en, where the left-of-dot is not sufficient to identify the associated data column :)
+    if (lower-case($column/string/string()) = 'sourceuri.'||$parentColumnName or lower-case($column/string/string()) = 'sourceuri.'||$parentColumnName||"."||$parentNameExtension)
+           then <sourceUriElementName>{$column/name/string()}</sourceUriElementName>
+         else ()
+  let $citedRangeUriElement := 
+    if ($column/string/string() = 'citedRange.'||$parentColumnName or $column/string/string() = 'citedRange.'||$parentColumnName||"."||$parentNameExtension)
+      then <citedRangeElementName>{$column/name/string()}</citedRangeElementName>
+    else ()
+  let $citationUnitElement := 
+    if ($column/string/string() = 'citationUnit.'||$parentColumnName or $column/string/string() = 'citationUnit.'||$parentColumnName||"."||$parentNameExtension)
+      then <citationUnitElementName>{$column/name/string()}</citationUnitElementName>
+    else ()
+  return ($sourceUriElement, $citedRangeUriElement, $citationUnitElement)
+};
+
+(:~ 
 : Returns a sequence that looks like this:
 : 
 : <name>
@@ -211,32 +266,8 @@ as element()*
 declare function csv2srophe:create-names-index($headerMap as element()+)
 as element()*
 {
-  for $nameColumn in $headerMap
-  let $columnString := $nameColumn/string/string()
-  let $leftOfDot := tokenize($columnString,'\.')[1]
-  let $langCode := tokenize($columnString,'\.')[2]
-  return if (substring(tokenize($columnString,'\.')[1],1,4) = 'name') then
-  <name>{
-      <langCode>{$langCode}</langCode>,
-      <textNodeColumnElementName>
-        {$nameColumn/name/string()}
-      </textNodeColumnElementName>,
-      
-      for $uriColumn in $headerMap   (: find the element name of the sourceURI column :)
-      return if (lower-case($uriColumn/string/string()) = 'sourceuri.'||$leftOfDot)
-             then <sourceUriElementName>{$uriColumn/name/string()}</sourceUriElementName>
-             else (),
-      for $citedRangeColumn in $headerMap   (: find the element name of the sourceURI column :)
-      return if ($citedRangeColumn/string/string() = 'citedRange.'||$leftOfDot)
-             then <citedRangeElementName>{$citedRangeColumn/name/string()}</citedRangeElementName>
-             else (),
-      for $citationUnitColumn in $headerMap   (: find the element name of the sourceURI column :)
-      return if ($citationUnitColumn/string/string() = 'citationUnit.'||$leftOfDot)
-             then <citationUnitElementName>{$citationUnitColumn/name/string()}</citationUnitElementName>
-             else ()
-    }</name>
-  else 
-   ()
+  let $namesIndex := csv2srophe:create-column-index("name", $headerMap, "langCode")
+  return $namesIndex
 };
 
 (:~
@@ -262,32 +293,8 @@ as element()*
 declare function csv2srophe:create-headword-index($headerMap as element()+)
 as element()*
 {
-  for $nameColumn in $headerMap
-  let $columnString := $nameColumn/string/string()
-  let $leftOfDot := tokenize($columnString,'\.')[1]
-  let $langCode := tokenize($columnString,'\.')[2]
-  return if (substring(tokenize($columnString,'\.')[1],1,8) = 'headword') then
-    <headword>{
-      <langCode>{$langCode}</langCode>,
-      <textNodeColumnElementName>
-        {$nameColumn/name/string()}
-      </textNodeColumnElementName>,
-      
-      for $uriColumn in $headerMap   (: find the element name of the sourceURI column :)
-      return if (lower-case($uriColumn/string/string()) = 'sourceuri.'||$leftOfDot||"."||$langCode)
-             then <sourceUriElementName>{$uriColumn/name/string()}</sourceUriElementName>
-             else (),
-      for $citedRangeColumn in $headerMap   (: find the element name of the sourceURI column :)
-      return if ($citedRangeColumn/string/string() = 'citedRange.'||$leftOfDot||"."||$langCode)
-             then <citedRangeElementName>{$citedRangeColumn/name/string()}</citedRangeElementName>
-             else (),
-      for $citationUnitColumn in $headerMap   (: find the element name of the sourceURI column :)
-      return if ($citationUnitColumn/string/string() = 'citationUnit.'||$leftOfDot||"."||$langCode)
-             then <citationUnitElementName>{$citationUnitColumn/name/string()}</citationUnitElementName>
-             else ()
-    }</headword>
-  else 
-   ()
+  let $headwordsIndex := csv2srophe:create-column-index("headword", $headerMap, "langCode")
+  return $headwordsIndex
 };
 
 (:~
@@ -314,32 +321,8 @@ as element()*
 declare function csv2srophe:create-abstract-index($headerMap as element()+)
 as element()*
 {
-  for $nameColumn in $headerMap
-  let $columnString := $nameColumn/string/string()
-  let $leftOfDot := tokenize($columnString,'\.')[1]
-  let $langCode := tokenize($columnString,'\.')[2]
-  return if (substring(tokenize($columnString,'\.')[1],1,8) = 'abstract') then
-    <abstract>{
-      <langCode>{$langCode}</langCode>,
-      <textNodeColumnElementName>
-        {$nameColumn/name/string()}
-      </textNodeColumnElementName>,
-      
-      for $uriColumn in $headerMap   (: find the element name of the sourceURI column :)
-      return if (lower-case($uriColumn/string/string()) = 'sourceuri.'||$leftOfDot)
-             then <sourceUriElementName>{$uriColumn/name/string()}</sourceUriElementName>
-             else (),
-      for $citedRangeColumn in $headerMap   (: find the element name of the sourceURI column :)
-      return if ($citedRangeColumn/string/string() = 'citedRange.'||$leftOfDot)
-             then <citedRangeElementName>{$citedRangeColumn/name/string()}</citedRangeElementName>
-             else (),
-      for $citationUnitColumn in $headerMap   (: find the element name of the sourceURI column :)
-      return if ($citationUnitColumn/string/string() = 'citationUnit.'||$leftOfDot)
-             then <citationUnitElementName>{$citationUnitColumn/name/string()}</citationUnitElementName>
-             else ()
-    }</abstract>
-  else 
-   ()
+  let $abstractIndex := csv2srophe:create-column-index("abstract", $headerMap, "langCode")
+  return $abstractIndex
 };
 
 (: ----------------------------------------- :)
@@ -356,6 +339,7 @@ as element()*
 : in the given $row.
 : NEEDS TESTS
 :)
+
 declare function csv2srophe:get-non-empty-index-from-row($row as element(),
                                                          $index as element()*)
 as element()*
@@ -367,6 +351,7 @@ as element()*
             else ()
     return $nonEmptyIndex
 };
+
 (:~ 
 : Returns the URI 
 : @param $row a single row of data, as produced by the get-data function.
