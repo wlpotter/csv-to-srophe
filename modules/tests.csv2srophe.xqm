@@ -68,7 +68,6 @@ declare variable $csv2srophe-test:sources-index-node-to-compare-single :=
 <source>
   <uri>http://syriaca.org/bibl/667</uri>
   <citedRange>318</citedRange>
-  <citationUnit>p</citationUnit>
 </source>;
 
 declare variable $csv2srophe-test:bibl-node-to-compare-single :=
