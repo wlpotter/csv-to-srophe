@@ -98,7 +98,7 @@ as node()
   let $headwords := csv2srophe:build-element-sequence($row, $headwordIndex, $sources, "placeName", 0)
   let $numHeadwords := count($headwords)
   let $placeNames := csv2srophe:build-element-sequence($row, $namesIndex, $sources, "placeName", $numHeadwords)
-  let $abstracts := csv2places:create-abstracts($row, $abstractIndex, $sources)
+  let $abstracts := csv2srophe:build-element-sequence($row, $abstractIndex, $sources, "desc", 0)
   
   (: currently not handling gps locations or relative locations :)
   let $nestedLocations := csv2places:create-nested-locations($row, $sources)
