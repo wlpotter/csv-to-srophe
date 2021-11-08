@@ -89,8 +89,8 @@ declare %unit:test function csv2places-test:create-names-from-local-csv-data() {
 };
 
 declare %unit:test function csv2places-test:create-abstracts-from-local-csv-data() {
-  unit:assert-equals(csv2places:create-abstracts($csv2places-test:data-row-to-compare, $csv2places-test:abstract-index-stub, $csv2places-test:sources-index-for-sample-row)[1], 
-  <desc xmlns="http://www.tei-c.org/ns/1.0" type="abstract" xml:id="abstract3059-1" xml:lang="en" source="#bib3059-1">A monastery at Tagais</desc>)
+  unit:assert-equals(csv2srophe:build-element-sequence($csv2places-test:data-row-to-compare, $csv2places-test:abstract-index-stub, $csv2places-test:sources-index-for-sample-row, "desc", 0)[1], 
+  <desc xmlns="http://www.tei-c.org/ns/1.0" type="abstract" xml:id="abstract3059-1" xml:lang="en"><quote source="#bib3059-1">A monastery at Tagais</quote></desc>)
 };
 
 declare %unit:test function csv2places-test:create-nested-locations-from-local-csv-data() {
