@@ -181,7 +181,7 @@ declare  %unit:test function csv2srophe-test:create-sources-index-for-row-from-l
 declare %unit:test function csv2srophe-test:create-bibl-sequence-for-row-from-local-csv()
 {
   unit:assert-equals(csv2srophe:create-bibl-sequence($csv2srophe-test:data-row-to-compare,
-                                    $csv2srophe-test:sources-index-node-to-compare)[1],
+                                    $csv2srophe-test:sources-index-node-to-compare-single)[1],
                     $csv2srophe-test:bibl-node-to-compare-single)
 };
 
@@ -244,7 +244,7 @@ declare %unit:test function csv2srophe-test:build-name-element-taxonomy-regular-
 declare %unit:test function csv2srophe-test:build-abstract-element-as-desc-with-source()
 {
   unit:assert-equals(csv2srophe:build-abstract-element("Lorem ipsum", "desc", "3059", "en", "bib3059-3", 1),
-  <desc xmlns="http://www.tei-c.org/ns/1.0" type="abstract" xml:id="abstract3059-1" xml:lang="en" source="#bib3059-3">Lorem ipsum</desc>)
+  <desc xmlns="http://www.tei-c.org/ns/1.0" type="abstract" xml:id="abstract3059-1" xml:lang="en"><quote source="#bib3059-3">Lorem ipsum</quote></desc>)
 };
 
 declare %unit:test function csv2srophe-test:build-abstract-element-as-note-with-no-source()

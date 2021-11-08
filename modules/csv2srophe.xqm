@@ -650,7 +650,7 @@ as element()
                         attribute {"resp"} {"http://syriaca.org"}
   let $quote := if($source != "") then element {QName("http://www.tei-c.org/ns/1.0", "quote")} {$sourceAttr, $textNode} else $textNode
   return element {QName("http://www.tei-c.org/ns/1.0", $elementName)}
-                  {$type, $id, $xmlLang, $quote}
+                  {$type, $id, $xmlLang, if($source = "") then $sourceAttr, $quote}
 
 };
 (: I'm not sure these final functions should be in this module. They are more
