@@ -167,12 +167,12 @@ let $settlementElement :=
       element {QName("http://www.tei-c.org/ns/1.0", "settlement")} {$setRefAttr, $setName}
 let $settlementSourceAttribute :=
     let $setSrc := functx:trim($row/*[name() = 'sourceURI.nested.settlement']/text())    
-    let $setPg := functx:trim($row/*[name() = 'pages.nested.settlement']/text())
+    let $setPg := functx:trim($row/*[name() = 'citedRange.nested.settlement']/text())
     return
         if ($setSrc != '')
         then
             for $src at $srcNumber in $sourcesIndex  (: step through the source index :)
-            where  $setSrc = $src/uri/text() and $setPg = $src/pg/text()  (: URI and page from columns must match with iterated item in the source index :)
+            where  $setSrc = $src/sourceUri/text() and $setPg = $src/citedRange/text()  (: URI and page from columns must match with iterated item in the source index :)
             return '#bib'||$uriLocalName||'-'||$srcNumber    (: create the last part of the source attribute :)
         else ''
 
@@ -185,12 +185,12 @@ let $regionElement :=
        element {QName("http://www.tei-c.org/ns/1.0", "region")} {$regRefAttr, $regName}
 let $regionSourceAttribute :=
     let $regSrc := functx:trim($row/*[name() = 'sourceURI.nested.region']/text())    
-    let $regPg := functx:trim($row/*[name() = 'pages.nested.region']/text())
+    let $regPg := functx:trim($row/*[name() = 'citedRange.nested.region']/text())
     return
         if ($regSrc != '')
         then
             for $src at $srcNumber in $sourcesIndex  (: step through the source index :)
-            where  $regSrc = $src/uri/text() and $regPg = $src/pg/text()  (: URI and page from columns must match with iterated item in the source index :)
+            where  $regSrc = $src/sourceUri/text() and $regPg = $src/citedRange/text()  (: URI and page from columns must match with iterated item in the source index :)
             return '#bib'||$uriLocalName||'-'||$srcNumber    (: create the last part of the source attribute :)
         else ''
 
