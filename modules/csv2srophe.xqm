@@ -49,8 +49,10 @@ as document-node()*
   let $headwordIndex := csv2srophe:create-headword-index($headerMap)
   let $namesIndex := csv2srophe:create-names-index($headerMap)
   let $abstractIndex := csv2srophe:create-abstract-index($headerMap)
+  let $sexIndex := csv2srophe:create-sex-index($headerMap)
+  let $datesIndex := csv2srophe:create-dates-index($headerMap)
   
-  let $indices := ($headwordIndex, $namesIndex, $abstractIndex)
+  let $indices := ($headwordIndex, $namesIndex, $abstractIndex, $sexIndex, $datesIndex)
   let $sourcesIndex := csv2srophe:create-sources-index($indices)
   let $indices := ($indices, $sourcesIndex)
   
@@ -605,6 +607,8 @@ as element()*
     case "name" return csv2srophe:build-name-element($text, $elementName, $uriLocalName, $langAttr, $sourceAttr, false (), $number + $enumerationOffset)
     case "headword" return csv2srophe:build-name-element($text, $elementName, $uriLocalName, $langAttr, $sourceAttr, true (), $number + $enumerationOffset)
     case "abstract" return csv2srophe:build-abstract-element($text, $elementName,$uriLocalName, $langAttr, $sourceAttr, $number + $enumerationOffset)
+    case "sex" return csv2srophe:build-sex-element($text, $sourceAttr)
+    (: case "date" return csv2srophe:build-date-element($text, $elementName, ) :)
     (: add other cases, e.g., "date", "sex", "anonymous descs", etc. :)
     default return () (: maybe have an error? :)
 };
@@ -698,6 +702,34 @@ as element()
                   {$type, $id, $xmlLang, if($source = "") then $sourceAttr, $quote}
 
 };
+
+(:~ 
+: returns a tei:sex element for use in persons entities.
+ :)
+declare function csv2srophe:build-sex-element($value as xs:string, $source as xs:string?)
+as element()
+{
+  let $textNode := if($value = "M") then "male" else if($value = "F") then "female"
+  let $sourceAttr := if($source != "") then attribute {"source"} {"#" || $source}
+    else attribute {"resp"} {"http://syriaca.org"}
+  let $valueAttr := attribute {"value"} {$value}
+  return element {QName("http://www.tei-c.org/ns/1.0", "sex")} {$sourceAttr, $valueAttr, $textNode}
+};
+
+declare function csv2srophe:build-date-element($textNode as xs:string, $source as xs:string?, $associatedData as element())
+as element()
+{
+  (:
+  - source attribute is either @source = "#" || $source or @resp="http://syriaca.org"
+  - $associatedData/type/text() gives the element name
+  - $textNode is the text node.
+  - $associatedData/when|notBefore|notAfter/text() gives the attribute values for the associated names.
+  - return that element
+  
+  - keep in mind that this can later handle more complex dated things like 
+  :)
+};
+
 (: I'm not sure these final functions should be in this module. They are more
 : generic than just csv transform. Perhaps separate out into some util library? :)
 
