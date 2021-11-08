@@ -92,6 +92,8 @@ as node()
   let $headwordIndex := $indices/self::headword
   let $namesIndex := $indices/self::name
   let $abstractIndex := $indices/self::abstract
+  let $sexIndex := $indices/self::sex
+  let $datesIndex := $indices/self::date
   let $sourcesIndex := $indices/self::source
   let $sources := csv2srophe:create-sources-index-for-row($sourcesIndex, $row)
   
@@ -107,8 +109,8 @@ as node()
   
   (: do any of these need indices?? :)
   let $trait := csv2persons:create-trait($row)
-  let $sex := csv2persons:create-sex-element($row, $sources)
-  let $dates := csv2srophe:create-dates($row, $sources) (: still pending :)
+  let $sex := csv2srophe:build-element-sequence($row, $sexIndex, $sources, "sex", 0)
+  let $dates := csv2srophe:build-element-sequence($row, $datesIndex, $sources, "date", 0)
   
   (: pending: 
   - @ana attribute on tei:person for saint, author, etc.
