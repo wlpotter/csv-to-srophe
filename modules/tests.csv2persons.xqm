@@ -46,6 +46,9 @@ declare variable $csv2persons-test:headword-index-stub :=
 declare variable $csv2persons-test:abstract-index-stub :=
   csv2srophe:create-abstract-index($csv2persons-test:header-map-stub);
   
+declare variable $csv2persons-test:sources-index-stub :=
+  csv2srophe:create-sources-index(($csv2persons-test:names-index-stub, $csv2persons-test:headword-index-stub, $csv2persons-test:abstract-index-stub));
+  
 declare variable $csv2persons-test:data-row-to-compare-named :=
   csv2srophe:get-data($csv2persons-test:local-csv-uri, "	")[43];
 
@@ -53,14 +56,14 @@ declare variable $csv2persons-test:data-row-to-compare-anonymi :=
   csv2srophe:get-data($csv2persons-test:local-csv-uri, "	")[138];
  
 declare variable $csv2persons-test:sources-index-for-sample-row-named :=
-  csv2srophe:create-sources-index-for-row($csv2persons-test:data-row-to-compare-named, $csv2persons-test:header-map-stub);
+  csv2srophe:create-sources-index-for-row($csv2persons-test:sources-index-stub, $csv2persons-test:data-row-to-compare-named);
 
 declare variable $csv2persons-test:skeleton-record-to-compare-output-named :=
   let $pathToDoc := $config:nav-base || "out/test/person3229-skeleton_test.xml"
   return doc($pathToDoc);
   
 declare variable $csv2persons-test:sources-index-for-sample-row-anonymi :=
-  csv2srophe:create-sources-index-for-row($csv2persons-test:data-row-to-compare-anonymi, $csv2persons-test:header-map-stub);
+  csv2srophe:create-sources-index-for-row($csv2persons-test:sources-index-stub, $csv2persons-test:data-row-to-compare-anonymi);
 
 
 declare variable $csv2persons-test:skeleton-record-to-compare-output-anonymi :=
@@ -83,7 +86,7 @@ declare %unit:test %unit:ignore function csv2persons-test:create-person-using-an
 
 declare %unit:test function csv2persons-test:create-person-using-named-row() {
   (: won't pass because the change/@when element uses fn:current-date() so compare value falls behind if not updated. Need to rewrite test (not tagging %unit:ignore to remind self to update. :)
-  unit:assert-equals(csv2persons:create-person-from-row($csv2persons-test:data-row-to-compare-named, $csv2persons-test:header-map-stub, ($csv2persons-test:names-index-stub, $csv2persons-test:headword-index-stub, $csv2persons-test:abstract-index-stub)),
+  unit:assert-equals(csv2persons:create-person-from-row($csv2persons-test:data-row-to-compare-named, $csv2persons-test:header-map-stub, ($csv2persons-test:names-index-stub, $csv2persons-test:headword-index-stub, $csv2persons-test:abstract-index-stub, $csv2persons-test:sources-index-stub)),
                     $csv2persons-test:skeleton-record-to-compare-output-named)
 };
 
@@ -108,7 +111,7 @@ declare %unit:test function csv2persons-test:create-names-using-named-row() {
 
 declare %unit:test function csv2persons-test:create-abstracts-using-named-row() {
   (: see https://github.com/wlpotter/csv-to-srophe/issues/18 :)
-  unit:assert-equals(csv2persons:create-abstracts($csv2persons-test:data-row-to-compare-named, $csv2persons-test:abstract-index-stub, $csv2persons-test:sources-index-for-sample-row-named)[1], 
+  unit:assert-equals(csv2srophe:build-element-sequence($csv2persons-test:data-row-to-compare-named, $csv2persons-test:abstract-index-stub, $csv2persons-test:sources-index-for-sample-row-named, "note", 0)[1], 
 <note xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en" type="abstract" xml:id="abstract-en-3229">
 <quote source="#bib3229-2">Roman Emperor, successor of Justinian and his sister&apos;s son</quote>.
                     </note>)

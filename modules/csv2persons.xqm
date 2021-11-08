@@ -92,7 +92,8 @@ as node()
   let $headwordIndex := $indices/self::headword
   let $namesIndex := $indices/self::name
   let $abstractIndex := $indices/self::abstract
-  let $sources := csv2srophe:create-sources-index-for-row($row, $headerMap)
+  let $sourcesIndex := $indices/self::source
+  let $sources := csv2srophe:create-sources-index-for-row($sourcesIndex, $row)
   
   (: build descendant nodes of the tei:person :)
   
@@ -102,7 +103,7 @@ as node()
   let $persNames := csv2srophe:build-element-sequence($row, $namesIndex, $sources, "persName", $numHeadwords)
   let $idnos := csv2srophe:create-idno-sequence-for-row($row, $config:uri-base)
   
-  let $abstracts := csv2persons:create-abstracts($row, $abstractIndex, $sources)
+  let $abstracts := csv2srophe:build-element-sequence($row, $abstractIndex, $sources, "note", 0)
   
   (: do any of these need indices?? :)
   let $trait := csv2persons:create-trait($row)
@@ -113,7 +114,7 @@ as node()
   - @ana attribute on tei:person for saint, author, etc.
   :)
   
-  let $bibls := csv2srophe:create-bibl-sequence($row, $headerMap)
+  let $bibls := csv2srophe:create-bibl-sequence($row, $sources)
   
   (: compose tei:place element and return it :)
   
