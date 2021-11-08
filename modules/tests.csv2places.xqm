@@ -79,12 +79,12 @@ declare %unit:test function csv2places-test:get-place-type-from-row-using-local-
 };
 
 declare %unit:test function csv2places-test:create-headwords-from-local-csv-data() {
-  unit:assert-equals(csv2srophe:build-name-element-sequence($csv2places-test:data-row-to-compare, $csv2places-test:headword-index-stub, $csv2places-test:sources-index-for-sample-row, "placeName", true (), 0)[2], 
+  unit:assert-equals(csv2srophe:build-element-sequence($csv2places-test:data-row-to-compare, $csv2places-test:headword-index-stub, $csv2places-test:sources-index-for-sample-row, "placeName", 0)[2], 
                     <placeName xmlns="http://www.tei-c.org/ns/1.0" xml:lang="syr" xml:id="name3059-2" srophe:tags="#syriaca-headword" resp="http://syriaca.org">ܕܝܪܐ ܕܒܛܐܓܐܝܣ</placeName>)
 };
 
 declare %unit:test function csv2places-test:create-names-from-local-csv-data() {
-  unit:assert-equals(csv2srophe:build-name-element-sequence($csv2places-test:data-row-to-compare, $csv2places-test:names-index-stub, $csv2places-test:sources-index-for-sample-row, "placeName", false (), 2)[1], 
+  unit:assert-equals(csv2srophe:build-element-sequence($csv2places-test:data-row-to-compare, $csv2places-test:names-index-stub, $csv2places-test:sources-index-for-sample-row, "placeName", 2)[1], 
   <placeName xmlns="http://www.tei-c.org/ns/1.0" xml:lang="syr" xml:id="name3059-3" source="#bib3059-2">ܕܝܪܐ ܕܒܛܐܓܐܝܣ</placeName>)
 };
 

@@ -520,7 +520,8 @@ as element()*
 };
 
 (:~ 
-: Returns a sequence of elements that represent entity names of Syriaca entities.
+: Returns a sequence of TEI elements for Srophe entities. Based on the $elementName,
+: this function can return names, abstracts, etc.
 : 
 : @param $row is the data input row
 : @param $columnIndex is the index of columns to match, e.g. headword, name, etc.
@@ -532,11 +533,10 @@ as element()*
 : @version 1.0
 :
 :)
-declare function csv2srophe:build-name-element-sequence($row as element(), 
+declare function csv2srophe:build-element-sequence($row as element(), 
                                                         $columnIndex as element()*, 
                                                         $sourcesIndexForRow as element()*, 
                                                         $elementName as xs:string,
-                                                        $isHeadword as xs:boolean,
                                                         $enumerationOffset as xs:integer)
 as element()*
 {
@@ -544,9 +544,9 @@ as element()*
   
   (: get the column information for this row's non-empty names :)
   let $nonEmptyColumnIndex := csv2srophe:get-non-empty-index-from-row($row, $columnIndex)
-  let $nameData := csv2srophe:populate-index-from-row($nonEmptyColumnIndex, $row) (: replace index of column names with index of data :)
+  let $rowData := csv2srophe:populate-index-from-row($nonEmptyColumnIndex, $row) (: replace index of column names with index of data :)
   return
-    for $item at $number in $nameData     (: loop through each of the names in various languages :)
+    for $item at $number in $rowData     (: loop through each of the names in various languages :)
     let $text := functx:trim($item/textNode/text())
     let $itemSourceUri := functx:trim($item/sourceUri/text())
     let $itemSourceCitedRange := functx:trim($item/citedRange/text())
@@ -555,8 +555,13 @@ as element()*
     (: get the @source attribute value by matching the uri, cited range, and citation unit values :)
     let $sourceAttr := csv2srophe:create-source-attribute-for-element($item, $sourcesIndexForRow, $uriLocalName)
     let $langAttr := functx:trim($item/langCode/text())
-    return csv2srophe:build-name-element($text, $elementName, $uriLocalName, $langAttr, $sourceAttr, $isHeadword, $number + $enumerationOffset)
-    
+    return 
+    switch($item/name())
+    case "name" return csv2srophe:build-name-element($text, $elementName, $uriLocalName, $langAttr, $sourceAttr, false (), $number + $enumerationOffset)
+    case "headword" return csv2srophe:build-name-element($text, $elementName, $uriLocalName, $langAttr, $sourceAttr, true (), $number + $enumerationOffset)
+    case "abstract" return csv2srophe:build-abstract-element($text, $elementName,$uriLocalName, $langAttr, $sourceAttr, $number + $enumerationOffset)
+    (: add other cases, e.g., "date", "sex", "anonymous descs", etc. :)
+    default return () (: maybe have an error? :)
 };
 
 (:~ 

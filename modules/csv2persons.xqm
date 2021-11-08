@@ -96,10 +96,10 @@ as node()
   
   (: build descendant nodes of the tei:person :)
   
-  let $headwords := csv2srophe:build-name-element-sequence($row, $headwordIndex, $sources, "persName", true (), 0)
+  let $headwords := csv2srophe:build-element-sequence($row, $headwordIndex, $sources, "persName", 0)
   let $numHeadwords := count($headwords)
   (: add anonymous-description elements. also need to test that this doesn't break when there **aren't** anon descs :)
-  let $persNames := csv2srophe:build-name-element-sequence($row, $namesIndex, $sources, "persName", false (), $numHeadwords)
+  let $persNames := csv2srophe:build-element-sequence($row, $namesIndex, $sources, "persName", $numHeadwords)
   let $idnos := csv2srophe:create-idno-sequence-for-row($row, $config:uri-base)
   
   let $abstracts := csv2persons:create-abstracts($row, $abstractIndex, $sources)

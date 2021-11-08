@@ -95,9 +95,9 @@ as node()
   (: build descendant nodes of the tei:place :)
   let $placeType := csv2places:get-place-type-from-row($row)
   
-  let $headwords := csv2srophe:build-name-element-sequence($row, $headwordIndex, $sources, "placeName", true (), 0)
+  let $headwords := csv2srophe:build-element-sequence($row, $headwordIndex, $sources, "placeName", 0)
   let $numHeadwords := count($headwords)
-  let $placeNames := csv2srophe:build-name-element-sequence($row, $namesIndex, $sources, "placeName", false (), $numHeadwords)
+  let $placeNames := csv2srophe:build-element-sequence($row, $namesIndex, $sources, "placeName", $numHeadwords)
   let $abstracts := csv2places:create-abstracts($row, $abstractIndex, $sources)
   
   (: currently not handling gps locations or relative locations :)

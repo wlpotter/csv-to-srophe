@@ -88,21 +88,21 @@ declare %unit:test function csv2persons-test:create-person-using-named-row() {
 };
 
 declare %unit:test function csv2persons-test:create-unsourced-headword-using-anonymi-row() {
-  unit:assert-equals(csv2srophe:build-name-element-sequence($csv2persons-test:data-row-to-compare-anonymi, $csv2persons-test:headword-index-stub, $csv2persons-test:sources-index-for-sample-row-anonymi, "persName", true (), 0)[1], <persName xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en" xml:id="name3774-1" srophe:tags="#syriaca-headword" resp="http://syriaca.org">Anonymous 3774</persName>)
+  unit:assert-equals(csv2srophe:build-element-sequence($csv2persons-test:data-row-to-compare-anonymi, $csv2persons-test:headword-index-stub, $csv2persons-test:sources-index-for-sample-row-anonymi, "persName", 0)[1], <persName xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en" xml:id="name3774-1" srophe:tags="#syriaca-headword" resp="http://syriaca.org">Anonymous 3774</persName>)
 };
 
 declare %unit:test function csv2persons-test:create-unsourced-headword-using-named-row() {
   (: failing because it is sourced, which is not currently handled by csv2persons:create-headwords. Waiting on https://github.com/wlpotter/csv-to-srophe/issues/19 :)
-  unit:assert-equals(csv2srophe:build-name-element-sequence($csv2persons-test:data-row-to-compare-named, $csv2persons-test:headword-index-stub, $csv2persons-test:sources-index-for-sample-row-named, "persName", true (), 0)[1], <persName xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en" xml:id="name3229-1" srophe:tags="#syriaca-headword" resp="http://syriaca.org">Justin II</persName>)
+  unit:assert-equals(csv2srophe:build-element-sequence($csv2persons-test:data-row-to-compare-named, $csv2persons-test:headword-index-stub, $csv2persons-test:sources-index-for-sample-row-named, "persName", 0)[1], <persName xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en" xml:id="name3229-1" srophe:tags="#syriaca-headword" resp="http://syriaca.org">Justin II</persName>)
 };
 
 declare %unit:test function csv2persons-test:create-sourced-headword-using-named-row() {
   (: failing because it is sourced, which is not currently handled by csv2persons:create-headwords. Waiting on https://github.com/wlpotter/csv-to-srophe/issues/19 :)
-  unit:assert-equals(csv2srophe:build-name-element-sequence($csv2persons-test:data-row-to-compare-named, $csv2persons-test:headword-index-stub, $csv2persons-test:sources-index-for-sample-row-named, "persName", true (), 0)[2], <persName xmlns="http://www.tei-c.org/ns/1.0" xml:lang="syr" source="#bib3229-1" xml:id="name3229-2" srophe:tags="#syriaca-headword">ܝܘܣܛܝܢܐ</persName>)
+  unit:assert-equals(csv2srophe:build-element-sequence($csv2persons-test:data-row-to-compare-named, $csv2persons-test:headword-index-stub, $csv2persons-test:sources-index-for-sample-row-named, "persName", 0)[2], <persName xmlns="http://www.tei-c.org/ns/1.0" xml:lang="syr" source="#bib3229-1" xml:id="name3229-2" srophe:tags="#syriaca-headword">ܝܘܣܛܝܢܐ</persName>)
 };
 
 declare %unit:test function csv2persons-test:create-names-using-named-row() {
-  unit:assert-equals(csv2srophe:build-name-element-sequence($csv2persons-test:data-row-to-compare-named, $csv2persons-test:names-index-stub, $csv2persons-test:sources-index-for-sample-row-named, "persName", false (), 2)[1], 
+  unit:assert-equals(csv2srophe:build-element-sequence($csv2persons-test:data-row-to-compare-named, $csv2persons-test:names-index-stub, $csv2persons-test:sources-index-for-sample-row-named, "persName", 2)[1], 
   <persName xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en" source="#bib3229-3" xml:id="name3229-3">Iustinus</persName>)
 };
 
