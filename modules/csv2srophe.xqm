@@ -460,7 +460,7 @@ declare function csv2srophe:create-sources-index-for-row($sourcesIndex as elemen
 as element()*
 {
   let $sources := csv2srophe:populate-index-from-row($sourcesIndex, $row)
-  let $sources := $sources[not(empty(sourceUri))]
+  let $sources := $sources[sourceUri/text() != ""]
   (: remove redundant sources :)
   return functx:distinct-deep($sources)
 };
