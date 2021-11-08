@@ -22,7 +22,7 @@
                     <persName xml:lang="en" source="#bib3229-1" xml:id="name3229-3">Iustinus</persName>
                     <idno type="URI">http://syriaca.org/person/3229</idno>
                     <idno type="URI">https://en.wikipedia.org/wiki/Justin_II</idno>
-                    <sex xml:lang="en" source="#bib3229-1" value="M">male</sex>
+                    <sex source="#bib3229-1" value="M">male</sex>
                     <note xml:lang="en" type="abstract" xml:id="abstract-en-3229">
                         <quote source="#bib3229-3">Roman Emperor, successor of Justinian and his sister's son</quote>.
                     </note>
