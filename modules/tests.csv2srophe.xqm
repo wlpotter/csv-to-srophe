@@ -30,6 +30,9 @@ declare namespace srophe="https://srophe.app";
 declare variable $csv2srophe-test:local-csv-uri :=
   $config:nav-base || "in/test/test.csv";
   
+declare variable $csv2srophe-test:local-csv-uri-persons :=
+  $config:nav-base || "in/test/persons_test.csv";
+  
 declare variable $csv2srophe-test:header-map-node-to-compare :=
 <map>
   <string>New place/add data</string>
@@ -39,6 +42,9 @@ declare variable $csv2srophe-test:header-map-node-to-compare :=
 declare variable $csv2srophe-test:header-map-from-local-csv :=
   csv2srophe:create-header-map($csv2srophe-test:local-csv-uri, "	");
   
+declare variable $csv2srophe-test:header-map-from-local-csv-persons :=
+  csv2srophe:create-header-map($csv2srophe-test:local-csv-uri-persons, "	");
+
 declare variable $csv2srophe-test:names-index-node-to-compare :=
 <name>
   <langCode>syr</langCode>
@@ -61,8 +67,31 @@ declare variable $csv2srophe-test:abstract-index-node-to-compare :=
   <citedRangeElementName>citedRange.abstract.en</citedRangeElementName>
 </abstract>;
 
+declare variable $csv2srophe-test:sex-index-node-to-compare :=
+<sex>
+  <textNodeColumnElementName>sex1</textNodeColumnElementName>
+  <sourceUriElementName>sourceUri.sex1</sourceUriElementName>
+  <citedRangeElementName>citedRange.sex1</citedRangeElementName>
+  <citationUnitElementName>citationUnit.sex1</citationUnitElementName>
+</sex>;
+
+declare variable $csv2srophe-test:dates-index-node-to-compare :=
+<date>
+  <textNodeColumnElementName>date1</textNodeColumnElementName>
+  <sourceUriElementName>sourceUri.date1</sourceUriElementName>
+  <citedRangeElementName>citedRange.date1</citedRangeElementName>
+  <citationUnitElementName>citationUnit.date1</citationUnitElementName>
+  <whenElementName>when.date1</whenElementName>
+  <notBeforeElementName>notBefore.date1</notBeforeElementName>
+  <notAfterElementName>notAfter.date1</notAfterElementName>
+  <typeElementName>type.date1</typeElementName>
+</date>;
+          
 declare variable $csv2srophe-test:data-row-to-compare :=
   csv2srophe:get-data($csv2srophe-test:local-csv-uri, "	")[3];
+  
+declare variable $csv2srophe-test:data-row-to-compare-persons :=
+  csv2srophe:get-data($csv2srophe-test:local-csv-uri-persons, "	")[43];
  
 declare variable $csv2srophe-test:sources-index-node-to-compare-single :=
 <source>
@@ -266,4 +295,14 @@ declare %unit:test function csv2srophe-test:create-sources-index-from-local-csv(
 declare %unit:test function csv2srophe-test:populate-index-from-row-using-sources-index()
 {
   unit:assert-equals(csv2srophe:populate-index-from-row($csv2srophe-test:sources-index-node-to-compare, $csv2srophe-test:data-row-to-compare), $csv2srophe-test:sources-index-node-to-compare-single)
+};
+
+declare %unit:test function csv2srophe-test:create-sex-index-from-local-csv()
+{
+  unit:assert-equals(csv2srophe:create-sex-index($csv2srophe-test:header-map-from-local-csv-persons), $csv2srophe-test:sex-index-node-to-compare)(: add variable for persons-input; add variable for :)
+};
+
+declare %unit:test function csv2srophe-test:create-dates-index-from-local-csv()
+{
+  unit:assert-equals(csv2srophe:create-dates-index($csv2srophe-test:header-map-from-local-csv-persons), $csv2srophe-test:dates-index-node-to-compare)
 };

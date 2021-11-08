@@ -211,7 +211,7 @@ as element()*
   return if (substring(tokenize($columnString,'\.')[1],1,string-length($columnName)) = $columnName) then
   element {$columnName} 
   {
-    element {$rightOfDotLabel} {$rightOfDot},
+    if ($rightOfDotLabel != "") then element {$rightOfDotLabel} {$rightOfDot} else(),
     element {"textNodeColumnElementName"} {$column/name/string()},
     csv2srophe:associate-source-data-columns($leftOfDot, $headerMap, $rightOfDot)
    }
@@ -326,6 +326,51 @@ as element()*
 {
   let $abstractIndex := csv2srophe:create-column-index("abstract", $headerMap, "langCode")
   return $abstractIndex
+};
+
+(:~
+: returns a sequence that looks like this:
+:
+: <sex>
+:   <langCode>en</langCode>
+:   <textNodeColumnElementName>sex1.en</textNodeColumnElementName>
+:   <sourceUriElementName>sourceURI.sex1</sourceUriElementName>
+:   <citedRangeElementName>citedRange.sex1</citedRangeElementName>
+:   <citationUnitElementName>citationUnit.sex1</citationUnitElementName>
+: </sex>
+:
+: The sex index stores a sequence of columns where entity sex information
+: is kept. It is solely used for persons entities. It is used, for each row 
+: of data, to create the element(s) encoding the sex/gender information for 
+: the entity.
+: 
+: @author William L. Potter
+:
+:)
+
+declare function csv2srophe:create-sex-index($headerMap as element()+)
+as element()*
+{
+  let $sexIndex := csv2srophe:create-column-index("sex", $headerMap, "")
+  return $sexIndex
+};
+
+declare function csv2srophe:create-dates-index($headerMap as element()+)
+as element()*
+{
+  let $datesIndex := csv2srophe:create-column-index("date", $headerMap, "")
+  
+  (: collate additional date information, such as associated attribute columns :)
+  for $date in $datesIndex
+  let $rightOfDot := functx:trim($date/*:textNodeColumnElementName/text())
+  let $dateAttrColumns :=  
+    for $column in $headerMap
+    let $columnName := functx:trim($column/*:name/text())
+    where substring-after($columnName, ".") = $rightOfDot (: screen for associated date columns :)
+    let $leftOfDot := substring-before($columnName, ".")
+    return element {$leftOfDot || "ElementName"} {$columnName}
+  let $dateChildren := functx:distinct-deep(($date/*, $dateAttrColumns))
+  return <date>{$dateChildren}</date>
 };
 
 (:~ 
