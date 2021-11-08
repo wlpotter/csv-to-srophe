@@ -125,34 +125,6 @@ as node()
 };
 
 
-declare function csv2persons:create-abstracts($row as element(),
-                                             $abstractIndex as element()*,
-                                             $sourcesIndex as element()*)
-as element()*
-{
-  let $uriLocalName := csv2srophe:get-uri-from-row($row, "")
-  
-  (: get the column information for this row's non-empty abstracts :)
-  let $nonEmptyAbstractIndex := csv2srophe:get-non-empty-index-from-row($row, $abstractIndex)
-  
-  return
-    for $abstract at $number in $abstractIndex
-    let $text := functx:trim($row/*[name() = $abstract/textNodeColumnElementName/text()]/text()) (: look up the abstract from that column :)
-    where $text != ''   (: skip the abstract columns that are empty :)
-    let $abstractSourceUri := functx:trim($row/*[name() = $abstract/sourceUriElementName/text()]/text())  (: look up the URI that goes with the abstract column :)
-    let $abstractSourcePg := functx:trim($row/*[name() = $abstract/pagesElementName/text()]/text())  (: look up the page that goes with the name column :)
-    let $languageAttr := functx:trim($abstract/*:langCode/text()) (: look up the language code for the current abstract :)
-    let $sourceAttr := 
-        if ($abstractSourceUri != '')
-        then
-            for $src at $srcNumber in $sourcesIndex  (: step through the source index :)
-            where  $abstractSourceUri = $src/uri/text() and $abstractSourcePg = $src/pg/text()  (: URI and page from columns must match with iterated item in the source index :)
-            return 'bib'||$uriLocalName||'-'||$srcNumber    (: create the last part of the source attribute :)
-        else ()
-    return csv2srophe:build-abstract-element($text, "note", $uriLocalName, $languageAttr, $sourceAttr, $number)
-  
-};
-
 declare function csv2persons:create-trait($row as element())
 as element()?
 {
