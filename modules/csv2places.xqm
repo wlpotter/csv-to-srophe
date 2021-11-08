@@ -89,7 +89,8 @@ as node()
   let $headwordIndex := $indices/self::headword
   let $namesIndex := $indices/self::name
   let $abstractIndex := $indices/self::abstract
-  let $sources := csv2srophe:create-sources-index-for-row($row, $headerMap)
+  let $sourcesIndex := $indices/self::source
+  let $sources := csv2srophe:create-sources-index-for-row($sourcesIndex, $row)
   
   (: build descendant nodes of the tei:place :)
   let $placeType := csv2places:get-place-type-from-row($row)
@@ -106,7 +107,7 @@ as node()
   
   (:currently not handling note creation as not needed for this data :)
   
-  let $bibls := csv2srophe:create-bibl-sequence($row, $headerMap)
+  let $bibls := csv2srophe:create-bibl-sequence($row, $sources)
   
   (: compose tei:place element and return it :)
   

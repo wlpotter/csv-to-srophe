@@ -51,6 +51,8 @@ as document-node()*
   let $abstractIndex := csv2srophe:create-abstract-index($headerMap)
   
   let $indices := ($headwordIndex, $namesIndex, $abstractIndex)
+  let $sourcesIndex := csv2srophe:create-sources-index($indices)
+  let $indices := ($indices, $sourcesIndex)
   
   for $row in $data
     return switch($config:collection-type)
@@ -382,6 +384,7 @@ declare function csv2srophe:populate-index-from-row($index as element()*,
                                                     $row as element())
 as element()*
 {
+  
   for $item in $index
   let $data := 
     for $column in $item/*
@@ -456,9 +459,10 @@ declare function csv2srophe:create-sources-index-for-row($sourcesIndex as elemen
                                                          $row as element())
 as element()*
 {
-  let $sources := csv2srophe:populate-index-from-row($sourcesIndex, $row) 
-     (: remove redundant sources :)
-    return functx:distinct-deep($sources)
+  let $sources := csv2srophe:populate-index-from-row($sourcesIndex, $row)
+  let $sources := $sources[not(empty(sourceUri))]
+  (: remove redundant sources :)
+  return functx:distinct-deep($sources)
 };
 
 (:~ 
@@ -471,14 +475,14 @@ as element()*
 : In the csv, these citedRanges and citationUnits should be separated by the "#" character
 :)
 declare function csv2srophe:create-bibl-sequence($row as element(),
-                                                         $sourcesIndex as element()+)
+                                                         $sourcesIndexForRow as element()+)
 as element()*
 {
-  let $sources := csv2srophe:populate-index-from-row($sourcesIndex, $row)
+  
   let $uriLocalName := csv2srophe:get-uri-from-row($row, "")
-  for $source at $number in $sources
+  for $source at $number in $sourcesIndexForRow
     let $sourceUri := $source/sourceUri/text()
-    
+    where $sourceUri != ""
     (: add the bibl uri-base if not already there :)
     let $sourceUri := if(starts-with($sourceUri, "http://syriaca.org/bibl/")
                          and $sourceUri != "")
@@ -530,7 +534,7 @@ as element()*
 :)
 declare function csv2srophe:build-name-element-sequence($row as element(), 
                                                         $columnIndex as element()*, 
-                                                        $sourcesIndex as element()*, 
+                                                        $sourcesIndexForRow as element()*, 
                                                         $elementName as xs:string,
                                                         $isHeadword as xs:boolean,
                                                         $enumerationOffset as xs:integer)
@@ -540,21 +544,51 @@ as element()*
   
   (: get the column information for this row's non-empty names :)
   let $nonEmptyColumnIndex := csv2srophe:get-non-empty-index-from-row($row, $columnIndex)
-  
+  let $nameData := csv2srophe:populate-index-from-row($nonEmptyColumnIndex, $row) (: replace index of column names with index of data :)
   return
-    for $item at $number in $nonEmptyColumnIndex     (: loop through each of the names in various languages :)
-    let $text := functx:trim($row/*[name() = $item/textNodeColumnElementName/text()]/text()) (: look up the name for that column :)
-    let $itemSourceUri := functx:trim($row/*[name() = $item/sourceUriElementName/text()]/text())  (: look up the URI that goes with the name column :)
-    let $itemSourceCitedRange := functx:trim($row/*[name() = $item/citedRangeElementName/text()]/text())  (: look up the citedRange that goes with the name column :)
-    let $itemSourceCitationUnit := functx:trim($row/*[name() = $item/citationUnitElementName/text()]/text())  (: look up the citation unit that goes with the name column :)
+    for $item at $number in $nameData     (: loop through each of the names in various languages :)
+    let $text := functx:trim($item/textNode/text())
+    let $itemSourceUri := functx:trim($item/sourceUri/text())
+    let $itemSourceCitedRange := functx:trim($item/citedRange/text())
+    let $itemSourceCitationUnit := functx:trim($item/citationUnit/text())
     
     (: get the @source attribute value by matching the uri, cited range, and citation unit values :)
-    let $sourceAttr := 
-        for $src at $srcNumber in $sourcesIndex  (: step through the source index :)
-        where  $itemSourceUri = $src/*:uri/text() and $itemSourceCitedRange = $src/*:citedRange/text() and string($itemSourceCitationUnit) = string($src/*:citationUnit/text())  (: URI and page from columns must match with iterated item in the source index :)
-        return "bib" || $uriLocalName||'-'||$srcNumber    (: create the last part of the source attribute :)
+    let $sourceAttr := csv2srophe:create-source-attribute-for-element($item, $sourcesIndexForRow, $uriLocalName)
     let $langAttr := functx:trim($item/langCode/text())
     return csv2srophe:build-name-element($text, $elementName, $uriLocalName, $langAttr, $sourceAttr, $isHeadword, $number + $enumerationOffset)
+    
+};
+
+(:~ 
+: returns an xs:string of the form "bib\1-\2" where \1 is the uri local name, and
+: \2 is the position in sequence of the corresponding bibl element.
+: 
+: @param $itemData is a node containing source information about a given element,
+: such as a name. It follows the form:
+: <name>
+:  <langCode></langCode>
+:  <textNode></textNode>
+:  <sourceUri></sourceUri>
+:  <citedRange></citedRange>
+:  <citationUnit></citationUnit>
+: </name>
+: @param $sourcesIndexForRow contains a sequence of unique sources for a given
+: data row. 
+: @param $uriLocalName is the URI of the data row without the entity-uri base.
+:
+: @author William L. Potter
+: @version 1.0
+: :)
+declare function csv2srophe:create-source-attribute-for-element($itemData as element(),
+                                                                $sourcesIndexForRow as element()*,
+                                                                $uriLocalName as xs:string)
+as xs:string*
+{
+  for $src at $srcNumber in $sourcesIndexForRow  (: step through the source index :)
+  where  $itemData/*:sourceUri/text() = $src/*:sourceUri/text() 
+     and $itemData/*:citedRange/text() = $src/*:citedRange/text() 
+     and string($itemData/*:citationUnit/text()) = string($src/*:citationUnit/text())  (: URI and page from columns must match with iterated item in the source index :)
+  return if($itemData/*:sourceUri/text() != "") then "bib" || $uriLocalName||'-'||$srcNumber    (: create the last part of the source attribute :)
 };
 
 declare function csv2srophe:build-name-element($textNode as xs:string,
