@@ -107,7 +107,7 @@ declare %unit:test function csv2persons-test:create-abstracts-using-named-row() 
 
 declare %unit:test function csv2persons-test:create-trait-using-anonymous-row() {
   unit:assert-equals(csv2persons:create-trait($csv2persons-test:data-row-to-compare-anonymi), 
-                    <trait xml:lang="en">
+                    <trait xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en">
                         <label>anonymous</label>
                     </trait>)
 };

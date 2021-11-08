@@ -124,11 +124,13 @@ as node()
   </person>
 };
 
-
+(: currently hard-coded as this function will likely change considerably :)
 declare function csv2persons:create-trait($row as element())
 as element()?
 {
-  
+  let $traitText := functx:trim($row/*[name() = "trait.en"]/text())
+  let $label := element {QName("http://www.tei-c.org/ns/1.0", "label")} {$traitText}
+  return if($traitText != "") then element {QName("http://www.tei-c.org/ns/1.0", "trait")} {attribute {"xml:lang"} {"en"}, $label}
 };
 
 declare function csv2persons:create-sex-element($row, $sources)
