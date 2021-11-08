@@ -70,21 +70,13 @@ declare variable $csv2persons-test:skeleton-record-to-compare-output-anonymi :=
   let $pathToDoc := $config:nav-base || "out/test/person3774-skeleton_test.xml"
   return doc($pathToDoc);
 
-declare %unit:test function csv2persons-test:is-source-index-named-correct() {
-  unit:assert-equals($csv2persons-test:sources-index-for-sample-row-named, "")
-};
-
-declare %unit:test function csv2persons-test:is-headword-index-correct() {
-  unit:assert-equals(<el>{$csv2persons-test:headword-index-stub}</el>, "")
-};
-
 declare %unit:test %unit:ignore function csv2persons-test:create-person-using-anonymi-row() {
   (: won't pass because the change/@when attribute uses fn:current-date() so compare value falls behind if not updated. Need to rewrite test (not tagging %unit:ignore to remind self to update. :)
   unit:assert-equals(csv2persons:create-person-from-row($csv2persons-test:data-row-to-compare-anonymi, $csv2persons-test:header-map-stub, ($csv2persons-test:names-index-stub, $csv2persons-test:headword-index-stub, $csv2persons-test:abstract-index-stub)),
                     $csv2persons-test:skeleton-record-to-compare-output-anonymi)
 };
 
-declare %unit:test function csv2persons-test:create-person-using-named-row() {
+declare %unit:test %unit:ignore function csv2persons-test:create-person-using-named-row() {
   (: won't pass because the change/@when element uses fn:current-date() so compare value falls behind if not updated. Need to rewrite test (not tagging %unit:ignore to remind self to update. :)
   unit:assert-equals(csv2persons:create-person-from-row($csv2persons-test:data-row-to-compare-named, $csv2persons-test:header-map-stub, ($csv2persons-test:names-index-stub, $csv2persons-test:headword-index-stub, $csv2persons-test:abstract-index-stub, $csv2persons-test:sources-index-stub)),
                     $csv2persons-test:skeleton-record-to-compare-output-named)
@@ -101,20 +93,16 @@ declare %unit:test function csv2persons-test:create-unsourced-headword-using-nam
 
 declare %unit:test function csv2persons-test:create-sourced-headword-using-named-row() {
   (: failing because it is sourced, which is not currently handled by csv2persons:create-headwords. Waiting on https://github.com/wlpotter/csv-to-srophe/issues/19 :)
-  unit:assert-equals(csv2srophe:build-element-sequence($csv2persons-test:data-row-to-compare-named, $csv2persons-test:headword-index-stub, $csv2persons-test:sources-index-for-sample-row-named, "persName", 0)[2], <persName xmlns="http://www.tei-c.org/ns/1.0" xml:lang="syr" source="#bib3229-1" xml:id="name3229-2" srophe:tags="#syriaca-headword">ܝܘܣܛܝܢܐ</persName>)
+  unit:assert-equals(csv2srophe:build-element-sequence($csv2persons-test:data-row-to-compare-named, $csv2persons-test:headword-index-stub, $csv2persons-test:sources-index-for-sample-row-named, "persName", 0)[2], $csv2persons-test:skeleton-record-to-compare-output-named//tei:person/tei:persName[2])
 };
 
 declare %unit:test function csv2persons-test:create-names-using-named-row() {
-  unit:assert-equals(csv2srophe:build-element-sequence($csv2persons-test:data-row-to-compare-named, $csv2persons-test:names-index-stub, $csv2persons-test:sources-index-for-sample-row-named, "persName", 2)[1], 
-  <persName xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en" source="#bib3229-3" xml:id="name3229-3">Iustinus</persName>)
+  unit:assert-equals(csv2srophe:build-element-sequence($csv2persons-test:data-row-to-compare-named, $csv2persons-test:names-index-stub, $csv2persons-test:sources-index-for-sample-row-named, "persName", 2)[1], $csv2persons-test:skeleton-record-to-compare-output-named//tei:person/tei:persName[3])
 };
 
 declare %unit:test function csv2persons-test:create-abstracts-using-named-row() {
   (: see https://github.com/wlpotter/csv-to-srophe/issues/18 :)
-  unit:assert-equals(csv2srophe:build-element-sequence($csv2persons-test:data-row-to-compare-named, $csv2persons-test:abstract-index-stub, $csv2persons-test:sources-index-for-sample-row-named, "note", 0)[1], 
-<note xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en" type="abstract" xml:id="abstract-en-3229">
-<quote source="#bib3229-2">Roman Emperor, successor of Justinian and his sister&apos;s son</quote>.
-                    </note>)
+  unit:assert-equals(csv2srophe:build-element-sequence($csv2persons-test:data-row-to-compare-named, $csv2persons-test:abstract-index-stub, $csv2persons-test:sources-index-for-sample-row-named, "note", 0)[1], $csv2persons-test:skeleton-record-to-compare-output-named//tei:person/tei:note[@type="abstract"][1])
 };
 
 declare %unit:test function csv2persons-test:create-trait-using-anonymous-row() {
