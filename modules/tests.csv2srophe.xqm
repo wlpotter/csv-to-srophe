@@ -66,14 +66,14 @@ declare variable $csv2srophe-test:data-row-to-compare :=
  
 declare variable $csv2srophe-test:sources-index-node-to-compare-single :=
 <source>
-  <uri>http://syriaca.org/bibl/667</uri>
-  <citedRange>318</citedRange>
+  <sourceUri>http://syriaca.org/bibl/669</sourceUri>
+  <citedRange>283</citedRange>
 </source>;
 
 declare variable $csv2srophe-test:bibl-node-to-compare-single :=
-<bibl xmlns="http://www.tei-c.org/ns/1.0" xml:id="bib3059-2">
-  <ptr target="http://syriaca.org/bibl/667"/>
-  <citedRange unit="p">318</citedRange>
+<bibl xmlns="http://www.tei-c.org/ns/1.0" xml:id="bib3059-1">
+  <ptr target="http://syriaca.org/bibl/669"/>
+  <citedRange unit="p">283</citedRange>
 </bibl>;
 
 declare variable $csv2srophe-test:idno-node-to-compare :=
@@ -87,6 +87,19 @@ declare variable $csv2srophe-test:revisionDesc-from-config :=
   {$config:change-log}
 </revisionDesc>;
 
+declare variable $csv2srophe-test:populated-names-index-to-compare :=
+<name>
+  <langCode>syr</langCode>
+  <textNode>ܕܝܪܐ ܕܒܛܐܓܐܝܣ</textNode>
+  <sourceUri>http://syriaca.org/bibl/667</sourceUri>
+  <citedRange>318</citedRange>
+</name>;
+
+declare variable $csv2srophe-test:sources-index-node-to-compare :=
+<source>
+  <sourceUriElementName>sourceURI.abstract.en</sourceUriElementName>
+  <citedRangeElementName>citedRange.abstract.en</citedRangeElementName>
+</source>;
 
 declare %unit:test function csv2srophe-test:load-csv-with-a-local-file()
 {
@@ -160,15 +173,15 @@ declare  %unit:test function csv2srophe-test:get-uri-from-row-no-uri-base()
 
 declare  %unit:test function csv2srophe-test:create-sources-index-for-row-from-local-csv()
 {
-  unit:assert-equals(csv2srophe:create-sources-index-for-row($csv2srophe-test:data-row-to-compare,
-                                    $csv2srophe-test:header-map-from-local-csv)[2],
+  unit:assert-equals(csv2srophe:create-sources-index-for-row($csv2srophe-test:sources-index-node-to-compare,
+                                    $csv2srophe-test:data-row-to-compare)[1],
                      $csv2srophe-test:sources-index-node-to-compare-single)
 };
 
 declare %unit:test function csv2srophe-test:create-bibl-sequence-for-row-from-local-csv()
 {
   unit:assert-equals(csv2srophe:create-bibl-sequence($csv2srophe-test:data-row-to-compare,
-                                    $csv2srophe-test:header-map-from-local-csv)[2],
+                                    $csv2srophe-test:sources-index-node-to-compare)[1],
                     $csv2srophe-test:bibl-node-to-compare-single)
 };
 
@@ -238,4 +251,19 @@ declare %unit:test function csv2srophe-test:build-abstract-element-as-note-with-
 {
   unit:assert-equals(csv2srophe:build-abstract-element("Lorem ipsum", "note", "3059", "en", "", 1),
   <note xmlns="http://www.tei-c.org/ns/1.0" type="abstract" xml:id="abstract3059-1" xml:lang="en" resp="http://syriaca.org">Lorem ipsum</note>)
+};
+
+declare %unit:test function csv2srophe-test:populate-index-from-row-using-names-index() 
+{
+  unit:assert-equals(csv2srophe:populate-index-from-row($csv2srophe-test:names-index-node-to-compare, $csv2srophe-test:data-row-to-compare), $csv2srophe-test:populated-names-index-to-compare)
+};
+
+declare %unit:test function csv2srophe-test:create-sources-index-from-local-csv()
+{
+  unit:assert-equals(csv2srophe:create-sources-index(($csv2srophe-test:names-index-node-to-compare, $csv2srophe-test:abstract-index-node-to-compare))[2], $csv2srophe-test:sources-index-node-to-compare)
+};
+
+declare %unit:test function csv2srophe-test:populate-index-from-row-using-sources-index()
+{
+  unit:assert-equals(csv2srophe:populate-index-from-row($csv2srophe-test:sources-index-node-to-compare, $csv2srophe-test:data-row-to-compare), $csv2srophe-test:sources-index-node-to-compare-single)
 };

@@ -204,7 +204,8 @@ as element()*
   let $columnString := $column/string/string()
   let $leftOfDot := tokenize($columnString,'\.')[1]
   let $rightOfDot := tokenize($columnString,'\.')[2]
-  (: instead use the length of the input string  :)
+  
+  
   return if (substring(tokenize($columnString,'\.')[1],1,string-length($columnName)) = $columnName) then
   element {$columnName} 
   {
@@ -325,6 +326,35 @@ as element()*
   return $abstractIndex
 };
 
+(:~ 
+: returns a sequence looks like this:
+:
+: <source>
+:  <sourceUriElementName>sourceURI.name2</sourceUriElementName>
+:  <citedRangeElementName>citedRange.name2</citedRangeElementName>
+:  <citationUnitElementName>citationUnit.name2</citationUnitElementName>
+: </source>
+: <source>
+:  <sourceUriElementName>sourceURI.abstract.en</sourceUriElementName>
+:  <citedRangeElementName>citedRange.abstract.en</citedRangeElementName>
+:  <citationUnitElementName>citationUnit.abstract.en</citationUnitElementName>
+: </source>
+: ...
+:
+: @author William L. Potter
+: @version 1.0
+: 
+:)
+declare function csv2srophe:create-sources-index($indices as element()+)
+as element()*
+{
+  (: loop through the passed indices and pull out the sourceUri, citedRange, and citationUnit column data:)
+  for $item in $indices
+  let $sourceData := $item/*[name() = "sourceUriElementName" or name() = "citedRangeElementName" or name() = "citationUnitElementName"]
+  return <source>{$sourceData}</source>
+  
+};
+
 (: ----------------------------------------- :)
 (: functions for processing individual data rows into skeleton tei records :)
 (: ----------------------------------------- :)
@@ -334,6 +364,37 @@ as element()*
 :  shared across the majority of entity types.
 :)
 
+(:~ 
+: Returns a sequence of elements with the row-specific data pulled from the 
+: column names specified in the $index parameter.
+:
+: @param $index an index of column names that group associated information such
+: as name, name language, and source information for the name
+: @param $row is a row of data from a CSV file created with the csv2srophe:get-csv-data function
+: 
+: This function is used as an intermediary to create entity-specific elements
+: such as persName or placeName, etc.
+:
+: @author William L. Potter
+: @version 1.0
+:  :)
+declare function csv2srophe:populate-index-from-row($index as element()*,
+                                                    $row as element())
+as element()*
+{
+  for $item in $index
+  let $data := 
+    for $column in $item/*
+    let $matchedDataField := $row/*[name() = $column/text()]
+    
+    (: remove the "ElementName" or "ColumnElementName" portion of the element name:)
+    let $nodeName := functx:substring-before-if-contains($column/name(), "ElementName")
+    let $nodeName := functx:substring-before-if-contains($nodeName, "Column")
+    
+    return if ($column/name() = "langCode") then element {$nodeName} {$column/text()} (: the langCode data is stored in the index, not in the row :)
+           else element {$nodeName} {$matchedDataField/text()} (: for any other data, use the text node of the row data field that matches the column name :)
+  return element {node-name($item)} {$data}
+};
 (:~
 : Returns a subset of the $index that only includes columns that are not empty
 : in the given $row.
@@ -391,36 +452,11 @@ as xs:string
 :
 :)
 (: NOTE: should refactor to handle non-page references? :)
-declare function csv2srophe:create-sources-index-for-row($row as element(),
-                                                         $headerMap as element()+)
+declare function csv2srophe:create-sources-index-for-row($sourcesIndex as element()+,
+                                                         $row as element())
 as element()*
 {
-  (: Find every possible reference in the row and add it to a sequence :)
-  let $sources :=
-    for $source in $headerMap  (: loop through each item in the header map sequence :)
-    let $sourceUriColumnName := $source/name/text()  (: get the XML element name :)
-    let $sourceUri := functx:trim($row/*[name() = $sourceUriColumnName]/text())  (: find the value for that column :)
-    where lower-case(substring($source/string/text(),1,9)) = 'sourceuri' and $sourceUri != '' (: screen for right header string and skip over empty elements :)
-    let $sourceUriElement := <uri>{$sourceUri}</uri>
-    
-    let $lastPartColString := substring($source/string/text(),10)  (: find the last part of the sourceUri column header label :)
-    let $citedRangeColumnString := 'citedRange'||$lastPartColString  (: construct the column label for the cited range of the source :)
-    let $citedRangeColumnName :=
-        for $citedRange in $headerMap    (: find the column string that matches the constructed on :)
-        where $citedRangeColumnString = $citedRange/string/text()
-        return $citedRange/name/text()     (: return the XML tag name for the matching column string :)
-    let $sourceCitedRange := functx:trim($row/*[name() = $citedRangeColumnName]/text())
-    let $sourceCitedRangeElement := <citedRange>{$sourceCitedRange}</citedRange>
-    
-    let $citationUnitColumnString := 'citationUnit'||$lastPartColString  (: construct the column label for the citation unit :)
-    let $citationUnitColumnName :=
-        for $citationUnit in $headerMap    (: find the column string that matches the constructed one :)
-        where $citationUnitColumnString = $citationUnit/string/text()
-        return $citationUnit/name/text()     (: return the XML tag name for the matching column string :)
-    let $sourceCitationUnit := functx:trim($row/*[name() = $citationUnitColumnName]/text())
-    let $sourceCitationUnitElement := if ($sourceCitationUnit != "") then <citationUnit>{$sourceCitationUnit}</citationUnit>
-    return (<source>{$sourceUriElement, $sourceCitedRangeElement, $sourceCitationUnitElement}</source>)
-    
+  let $sources := csv2srophe:populate-index-from-row($sourcesIndex, $row) 
      (: remove redundant sources :)
     return functx:distinct-deep($sources)
 };
@@ -435,13 +471,13 @@ as element()*
 : In the csv, these citedRanges and citationUnits should be separated by the "#" character
 :)
 declare function csv2srophe:create-bibl-sequence($row as element(),
-                                                         $headerMap as element()+)
+                                                         $sourcesIndex as element()+)
 as element()*
 {
-  let $sources := csv2srophe:create-sources-index-for-row($row, $headerMap)
+  let $sources := csv2srophe:populate-index-from-row($sourcesIndex, $row)
   let $uriLocalName := csv2srophe:get-uri-from-row($row, "")
   for $source at $number in $sources
-    let $sourceUri := $source/uri/text()
+    let $sourceUri := $source/sourceUri/text()
     
     (: add the bibl uri-base if not already there :)
     let $sourceUri := if(starts-with($sourceUri, "http://syriaca.org/bibl/")
