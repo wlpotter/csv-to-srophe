@@ -501,7 +501,7 @@ as xs:string
 : @author William L. Potter
 :
 :)
-(: NOTE: should refactor to handle non-page references? :)
+
 declare function csv2srophe:create-sources-index-for-row($sourcesIndex as element()+,
                                                          $row as element())
 as element()*
@@ -608,6 +608,7 @@ as element()*
     case "headword" return csv2srophe:build-name-element($text, $elementName, $uriLocalName, $langAttr, $sourceAttr, true (), $number + $enumerationOffset)
     case "abstract" return csv2srophe:build-abstract-element($text, $elementName,$uriLocalName, $langAttr, $sourceAttr, $number + $enumerationOffset)
     case "sex" return csv2srophe:build-sex-element($text, $sourceAttr)
+    case "date" return csv2srophe:build-date-element($text, $sourceAttr, $item)
     (: case "date" return csv2srophe:build-date-element($text, $elementName, ) :)
     (: add other cases, e.g., "date", "sex", "anonymous descs", etc. :)
     default return () (: maybe have an error? :)
@@ -716,18 +717,32 @@ as element()
   return element {QName("http://www.tei-c.org/ns/1.0", "sex")} {$sourceAttr, $valueAttr, $textNode}
 };
 
+(: possibly a csv2srophe function if you use it for existence dates, etc.? 
+cases which this could handle
+
+persons:
+- floruit
+- birth
+- death
+- ??
+
+places:
+- state[@type="existence"]
+- state[@type="confession"] (though these can be undated, so possibly this will be separate?)
+  - or a confession can optionally call this function to create it?
+- event[@type="other"]
+- event[@type="attestation"] should likely be handled like confession states as, while they can be dated, the primary purposes is to create the link between work and name
+:)
 declare function csv2srophe:build-date-element($textNode as xs:string, $source as xs:string?, $associatedData as element())
 as element()
 {
-  (:
-  - source attribute is either @source = "#" || $source or @resp="http://syriaca.org"
-  - $associatedData/type/text() gives the element name
-  - $textNode is the text node.
-  - $associatedData/when|notBefore|notAfter/text() gives the attribute values for the associated names.
-  - return that element
-  
-  - keep in mind that this can later handle more complex dated things like 
-  :)
+  let $sourceAttr := if($source != "") then attribute {"source"} {"#" || $source} else attribute {"resp"} {"http://syriaca.org"}
+  let $elementName := functx:trim($associatedData/*:type/text())
+  let $dateAttrs :=
+    for $item in $associatedData/*
+    where $item/text() != "" and ($item/name() = "when" or $item/name() = "notBefore" or $item/name() = "notAfter")
+    return attribute {$item/name()} {functx:trim($item/text())}
+  return element {QName("http://www.tei-c.org/ns/1.0", $elementName)} {$sourceAttr, $dateAttrs, $textNode}
 };
 
 (: I'm not sure these final functions should be in this module. They are more
@@ -766,27 +781,6 @@ as element()
   return $revisionDesc
 };
 
-(: possibly a csv2srophe function if you use it for existence dates, etc.? 
-cases which this could handle
-
-persons:
-- floruit
-- birth
-- death
-- ??
-
-places:
-- state[@type="existence"]
-- state[@type="confession"] (though these can be undated, so possibly this will be separate?)
-  - or a confession can optionally call this function to create it?
-- event[@type="other"]
-- event[@type="attestation"] should likely be handled like confession states as, while they can be dated, the primary purposes is to create the link between work and name
-:)
-(: pending. This should take a data row, probably a date-index (which this module should create) and an index of sources. Based on the date type (type.daten), various elements can be constructed (see the list above). First implement for floruit, death, and birth in persons. Then can add later to handle existence and events and such:)
-declare function csv2srophe:create-dates($row, $sources)
-{
-  
-};
 (: ----------------------------------------- :)
 (: LATER DEVELOPMENT :)
 (: ----------------------------------------- :)

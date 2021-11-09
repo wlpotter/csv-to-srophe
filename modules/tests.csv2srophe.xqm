@@ -91,7 +91,7 @@ declare variable $csv2srophe-test:data-row-to-compare :=
   csv2srophe:get-data($csv2srophe-test:local-csv-uri, "	")[3];
   
 declare variable $csv2srophe-test:data-row-to-compare-persons :=
-  csv2srophe:get-data($csv2srophe-test:local-csv-uri-persons, "	")[43];
+  csv2srophe:get-data($csv2srophe-test:local-csv-uri-persons, "	")[138];
  
 declare variable $csv2srophe-test:sources-index-node-to-compare-single :=
 <source>
@@ -305,4 +305,9 @@ declare %unit:test function csv2srophe-test:create-sex-index-from-local-csv()
 declare %unit:test function csv2srophe-test:create-dates-index-from-local-csv()
 {
   unit:assert-equals(csv2srophe:create-dates-index($csv2srophe-test:header-map-from-local-csv-persons), $csv2srophe-test:dates-index-node-to-compare)
+};
+
+declare %unit:test function csv2srophe-test:create-date-element-from-local-csv()
+{
+  unit:assert-equals(csv2srophe:build-element-sequence($csv2srophe-test:data-row-to-compare-persons, $csv2srophe-test:dates-index-node-to-compare, $csv2srophe-test:sources-index-node-to-compare-single, "date", 0), <floruit xmlns="http://www.tei-c.org/ns/1.0" resp="http://syriaca.org" notBefore="500" notAfter="550">early 6th century</floruit>)
 };
