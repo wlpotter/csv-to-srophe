@@ -67,6 +67,12 @@ declare variable $csv2srophe-test:abstract-index-node-to-compare :=
   <citedRangeElementName>citedRange.abstract.en</citedRangeElementName>
 </abstract>;
 
+declare variable $csv2srophe-test:anonymousDesc-index-node-to-compare :=
+<anonymousDesc>
+  <langCode>en</langCode>
+  <textNodeColumnElementName>anonymousDesc.en</textNodeColumnElementName>
+</anonymousDesc>;
+
 declare variable $csv2srophe-test:sex-index-node-to-compare :=
 <sex>
   <textNodeColumnElementName>sex1</textNodeColumnElementName>
@@ -332,4 +338,9 @@ declare %unit:test function csv2srophe-test:create-bibl-sequence-with-multiple-c
             <citedRange unit="p">283</citedRange>
             <citedRange unit="entry">Test</citedRange>
           </bibl>)
+};
+
+declare %unit:test function csv2srophe-test:create-anonymousDesc-index-from-local-csv()
+{
+  unit:assert-equals(csv2srophe:create-anonymousDesc-index($csv2srophe-test:header-map-from-local-csv-persons), $csv2srophe-test:anonymousDesc-index-node-to-compare)
 };

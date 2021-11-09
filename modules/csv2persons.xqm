@@ -92,6 +92,7 @@ as node()
   let $headwordIndex := $indices/self::headword
   let $namesIndex := $indices/self::name
   let $abstractIndex := $indices/self::abstract
+  let $anonymousDescIndex := $indices/self::anonymousDesc
   let $sexIndex := $indices/self::sex
   let $datesIndex := $indices/self::date
   let $sourcesIndex := $indices/self::source
@@ -101,8 +102,9 @@ as node()
   
   let $headwords := csv2srophe:build-element-sequence($row, $headwordIndex, $sources, "persName", 0)
   let $numHeadwords := count($headwords)
-  (: add anonymous-description elements. also need to test that this doesn't break when there **aren't** anon descs :)
-  let $persNames := csv2srophe:build-element-sequence($row, $namesIndex, $sources, "persName", $numHeadwords)
+  let $anonymousDesc := csv2srophe:build-element-sequence($row, $anonymousDescIndex, $sources, "persName", $numHeadwords)
+  let $numAnonymousDesc := count($anonymousDesc)
+  let $persNames := csv2srophe:build-element-sequence($row, $namesIndex, $sources, "persName", $numHeadwords + $numAnonymousDesc)
   let $idnos := csv2srophe:create-idno-sequence-for-row($row, $config:uri-base)
   
   let $abstracts := csv2srophe:build-element-sequence($row, $abstractIndex, $sources, "note", 0)
@@ -122,7 +124,7 @@ as node()
   
   return 
   <person xmlns="http://www.tei-c.org/ns/1.0" xml:id="person-{$uriLocalName}">
-    {$headwords, $persNames, $idnos, $trait, $sex, $dates, $abstracts, $bibls}
+    {$headwords, $anonymousDesc, $persNames, $idnos, $trait, $sex, $dates, $abstracts, $bibls}
   </person>
 };
 

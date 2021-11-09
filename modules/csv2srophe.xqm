@@ -49,15 +49,16 @@ as document-node()*
   let $headwordIndex := csv2srophe:create-headword-index($headerMap)
   let $namesIndex := csv2srophe:create-names-index($headerMap)
   let $abstractIndex := csv2srophe:create-abstract-index($headerMap)
+  let $anonymousDescIndex := csv2srophe:create-anonymousDesc-index($headerMap)
   let $sexIndex := csv2srophe:create-sex-index($headerMap)
   let $datesIndex := csv2srophe:create-dates-index($headerMap)
   
-  let $indices := ($headwordIndex, $namesIndex, $abstractIndex, $sexIndex, $datesIndex)
+  let $indices := ($headwordIndex, $namesIndex, $abstractIndex, $anonymousDescIndex, $sexIndex, $datesIndex)
   let $sourcesIndex := csv2srophe:create-sources-index($indices)
   let $indices := ($indices, $sourcesIndex)
   
   for $row in $data
-    return switch($config:collection-type)
+    return switch($config:collection-type) (: perhaps switch collection type to be a parameter? Then call with the config variable (this might help with testing purposes?):)
       case "places" return csv2places:create-place-from-row($row, $headerMap, $indices)
       default return ""
 };
@@ -328,6 +329,13 @@ as element()*
 {
   let $abstractIndex := csv2srophe:create-column-index("abstract", $headerMap, "langCode")
   return $abstractIndex
+};
+
+declare function csv2srophe:create-anonymousDesc-index($headerMap as element()+)
+as element()*
+{
+  let $anonymousDescIndex := csv2srophe:create-column-index("anonymousDesc", $headerMap, "langCode")
+  return $anonymousDescIndex
 };
 
 (:~
@@ -624,6 +632,7 @@ as element()*
     case "name" return csv2srophe:build-name-element($text, $elementName, $uriLocalName, $langAttr, $sourceAttr, false (), $number + $enumerationOffset)
     case "headword" return csv2srophe:build-name-element($text, $elementName, $uriLocalName, $langAttr, $sourceAttr, true (), $number + $enumerationOffset)
     case "abstract" return csv2srophe:build-abstract-element($text, $elementName,$uriLocalName, $langAttr, $sourceAttr, $number + $enumerationOffset)
+    case "anonymousDesc" return csv2srophe:build-anonymousDesc-element($text, $elementName, $uriLocalName, $langAttr, $sourceAttr, false (), $number + $enumerationOffset)
     case "sex" return csv2srophe:build-sex-element($text, $sourceAttr)
     case "date" return csv2srophe:build-date-element($text, $sourceAttr, $item)
     (: case "date" return csv2srophe:build-date-element($text, $elementName, ) :)
@@ -721,6 +730,23 @@ as element()
 
 };
 
+(:~ 
+: returns an anonymous description nested in an @param $elementName
+:)
+declare function csv2srophe:build-anonymousDesc-element($textNode as xs:string,
+                                               $elementName as xs:string,
+                                               $entityUri as xs:string,
+                                               $language as xs:string,
+                                               $source as xs:string?,
+                                               $isHeadword as xs:boolean,
+                                               $namePositionInSequence as xs:integer)
+as element()
+{
+  (: create the anonymous description as if it were a non-headword entity name :)
+  let $anonymousDesc := csv2srophe:build-name-element($textNode, $elementName, $entityUri, $language, $source, $isHeadword, $namePositionInSequence)
+  let $anonymousDescAttr := attribute {"srophe:tags"} {"#anonymous-description"}
+  return element {node-name($anonymousDesc)} {$anonymousDesc/@*, $anonymousDescAttr, $anonymousDesc/child::node()}
+};
 (:~ 
 : returns a tei:sex element for use in persons entities.
  :)
