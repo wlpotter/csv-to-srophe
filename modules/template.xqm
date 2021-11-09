@@ -72,7 +72,10 @@ as node()
   </publicationStmt>
   
   (: build the seriesStmt from tepmlate :)
-  let $seriesStmt := $template//seriesStmt
+  let $seriesStmt := if($config:collection-type = "persons")
+    (: for persons, the seriesStmt depends on if the person is an author and/or saint :)
+    then template:build-persons-seriesStmt($template, string($record//text/body/listPerson/person/@ana))
+    else $template//seriesStmt
   
   (: build sourceDesc from template :)
   let $sourceDesc := $template//sourceDesc
@@ -153,29 +156,25 @@ as element()
   </title>
   
 };
-(:
-THESE ARE ALL TEMPLATE-INDEPENDENT!
-teiHeader
-fileDesc
-titleStmt
-- add creator editor to bottom of editor list
-- add respStmts to bottom of respStmt list
-editionStmt
-  from template
-publicationStmt
-  - add idno for record
-  - add current date
-seriesStmt
-  - from template
-sourceDesc
-  - from template
-encodingDesc
-  - from template
-profileDesc
-  - from template
-revisionDesc
-  - as-is from skeleton
-  - or maybe have flag to change to record is published??
-text
-  - as-is from skeleton
-:)
+
+declare function template:build-persons-seriesStmt($template as node(), $personType as xs:string?)
+as element()+
+{
+  (: include the main Syriac Biographical Dictionary seriesStmt, with the corresponding biblScopes for each entity-type:)
+  let $sbdSeriesStmt := $template//seriesStmt[idno[@type="URI"]/text() = "http://syriaca.org/persons"]
+  let $qadisheBiblScope := if(contains($personType, "#syriaca-saint")) then $sbdSeriesStmt/biblScope[@from="1"]
+  let $authorsBiblScope := if(contains($personType, "#syriaca-author")) then $sbdSeriesStmt/biblScope[@from="2"]
+  let $otherBiblScope := $sbdSeriesStmt/biblScope[text() = "3"]
+  
+  (: include volumes 1 and/or 2 if the person is a saint and/or author:)
+  let $sbdSeriesStmt := 
+    if(contains($personType, "#syriaca-saint") or contains($personType, "#syriaca-author")) then
+    element {node-name($sbdSeriesStmt)} {$sbdSeriesStmt/*[not(name() = "biblScope")], $qadisheBiblScope, $authorsBiblScope}
+    else element{node-name($sbdSeriesStmt)} {$sbdSeriesStmt/*[not(name() = "biblScope")], $otherBiblScope}
+  
+  (: include seriesStmt for Gateway to the Syriac Saints if the person is a saint :)
+  let $saintsSeriesStmt := if(contains($personType, "#syriaca-saint")) then
+    $template//seriesStmt[idno[@type="URI"]/text() = "http://syriaca.org/saints"]
+  
+  return ($sbdSeriesStmt, $saintsSeriesStmt)
+};
