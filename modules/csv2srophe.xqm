@@ -30,6 +30,7 @@ module namespace csv2srophe="http://wlpotter.github.io/ns/csv2srophe";
 import module namespace functx="http://www.functx.com";
 import module namespace config="http://wlpotter.github.io/ns/config" at "config.xqm";
 import module namespace csv2places="http://wlpotter.github.io/ns/csv2places" at "csv2places.xqm";
+import module namespace csv2persons="http://wlpotter.github.io/ns/csv2persons" at "csv2persons.xqm";
 
 declare namespace srophe="https://srophe.app";
 (: note that it makes use of Basex's CSV module. Note also that you should declare output options. :)
@@ -60,6 +61,7 @@ as document-node()*
   for $row in $data
     return switch($config:collection-type) (: perhaps switch collection type to be a parameter? Then call with the config variable (this might help with testing purposes?):)
       case "places" return csv2places:create-place-from-row($row, $headerMap, $indices)
+      case "persons" return csv2persons:create-person-from-row($row, $headerMap, $indices)
       default return ""
 };
                                         
