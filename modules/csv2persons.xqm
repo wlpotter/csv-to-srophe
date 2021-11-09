@@ -107,7 +107,7 @@ as node()
   
   let $abstracts := csv2srophe:build-element-sequence($row, $abstractIndex, $sources, "note", 0)
   
-  (: do any of these need indices?? :)
+  
   let $trait := csv2persons:create-trait($row)
   let $sex := csv2srophe:build-element-sequence($row, $sexIndex, $sources, "sex", 0)
   let $dates := csv2srophe:build-element-sequence($row, $datesIndex, $sources, "date", 0)
@@ -133,9 +133,4 @@ as element()?
   let $traitText := functx:trim($row/*[name() = "trait.en"]/text())
   let $label := element {QName("http://www.tei-c.org/ns/1.0", "label")} {$traitText}
   return if($traitText != "") then element {QName("http://www.tei-c.org/ns/1.0", "trait")} {attribute {"xml:lang"} {"en"}, $label}
-};
-
-declare function csv2persons:create-sex-element($row, $sources)
-{
-  
 };
