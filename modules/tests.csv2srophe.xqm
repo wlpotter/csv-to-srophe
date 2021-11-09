@@ -99,6 +99,13 @@ declare variable $csv2srophe-test:sources-index-node-to-compare-single :=
   <citedRange>283</citedRange>
 </source>;
 
+declare variable $csv2srophe-test:sources-index-node-to-compare-multiple-cited-range :=
+<source>
+  <sourceUri>http://syriaca.org/bibl/669</sourceUri>
+  <citedRange>283#Test</citedRange>
+  <citationUnit>p#entry</citationUnit>
+</source>;
+
 declare variable $csv2srophe-test:bibl-node-to-compare-single :=
 <bibl xmlns="http://www.tei-c.org/ns/1.0" xml:id="bib3059-1">
   <ptr target="http://syriaca.org/bibl/669"/>
@@ -310,4 +317,19 @@ declare %unit:test function csv2srophe-test:create-dates-index-from-local-csv()
 declare %unit:test function csv2srophe-test:create-date-element-from-local-csv()
 {
   unit:assert-equals(csv2srophe:build-element-sequence($csv2srophe-test:data-row-to-compare-persons, $csv2srophe-test:dates-index-node-to-compare, $csv2srophe-test:sources-index-node-to-compare-single, "date", 0), <floruit xmlns="http://www.tei-c.org/ns/1.0" resp="http://syriaca.org" notBefore="500" notAfter="550">early 6th century</floruit>)
+};
+
+declare %unit:test function csv2srophe-test:create-citedRange-element-from-stub()
+{
+  unit:assert-equals(csv2srophe:create-citedRange-element("228#Test", "p#entry")[2], <citedRange xmlns="http://www.tei-c.org/ns/1.0" unit="entry">Test</citedRange>)
+};
+
+declare %unit:test function csv2srophe-test:create-bibl-sequence-with-multiple-citation-units()
+{
+  unit:assert-equals(csv2srophe:create-bibl-sequence($csv2srophe-test:data-row-to-compare-persons, $csv2srophe-test:sources-index-node-to-compare-multiple-cited-range),
+  <bibl xmlns="http://www.tei-c.org/ns/1.0" xml:id="bib3774-1">
+            <ptr target="http://syriaca.org/bibl/669"/>
+            <citedRange unit="p">283</citedRange>
+            <citedRange unit="entry">Test</citedRange>
+          </bibl>)
 };

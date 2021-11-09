@@ -537,17 +537,34 @@ as element()*
                       else "http://syriaca.org/bibl/" || $sourceUri
     let $sourceCitedRange := $source/*:citedRange/text()
     let $sourceCitationUnit := if ($source/*:citationUnit/text() != "") then $source/*:citationUnit/text() else "p"
+    let $citedRangeElement := csv2srophe:create-citedRange-element($sourceCitedRange, $sourceCitationUnit)
     return
     <bibl xmlns="http://www.tei-c.org/ns/1.0" xml:id="bib{$uriLocalName}-{$number}">
         <ptr target="{$sourceUri}"/>
-        <citedRange unit="{$sourceCitationUnit}">{$sourceCitedRange}</citedRange>
+        {$citedRangeElement}
     </bibl>
-    (: refactor: handle multiple "#"-separated citedRange and citationUnits from the csv :)
-}; (:refactor: handle multiple @unit values in citedRange ("p" can be the default) 
+}; 
 
-Refactor: add a function that matches source values and returns the correct bibl source attribute based on input data
-csv2srophe:get-source-attribute-for-node($matchUri, $matchPages) -- once you make the more complex @unit handling, this can become $matchRangeType, $matchRangeValue or something similar
-:)
+(:~ 
+: returns a sequence of tei:citedRange elements based on the parameters. If the
+: cited range and citation unit are character-separated with the "#" character,
+: it will return multiple tei:citedRange elements for each pair in the sequence.
+:
+: @author William L. Potter
+: @version 1.0
+:  
+:  :)
+declare function csv2srophe:create-citedRange-element($citedRange as xs:string, 
+                                                      $citationUnit as xs:string)
+as element()+
+{
+  (: tokenize the range and unit strings. Currently hard-coded separator, but perhaps make this a :)
+  let $citedRangeSeq := tokenize($citedRange, "#")
+  let $citationUnitSeq := tokenize($citationUnit, "#")
+  
+  for $range at $i in $citedRangeSeq
+  return element {QName("http://www.tei-c.org/ns/1.0", "citedRange")} {attribute {"unit"} {$citationUnitSeq[$i]}, $range}
+};
 
 declare function csv2srophe:create-idno-sequence-for-row($row as element(), $uriBase as xs:string?)
 as element()*
