@@ -541,7 +541,7 @@ as element()*
     let $sourceUri := $source/sourceUri/text()
     where $sourceUri != ""
     (: add the bibl uri-base if not already there :)
-    let $sourceUri := if(starts-with($sourceUri, "http://syriaca.org/bibl/")
+    let $sourceUri := if(starts-with($sourceUri, "http")
                          and $sourceUri != "")
                       then $sourceUri 
                       else "http://syriaca.org/bibl/" || $sourceUri
