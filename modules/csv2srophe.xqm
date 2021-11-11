@@ -547,7 +547,7 @@ as element()*
                       else "http://syriaca.org/bibl/" || $sourceUri
     let $sourceCitedRange := $source/*:citedRange/text()
     let $sourceCitationUnit := if ($source/*:citationUnit/text() != "") then $source/*:citationUnit/text() else "p"
-    let $citedRangeElement := csv2srophe:create-citedRange-element($sourceCitedRange, $sourceCitationUnit)
+    let $citedRangeElement := if ($sourceCitedRange != "") then csv2srophe:create-citedRange-element($sourceCitedRange, $sourceCitationUnit)
     return
     <bibl xmlns="http://www.tei-c.org/ns/1.0" xml:id="bib{$uriLocalName}-{$number}">
         <ptr target="{$sourceUri}"/>
