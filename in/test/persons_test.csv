@@ -1,4 +1,4 @@
-uri	DNU	DNU	headword.en	headword.syr	alphabetize.headword.en	sourceUri.headword.syr	citedRange.headword.syr	citationUnit.headword.syr	sex1	sourceUri.sex1	citedRange.sex1	citationUnit.sex1	trait.en	abstract.en	anonymousDesc.en	sourceUri.abstract.en	citedRange.abstract.en	citationUnit.abstract.en	date1	when.date1	notBefore.date1	notAfter.date1	type.date1	sourceUri.date1	citedRange.date1	citationUnit.date1	name1.en	sourceUri.name1	citedRange.name1	citationUnit.name1	idno		NOTES 
+uri	DNU	relation1.possiblyIdentical 	headword.en	headword.syr	alphabetize.headword.en	sourceUri.headword.syr	citedRange.headword.syr	citationUnit.headword.syr	sex1	sourceUri.sex1	citedRange.sex1	citationUnit.sex1	trait.en	abstract.en	anonymousDesc.en	sourceUri.abstract.en	citedRange.abstract.en	citationUnit.abstract.en	date1	when.date1	notBefore.date1	notAfter.date1	type.date1	sourceUri.date1	citedRange.date1	citationUnit.date1	name1.en	sourceUri.name1	citedRange.name1	citationUnit.name1	idno		NOTES 
 2538			Aeneas	ܐܢܝܐ		667	472	pp	M	669	417	pp			Aeneas was a presbyter and monk	669	417	pp	early 6th century		500	550	floruit	669	417	pp							
 3183			Abba	ܐܒܐ		2033	224 [571]	pp	M	2033	224 [571]	pp		Monastic head of the monastery of John Urtaya		2033	224 [571]	pp															
 3184			Abraham of Amida						M	1409	96 [96]	pp		Bishop of Amida		2033	276 [622]	pp															
@@ -136,7 +136,7 @@ uri	DNU	DNU	headword.en	headword.syr	alphabetize.headword.en	sourceUri.headword.
 3771			Anonymi 3771												The holy community of non-Chalcedonians that the Empress Theodora gathered together in Constantinople	2032	676 [474]	pp	early 6th century		500	550	floruit	2032	676 [474]	pp							
 3772			Anonymous 3772						M	1409	270	pp			A monk and disciple of Zacharias	1409	270	pp															
 3773			Anonymous 3773						M	669	433	pp			The subject of a letter of Severus of Antioch. He was accused of abandoning his wife and children to enter a monastery.	669	433	pp	early 6th century		500	550	floruit	669	433	pp							
-3774			Anonymous 3774						F	669	440	pp	anonymous		The daughter of Conon the silentiary	669	440	pp	early 6th century		500	550	floruit	669	439-40	pp							
+3774		http://syriaca.org/person58#http://syriaca.org/person/2476#http://syriaca.org/person/2717#http://syriaca.org/person/2718 	Anonymous 3774						F	669	440	pp	anonymous		The daughter of Conon the silentiary	669	440	pp	early 6th century		500	550	floruit	669	439-40	pp							
 3775			Anonymous 3775						F	669	428	pp			The wife of Alypius	669	428	pp	early 6th century		500	550	floruit	669	428	pp							
 3776			Anonymous 3776						F	669	436-37	pp			The wife of Theodore the tribune and notary	669	436-37	pp	early 6th century		500	550	floruit	669	436-37	pp							
 3777			Anonymous 3777						F	669	263	pp			The wife of the comes John	669	263	pp	early 6th century		500	550	floruit	669	263	pp							
