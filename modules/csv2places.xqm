@@ -54,15 +54,19 @@ as document-node()
   let $teiHeader := <teiHeader xmlns="http://www.tei-c.org/ns/1.0">{$fileDesc, $revisionDesc}</teiHeader>
   
   (: Build text node :)
+  let $relationsIndex := $indices/self::relation
+  let $sourcesIndex := $indices/self::source
+  let $sources := csv2srophe:create-sources-index-for-row($sourcesIndex, $row)
+  
   let $text := 
   <text xmlns="http://www.tei-c.org/ns/1.0">
     <body>
       <listPlace>
         {csv2places:build-place-node-from-row($row, $headerMap, $indices)}
       </listPlace>
+      {csv2srophe:build-listRelation-element($row, $relationsIndex, $sources)}
     </body>
   </text>
-  (: listRelation will go below the listPlace, but not currently developed as not currently needed. Likely a csv2srophe.xqm function call as it's shared among places, etc. :)
   
   let $tei := 
   <TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:svg="http://www.w3.org/2000/svg" xmlns:srophe="https://srophe.app" xmlns:syriaca="http://syriaca.org" xml:lang="{$config:base-language}">
@@ -89,6 +93,7 @@ as node()
   let $headwordIndex := $indices/self::headword
   let $namesIndex := $indices/self::name
   let $abstractIndex := $indices/self::abstract
+  let $datesIndex := $indices/self::date
   let $sourcesIndex := $indices/self::source
   let $sources := csv2srophe:create-sources-index-for-row($sourcesIndex, $row)
   

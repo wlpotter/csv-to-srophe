@@ -54,9 +54,12 @@ declare variable $csv2persons-test:sex-index-stub :=
     
 declare variable $csv2persons-test:dates-index-stub := 
     csv2srophe:create-dates-index($csv2persons-test:header-map-stub);
+
+declare variable $csv2persons-test:relations-index-stub :=
+  csv2srophe:create-relations-index($csv2persons-test:header-map-stub);
         
 declare variable $csv2persons-test:sources-index-stub :=
-  csv2srophe:create-sources-index(($csv2persons-test:names-index-stub, $csv2persons-test:headword-index-stub, $csv2persons-test:abstract-index-stub, $csv2persons-test:sex-index-stub, $csv2persons-test:dates-index-stub));
+  csv2srophe:create-sources-index(($csv2persons-test:names-index-stub, $csv2persons-test:headword-index-stub, $csv2persons-test:abstract-index-stub, $csv2persons-test:sex-index-stub, $csv2persons-test:dates-index-stub, $csv2persons-test:relations-index-stub));
   
 declare variable $csv2persons-test:data-row-to-compare-named :=
   csv2srophe:get-data($csv2persons-test:local-csv-uri, "	")[43];
@@ -81,7 +84,7 @@ declare variable $csv2persons-test:skeleton-record-to-compare-output-anonymi :=
 
 declare %unit:test function csv2persons-test:create-person-using-anonymi-row() {
   (: won't pass because the change/@when attribute uses fn:current-date() so compare value falls behind if not updated. Need to rewrite test (not tagging %unit:ignore to remind self to update. :)
-  unit:assert-equals(csv2persons:create-person-from-row($csv2persons-test:data-row-to-compare-anonymi, $csv2persons-test:header-map-stub, ($csv2persons-test:names-index-stub, $csv2persons-test:headword-index-stub, $csv2persons-test:abstract-index-stub, $csv2persons-test:anonymousDesc-index-stub, $csv2persons-test:sex-index-stub, $csv2persons-test:dates-index-stub, $csv2persons-test:sources-index-stub)),
+  unit:assert-equals(csv2persons:create-person-from-row($csv2persons-test:data-row-to-compare-anonymi, $csv2persons-test:header-map-stub, ($csv2persons-test:names-index-stub, $csv2persons-test:headword-index-stub, $csv2persons-test:abstract-index-stub, $csv2persons-test:anonymousDesc-index-stub, $csv2persons-test:sex-index-stub, $csv2persons-test:dates-index-stub, $csv2persons-test:relations-index-stub, $csv2persons-test:sources-index-stub)),
                     $csv2persons-test:skeleton-record-to-compare-output-anonymi)
 };
 
