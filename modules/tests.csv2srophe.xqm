@@ -93,6 +93,12 @@ declare variable $csv2srophe-test:dates-index-node-to-compare :=
   <typeElementName>type.date1</typeElementName>
 </date>;
           
+declare variable $csv2srophe-test:relations-index-node-to-compare-persons :=
+<relation>
+  <type>possiblyIdentical</type>
+  <textNodeColumnElementName>relation1.possiblyIdentical</textNodeColumnElementName>
+</relation>;
+
 declare variable $csv2srophe-test:data-row-to-compare :=
   csv2srophe:get-data($csv2srophe-test:local-csv-uri, "	")[3];
   
@@ -142,6 +148,13 @@ declare variable $csv2srophe-test:sources-index-node-to-compare :=
   <sourceUriElementName>sourceURI.abstract.en</sourceUriElementName>
   <citedRangeElementName>citedRange.abstract.en</citedRangeElementName>
 </source>;
+
+declare variable $csv2srophe-test:listRelation-node-to-compare-possibly-identical-persons :=
+<listRelation xmlns="http://www.tei-c.org/ns/1.0">
+  <relation name="possibly-identical" mutual="http://syriaca.org/person/3774 http://syriaca.org/person58 http://syriaca.org/person/2476 http://syriaca.org/person/2717 http://syriaca.org/person/2718" resp="http://syriaca.org">
+    <desc xml:lang="en">This person is possibly identical with the person represented in another record</desc>
+  </relation>
+</listRelation>;
 
 declare %unit:test function csv2srophe-test:load-csv-with-a-local-file()
 {
@@ -343,4 +356,21 @@ declare %unit:test function csv2srophe-test:create-bibl-sequence-with-multiple-c
 declare %unit:test function csv2srophe-test:create-anonymousDesc-index-from-local-csv()
 {
   unit:assert-equals(csv2srophe:create-anonymousDesc-index($csv2srophe-test:header-map-from-local-csv-persons), $csv2srophe-test:anonymousDesc-index-node-to-compare)
+};
+
+declare %unit:test function csv2srophe-test:build-relationsIndex-from-local-csv()
+{
+  unit:assert-equals(csv2srophe:create-relations-index($csv2srophe-test:header-map-from-local-csv-persons), $csv2srophe-test:relations-index-node-to-compare-persons)
+};
+
+declare %unit:test function csv2srophe-test:build-listRelation-element-no-relations()
+(: should return empty :)
+{
+  unit:assert-equals(csv2srophe:build-listRelation-element($csv2srophe-test:data-row-to-compare, $csv2srophe-test:relations-index-node-to-compare-persons, $csv2srophe-test:sources-index-node-to-compare-multiple-cited-range), ())
+};
+
+declare %unit:test function csv2srophe-test:build-listRelation-element-has-relations()
+
+{
+  unit:assert-equals(csv2srophe:build-listRelation-element($csv2srophe-test:data-row-to-compare-persons, $csv2srophe-test:relations-index-node-to-compare-persons, $csv2srophe-test:sources-index-node-to-compare-multiple-cited-range), $csv2srophe-test:listRelation-node-to-compare-possibly-identical-persons)
 };

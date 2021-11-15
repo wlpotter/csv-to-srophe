@@ -53,8 +53,9 @@ as document-node()*
   let $anonymousDescIndex := csv2srophe:create-anonymousDesc-index($headerMap)
   let $sexIndex := csv2srophe:create-sex-index($headerMap)
   let $datesIndex := csv2srophe:create-dates-index($headerMap)
+  let $relationsIndex := csv2srophe:create-relations-index($headerMap)
   
-  let $indices := ($headwordIndex, $namesIndex, $abstractIndex, $anonymousDescIndex, $sexIndex, $datesIndex)
+  let $indices := ($headwordIndex, $namesIndex, $abstractIndex, $anonymousDescIndex, $sexIndex, $datesIndex, $relationsIndex)
   let $sourcesIndex := csv2srophe:create-sources-index($indices)
   let $indices := ($indices, $sourcesIndex)
   
@@ -210,7 +211,7 @@ as element()*
   for $column in $headerMap
   let $columnString := $column/string/string()
   let $leftOfDot := tokenize($columnString,'\.')[1]
-  let $rightOfDot := tokenize($columnString,'\.')[2]
+  let $rightOfDot := functx:trim(tokenize($columnString,'\.')[2])
   
   
   return if (substring(tokenize($columnString,'\.')[1],1,string-length($columnName)) = $columnName) then
@@ -367,6 +368,26 @@ as element()*
   return $sexIndex
 };
 
+(:~ 
+: returns a sequence looks like:
+: 
+: <relation>
+:  <type>possiblyIdentical</type>
+:  <textNodeColumnElementName>relation1.possiblyIdentical</textNodeColumnElementName>
+:  <sourceUriElementName>sourceUri.relation1</sourceUriElementName>
+:  ... (etc. with citedRange and citationUnit)
+: </relation> 
+: ...
+:
+: These columns store information for to tei:relation elements.
+:)
+declare function csv2srophe:create-relations-index($headerMap as element()+)
+as element()*
+{
+  let $relationsIndex := csv2srophe:create-column-index("relation", $headerMap, "type")
+  return $relationsIndex
+};
+
 declare function csv2srophe:create-dates-index($headerMap as element()+)
 as element()*
 {
@@ -451,7 +472,7 @@ as element()*
     let $nodeName := functx:substring-before-if-contains($column/name(), "ElementName")
     let $nodeName := functx:substring-before-if-contains($nodeName, "Column")
     
-    return if ($column/name() = "langCode") then element {$nodeName} {$column/text()} (: the langCode data is stored in the index, not in the row :)
+    return if ($column/name() = "langCode" or $column/name() = "type") then element {$nodeName} {$column/text()} (: the langCode data is stored in the index, not in the row :)
            else element {$nodeName} {$matchedDataField/text()} (: for any other data, use the text node of the row data field that matches the column name :)
   return element {node-name($item)} {$data}
 };
@@ -637,7 +658,7 @@ as element()*
     case "anonymousDesc" return csv2srophe:build-anonymousDesc-element($text, $elementName, $uriLocalName, $langAttr, $sourceAttr, false (), $number + $enumerationOffset)
     case "sex" return csv2srophe:build-sex-element($text, $sourceAttr)
     case "date" return csv2srophe:build-date-element($text, $sourceAttr, $item)
-    (: case "date" return csv2srophe:build-date-element($text, $elementName, ) :)
+    case "relation" return csv2srophe:build-relation-element($item, $sourceAttr, $uriLocalName, "#") (: FIX: separator should not be hard-coded :)
     (: add other cases, e.g., "date", "sex", "anonymous descs", etc. :)
     default return () (: maybe have an error? :)
 };
@@ -790,6 +811,49 @@ as element()
   return element {QName("http://www.tei-c.org/ns/1.0", $elementName)} {$sourceAttr, $dateAttrs, $textNode}
 };
 
+declare function csv2srophe:build-relation-element($relationData as element(), 
+                                                   $source as xs:string?,
+                                                   $uriLocalName as xs:string,
+                                                   $separator as xs:string)
+as element()
+{
+  let $selfUri := $config:uri-base || $uriLocalName (: it is assumed but not enforced that this function receives only the numerical portion of the URI :)
+  
+  let $otherUris := functx:trim($relationData/textNode/text())
+  let $otherUris := tokenize($otherUris, $separator)
+  (: if the other uris are of the same entity type (e.g., persons in a person row), they will not have the URI-base :)
+  let $otherUris := for $uri in $otherUris return if(starts-with($uri, "http")) then $uri else $config:uri-base || $uri
+  let $otherUris := string-join($otherUris, " ")
+  
+  let $sourceAttr := if($source != "") then attribute {"source"} {$source} else attribute {"resp"} {"http://syriaca.org"}
+  
+  let $relationType := functx:trim($relationData/type/text())
+  
+  return switch($relationType)
+  case "possiblyIdentical" return 
+    let $name := attribute {"name"} {"possibly-identical"}
+    let $mutual := attribute {"mutual"} {$selfUri||" "||$otherUris}
+    let $desc := element {QName("http://www.tei-c.org/ns/1.0", "desc")} {attribute {"xml:lang"} {"en"}, "This person is possibly identical with the person represented in another record"}
+    return element {QName("http://www.tei-c.org/ns/1.0", "relation")} {$name, $mutual, $sourceAttr, $desc}
+  default return 
+    let $name := attribute {"name"} {"see-also"}
+    let $mutual := attribute {"mutual"} {$selfUri||" "||$otherUris}
+    return element {QName("http://www.tei-c.org/ns/1.0", "relation")} {$name, $mutual, $sourceAttr}
+};
+
+declare function csv2srophe:build-listRelation-element($row as element(), 
+                                                        $relationsIndex as element()*, 
+                                                        $sourcesIndexForRow as element()*)
+as element()?
+{
+  let $relations := csv2srophe:build-element-sequence($row, 
+                                                      $relationsIndex, 
+                                                      $sourcesIndexForRow, 
+                                                      "relation", 0)
+  return if(not(empty($relations))) then 
+    element {QName("http://www.tei-c.org/ns/1.0", "listRelation")} {$relations}
+  else ()
+};
 (: I'm not sure these final functions should be in this module. They are more
 : generic than just csv transform. Perhaps separate out into some util library? :)
 
