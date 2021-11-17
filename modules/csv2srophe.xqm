@@ -807,8 +807,20 @@ as element()
   let $dateAttrs :=
     for $item in $associatedData/*
     where $item/text() != "" and ($item/name() = "when" or $item/name() = "notBefore" or $item/name() = "notAfter")
-    return attribute {$item/name()} {functx:trim($item/text())}
+    let $dateAttrValue := functx:trim($item/text())
+    let $dateAttrValue := csv2srophe:enforce-iso-date-format($dateAttrValue) (: ensure date attribute is in proper ISO format :)
+    return attribute {$item/name()} {$dateAttrValue}
   return element {QName("http://www.tei-c.org/ns/1.0", $elementName)} {$sourceAttr, $dateAttrs, $textNode}
+};
+
+declare function csv2srophe:enforce-iso-date-format($date)
+as xs:string
+{
+  let $dateComponents := tokenize($date, "-")
+  let $year := format-number(xs:integer($dateComponents[1]), "9999")
+  let $month := if($dateComponents[2] != "") then format-number(xs:integer($dateComponents[2]), "99")
+  let $day := if($dateComponents[3] != "") then format-number(xs:integer($dateComponents[3]), "99")
+  return string-join(($year, $month, $day), "-")
 };
 
 declare function csv2srophe:build-relation-element($relationData as element(), 
