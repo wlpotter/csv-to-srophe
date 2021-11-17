@@ -112,7 +112,7 @@
           <trait xml:lang="en">
             <label>anonymous</label>
           </trait>
-          <floruit source="#bib3750-1" notBefore="500" notAfter="550">early 6th century</floruit>
+          <floruit source="#bib3750-1" notBefore="0500" notAfter="0550">early 6th century</floruit>
           <note type="abstract" xml:id="abstract3750-1" xml:lang="en">
             <quote source="#bib3750-1">Recipients of a letter from Severus of Antioch, the incipit of which is no longer extant</quote>
           </note>

@@ -113,7 +113,7 @@
             <label>anonymous</label>
           </trait>
           <sex source="#bib3742-1" value="M">male</sex>
-          <floruit resp="http://syriaca.org" notBefore="500" notAfter="550">early 6th century</floruit>
+          <floruit resp="http://syriaca.org" notBefore="0500" notAfter="0550">early 6th century</floruit>
           <note type="abstract" xml:id="abstract3742-1" xml:lang="en">
             <quote source="#bib3742-1">The bishop of Antardus who removed the deacon Leontius from the sacred tables but allowed him to continue ministering</quote>
           </note>

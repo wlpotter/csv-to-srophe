@@ -112,7 +112,7 @@
           <persName xml:lang="en" xml:id="name3260-3" source="#bib3260-2">Šnq</persName>
           <idno type="URI">http://syriaca.org/person/3260</idno>
           <sex source="#bib3260-1" value="M">male</sex>
-          <floruit source="#bib3260-3" notBefore="500" notAfter="550">early 6th century</floruit>
+          <floruit source="#bib3260-3" notBefore="0500" notAfter="0550">early 6th century</floruit>
           <note type="abstract" xml:id="abstract3260-1" xml:lang="en">
             <quote source="#bib3260-1">Satrap of Syria and Armenia; father of Thomas the Armenian</quote>
           </note>

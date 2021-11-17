@@ -113,7 +113,7 @@
             <label>anonymous</label>
           </trait>
           <sex source="#bib3757-1" value="M">male</sex>
-          <floruit source="#bib3757-1" when="381">381</floruit>
+          <floruit source="#bib3757-1" when="0381">381</floruit>
           <note type="abstract" xml:id="abstract3757-1" xml:lang="en">
             <quote source="#bib3757-1">The bishops of the East who ordained Flavian I of Antioch</quote>
           </note>

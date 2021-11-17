@@ -111,7 +111,7 @@
           <persName xml:lang="syr" xml:id="name3241-2" srophe:tags="#syriaca-headword" source="#bib3241-1">ܦܘܠܘܣ</persName>
           <idno type="URI">http://syriaca.org/person/3241</idno>
           <sex source="#bib3241-1" value="M">male</sex>
-          <floruit source="#bib3241-1" notBefore="500" notAfter="600">6th century</floruit>
+          <floruit source="#bib3241-1" notBefore="0500" notAfter="0600">6th century</floruit>
           <note type="abstract" xml:id="abstract3241-1" xml:lang="en">
             <quote source="#bib3241-1">A presbyter who lived together with John of Ephesus at the home of the patrician Probus</quote>
           </note>

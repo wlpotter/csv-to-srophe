@@ -112,7 +112,7 @@
           <trait xml:lang="en">
             <label>anonymous</label>
           </trait>
-          <floruit source="#bib3744-1" notBefore="500" notAfter="550">early 6th century</floruit>
+          <floruit source="#bib3744-1" notBefore="0500" notAfter="0550">early 6th century</floruit>
           <note type="abstract" xml:id="abstract3744-1" xml:lang="en">
             <quote source="#bib3744-1">Certain Jewish people who sold a Christian slave</quote>
           </note>

@@ -113,7 +113,7 @@
             <label>anonymous</label>
           </trait>
           <sex source="#bib3754-1" value="M">male</sex>
-          <floruit source="#bib3754-1" notAfter="520">prior to 520 CE</floruit>
+          <floruit source="#bib3754-1" notAfter="0520">prior to 520 CE</floruit>
           <note type="abstract" xml:id="abstract3754-1" xml:lang="en">
             <quote source="#bib3754-1">A dead boy whom Isaiah tried to resurrect</quote>
           </note>

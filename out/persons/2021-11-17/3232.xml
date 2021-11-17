@@ -111,7 +111,7 @@
           <persName xml:lang="syr" xml:id="name3232-2" srophe:tags="#syriaca-headword" source="#bib3232-1">ܡܐܪܝܐ</persName>
           <idno type="URI">http://syriaca.org/person/3232</idno>
           <sex source="#bib3232-1" value="F">female</sex>
-          <floruit source="#bib3232-1" notBefore="500" notAfter="600">6th century</floruit>
+          <floruit source="#bib3232-1" notBefore="0500" notAfter="0600">6th century</floruit>
           <note type="abstract" xml:id="abstract3232-1" xml:lang="en">
             <quote source="#bib3232-1">Daughter of Euphemia</quote>
           </note>

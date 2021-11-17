@@ -112,7 +112,7 @@
           <trait xml:lang="en">
             <label>anonymous</label>
           </trait>
-          <floruit source="#bib3753-1" notBefore="500" notAfter="550">early 6th century</floruit>
+          <floruit source="#bib3753-1" notBefore="0500" notAfter="0550">early 6th century</floruit>
           <note type="abstract" xml:id="abstract3753-1" xml:lang="en">
             <quote source="#bib3753-1">The non-Chalcedonian clergy of Emesa who received a letter from Severus of Antioch sometime between 519-520</quote>
           </note>

@@ -113,7 +113,7 @@
             <label>anonymous</label>
           </trait>
           <sex source="#bib3718-1" value="M">male</sex>
-          <floruit source="#bib3718-1" notBefore="500" notAfter="600">6th century</floruit>
+          <floruit source="#bib3718-1" notBefore="0500" notAfter="0600">6th century</floruit>
           <note type="abstract" xml:id="abstract3718-1" xml:lang="en">
             <quote source="#bib3718-1">The monk who stole, subject of John of Ephesus' Life of that name</quote>
           </note>

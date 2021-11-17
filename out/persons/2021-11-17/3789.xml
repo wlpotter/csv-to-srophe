@@ -111,7 +111,7 @@
           <persName xml:lang="syr" xml:id="name3789-2" srophe:tags="#syriaca-headword" source="#bib3789-1">ܒܣܝܠܝܘܣ</persName>
           <idno type="URI">http://syriaca.org/person/3789</idno>
           <sex source="#bib3789-2" value="M">male</sex>
-          <floruit source="#bib3789-2" notBefore="514" notAfter="517">mid 510s</floruit>
+          <floruit source="#bib3789-2" notBefore="0514" notAfter="0517">mid 510s</floruit>
           <note type="abstract" xml:id="abstract3789-1" xml:lang="en">
             <quote source="#bib3789-2">Carrier of a letter between Solon and Severus</quote>
           </note>

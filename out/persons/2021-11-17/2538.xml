@@ -111,7 +111,7 @@
           <persName xml:lang="syr" xml:id="name2538-2" srophe:tags="#syriaca-headword" source="#bib2538-1">ܐܢܝܐ</persName>
           <idno type="URI">http://syriaca.org/person/2538</idno>
           <sex source="#bib2538-2" value="M">male</sex>
-          <floruit source="#bib2538-2" notBefore="500" notAfter="550">early 6th century</floruit>
+          <floruit source="#bib2538-2" notBefore="0500" notAfter="0550">early 6th century</floruit>
           <note type="abstract" xml:id="abstract2538-1" xml:lang="en">
             <quote source="#bib2538-2">Aeneas was a presbyter and monk</quote>
           </note>
