@@ -1,0 +1,44 @@
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:srophe="https://srophe.app">
+      <teiHeader>
+         <fileDesc>
+            <titleStmt>
+               <editor role="creator" ref="http://syriaca.org/documentation/editors.xml#dschwartz">Daniel L. Schwartz</editor>
+               <respStmt>
+                  <resp>URI minted and initial data collected by</resp>
+                  <name type="person" ref="http://syriaca.org/documentation/editors.xml#dschwartz">Daniel L. Schwartz</name>
+               </respStmt>
+            </titleStmt>
+         </fileDesc>
+         <revisionDesc status="draft">
+            <change who="http://syriaca.org/documentation/editors.xml#dschwartz" when="2021-11-02-04:00">CREATED: subject</change>
+         </revisionDesc>
+      </teiHeader>
+   <text>
+      <body>
+         <entryFree xml:id="keyword-afterlife" type="skos:Concept">
+            <term xml:lang="en" srophe:tags="#syriaca-headword" xml:id="name-afterlife-en">Afterlife</term>
+            <gloss xml:lang="en">
+               <term>afterlife</term>
+            </gloss>
+            <gloss xml:lang="en">
+               <term>eternal life</term>
+            </gloss>
+            <gloss xml:lang="en">
+               <term>life</term>
+            </gloss>
+            <gloss xml:lang="en">
+               <term>future</term>
+            </gloss>
+            <gloss xml:lang="en">
+               <term>life after death</term>
+            </gloss>
+            <listRelation>
+               <relation ref="skos:broadMatch" active="http://syriaca.org/keyword/afterlife" passive="http://syriaca.org/keyword/christianity"/>
+               <relation ref="skos:broadMatch" active="http://syriaca.org/keyword/afterlife" passive="http://syriaca.org/keyword/religion"/>
+            </listRelation>
+            <idno type="URI">http://syriaca.org/keyword/afterlife</idno>
+            <idno type="URI">http://id.loc.gov/authorities/subjects/sh85052611</idno>
+         </entryFree>
+      </body>
+   </text>
+</TEI>
