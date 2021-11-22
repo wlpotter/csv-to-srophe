@@ -847,6 +847,11 @@ as element()
     let $mutual := attribute {"mutual"} {$selfUri||" "||$otherUris}
     let $desc := element {QName("http://www.tei-c.org/ns/1.0", "desc")} {attribute {"xml:lang"} {"en"}, "This person is possibly identical with the person represented in another record"}
     return element {QName("http://www.tei-c.org/ns/1.0", "relation")} {$name, $mutual, $sourceAttr, $desc}
+  case "skosBroadMatch" return
+    let $ref := attribute {"ref"} {"skos:broadMatch"}
+    let $active := attribute {"active"} {$selfUri}
+    let $passive := attribute {"passive"} {$otherUris}
+    return element {QName("http://www.tei-c.org/ns/1.0", "relation")} {$ref, $active, $passive}
   default return 
     let $name := attribute {"name"} {"see-also"}
     let $mutual := attribute {"mutual"} {$selfUri||" "||$otherUris}
