@@ -57,7 +57,12 @@ declare variable $csv2subjects-test:data-row-to-compare :=
 
 declare variable $csv2subjects-test:data-row-to-compare-techne :=
   csv2srophe:get-data($csv2subjects-test:local-csv-uri, "	")[41];
+  
+declare variable $csv2subjects-test:data-row-to-compare-akkadian :=
+  csv2srophe:get-data($csv2subjects-test:local-csv-uri, "	")[80];
 
+declare variable $csv2subjects-test:data-row-to-compare-adopted-family-relationship :=
+  csv2srophe:get-data($csv2subjects-test:local-csv-uri, "	")[61];
  
 declare variable $csv2subjects-test:sources-index-for-sample-row :=
   csv2srophe:create-sources-index-for-row($csv2subjects-test:sources-index-stub, $csv2subjects-test:data-row-to-compare);
@@ -67,7 +72,7 @@ declare variable $csv2subjects-test:skeleton-record-to-compare-output :=
   return doc($pathToDoc);
   
 
-declare %unit:test function csv2subjects-test:create-subject-from-local-csv() {
+declare %unit:test %unit:ignore function csv2subjects-test:create-subject-from-local-csv() {
   (: won't pass because the change/@when attribute uses fn:current-date() so compare value falls behind if not updated. Need to rewrite test (not tagging %unit:ignore to remind self to update. :)
   unit:assert-equals(csv2subjects:create-subject-from-row($csv2subjects-test:data-row-to-compare, $csv2subjects-test:header-map-stub, ($csv2subjects-test:names-index-stub, $csv2subjects-test:headword-index-stub, $csv2subjects-test:abstract-index-stub, $csv2subjects-test:relations-index-stub, $csv2subjects-test:sources-index-stub)),
                     $csv2subjects-test:skeleton-record-to-compare-output)
@@ -75,6 +80,14 @@ declare %unit:test function csv2subjects-test:create-subject-from-local-csv() {
 
 declare %unit:test function csv2subjects-test:create-subject-subtype-from-local-csv() {
     unit:assert-equals(string(csv2subjects:create-subject-from-row($csv2subjects-test:data-row-to-compare-techne, $csv2subjects-test:header-map-stub, ($csv2subjects-test:names-index-stub, $csv2subjects-test:headword-index-stub, $csv2subjects-test:abstract-index-stub, $csv2subjects-test:relations-index-stub, $csv2subjects-test:sources-index-stub))//*:entryFree/@subtype), "category")
+};
+
+declare %unit:test function csv2subjects-test:create-subject-langCode-idno-from-local-csv() {
+    unit:assert-equals(csv2subjects:create-subject-from-row($csv2subjects-test:data-row-to-compare-akkadian, $csv2subjects-test:header-map-stub, ($csv2subjects-test:names-index-stub, $csv2subjects-test:headword-index-stub, $csv2subjects-test:abstract-index-stub, $csv2subjects-test:relations-index-stub, $csv2subjects-test:sources-index-stub))//*:entryFree/*:idno[not(@type)], <idno xmlns="http://www.tei-c.org/ns/1.0">ISO 639-2: akk</idno>)
+};
+
+declare %unit:test function csv2subjects-test:create-subject-note-from-local-csv() { (: fix: suppress attributes :)
+    unit:assert-equals(csv2subjects:create-subject-from-row($csv2subjects-test:data-row-to-compare-adopted-family-relationship, $csv2subjects-test:header-map-stub, ($csv2subjects-test:names-index-stub, $csv2subjects-test:headword-index-stub, $csv2subjects-test:abstract-index-stub, $csv2subjects-test:relations-index-stub, $csv2subjects-test:sources-index-stub))//*:entryFree/*:note, <note xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en">A "qualifier relationship" indicating that a familial relationship was constituted by adoption.</note>)
 };
 
 declare %unit:test function csv2subjects-test:create-headword-term-elements() {

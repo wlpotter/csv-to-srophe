@@ -112,7 +112,8 @@ as node()
   
   let $listRelation := csv2srophe:build-listRelation-element($row, $relationsIndex, $sources) (: FIX: need to build a relation for skos:broadMatch:)
   
-  let $idnos := csv2srophe:create-idno-sequence-for-row($row, $config:uri-base)  
+  let $idnos := csv2srophe:create-idno-sequence-for-row($row, $config:uri-base)
+  let $langCodeIdno := if(functx:trim($row/*:iso.langCode/text()) != "") then <idno xmlns="http://www.tei-c.org/ns/1.0">{functx:trim($row/*:iso.langCode/text())}</idno>
   let $abstracts := csv2srophe:build-element-sequence($row, $abstractIndex, $sources, "note", 0)
   
   (: create subtype attribute if one exists :)
@@ -123,7 +124,7 @@ as node()
     {attribute {"xml:id"} {"keyword-" || $uriLocalName},
      attribute {"type"} {"skos:Concept"} (: hard-coding the entryFree/@type as "skos:Concept". Will this ever change? :),
      $subType,
-     $headwords, $glosses, $listRelation, $idnos, $abstracts}
+     $headwords, $glosses, $listRelation, $idnos, $langCodeIdno, $abstracts}
 };
 
 (:
