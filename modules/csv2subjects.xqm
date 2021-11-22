@@ -70,6 +70,8 @@ as document-node()
     </body>
   </text>
   
+  let $text := functx:remove-attributes-deep($text, "resp") (: remove unneeded @resp attribute :)
+  
   let $tei := 
   <TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:svg="http://www.w3.org/2000/svg" xmlns:srophe="https://srophe.app" xmlns:syriaca="http://syriaca.org" xml:lang="{$config:base-language}">
     {$teiHeader, $text}
@@ -113,8 +115,6 @@ as node()
   let $idnos := csv2srophe:create-idno-sequence-for-row($row, $config:uri-base)  
   let $abstracts := csv2srophe:build-element-sequence($row, $abstractIndex, $sources, "note", 0)
   
-  (: let $bibls := csv2srophe:create-bibl-sequence($row, $sources) :) (: needed? :)
-  
   (: create subtype attribute if one exists :)
   let $subType := if(functx:trim($row/*:subjectSubType/text()) != "") then attribute {"subtype"} {functx:trim($row/*:subjectSubType/text())}
   (: compose tei:entryFree element and return it :)
@@ -123,7 +123,7 @@ as node()
     {attribute {"xml:id"} {"keyword-" || $uriLocalName},
      attribute {"type"} {"skos:Concept"} (: hard-coding the entryFree/@type as "skos:Concept". Will this ever change? :),
      $subType,
-     $headwords, $glosses, $listRelation, $idnos, $abstracts(: , $bibls :)}
+     $headwords, $glosses, $listRelation, $idnos, $abstracts}
 };
 
 (:
