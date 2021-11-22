@@ -717,6 +717,7 @@ as element()
                        attribute {"source"} {"#" || $source}
                      else
                        attribute {"resp"} {"http://syriaca.org"}
+  let $textNode := if($elementName = "gloss") then element {QName("http://www.tei-c.org/ns/1.0", "term")} {$textNode} else $textNode (: nest a term in a gloss :)
   return
     element {QName("http://www.tei-c.org/ns/1.0", $elementName)} 
             {$xmlLang, $xmlId, $headwordAttr, $sourceAttr, $textNode}
