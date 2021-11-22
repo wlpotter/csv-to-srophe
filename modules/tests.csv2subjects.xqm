@@ -53,7 +53,7 @@ declare variable $csv2subjects-test:sources-index-stub :=
   csv2srophe:create-sources-index(($csv2subjects-test:names-index-stub, $csv2subjects-test:headword-index-stub, $csv2subjects-test:abstract-index-stub, $csv2subjects-test:relations-index-stub));
   
 declare variable $csv2subjects-test:data-row-to-compare :=
-  csv2srophe:get-data($csv2subjects-test:local-csv-uri, "	")[14];
+  csv2srophe:get-data($csv2subjects-test:local-csv-uri, "	")[77];
 
  
 declare variable $csv2subjects-test:sources-index-for-sample-row :=
@@ -64,7 +64,7 @@ declare variable $csv2subjects-test:skeleton-record-to-compare-output :=
   return doc($pathToDoc);
   
 
-declare %unit:test function csv2subjects-test:create-person-using-anonymi-row() {
+declare %unit:test function csv2subjects-test:create-subject-from-local-csv() {
   (: won't pass because the change/@when attribute uses fn:current-date() so compare value falls behind if not updated. Need to rewrite test (not tagging %unit:ignore to remind self to update. :)
   unit:assert-equals(csv2subjects:create-subject-from-row($csv2subjects-test:data-row-to-compare, $csv2subjects-test:header-map-stub, ($csv2subjects-test:names-index-stub, $csv2subjects-test:headword-index-stub, $csv2subjects-test:abstract-index-stub, $csv2subjects-test:relations-index-stub, $csv2subjects-test:sources-index-stub)),
                     $csv2subjects-test:skeleton-record-to-compare-output)
