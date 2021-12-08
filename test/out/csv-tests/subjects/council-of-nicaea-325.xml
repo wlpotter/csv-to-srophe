@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:srophe="https://srophe.app" xmlns:syriaca="http://syriaca.org" xmlns:svg="http://www.w3.org/2000/svg" xml:lang="en">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title level="a" xml:lang="en">Council of Nicaea (325)</title>
+        <sponsor xmlns:skos="http://www.w3.org/2004/02/skos/core#">Syriaca.org: The Syriac Reference Portal</sponsor>
+        <funder xmlns:skos="http://www.w3.org/2004/02/skos/core#">The International Balzan Prize Foundation</funder>
+        <funder xmlns:skos="http://www.w3.org/2004/02/skos/core#">The National Endowment for the Humanities</funder>
+        <editor xmlns:skos="http://www.w3.org/2004/02/skos/core#" role="general" ref="http://syriaca.org/documentation/editors.xml#sminov">Sergey
+                                    Minov</editor>
+        <editor xmlns:skos="http://www.w3.org/2004/02/skos/core#" role="general" ref="http://syriaca.org/documentation/editors.xml#dschwartz">Daniel L. Schwartz</editor>
+        <editor xmlns:skos="http://www.w3.org/2004/02/skos/core#" role="creator" ref="http://syriaca.org/documentation/editors.xml#sminov">Sergey
+                                    Minov</editor>
+        <editor role="creator" ref="http://syriaca.org/documentation/editors.xml#dschwartz">Daniel L. Schwartz</editor>
+        <respStmt>
+          <resp>URI minted and initial data collected by</resp>
+          <name ref="http://syriaca.org/documentation/editors.xml#dschwartz">Daniel L. Schwartz</name>
+        </respStmt>
+        <respStmt xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+          <resp>This keyword list adapts and expands one developed for the
+                                        Comprehensive Bibliography of Syriac Christianity by</resp>
+          <name ref="http://syriaca.org/documentation/editors.xml#sminov">Sergey Minov</name>
+        </respStmt>
+        <respStmt xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+          <resp>Adaptation, expansion, and organization of the
+                                        Comprehensive Bibliography of Syriac Christianity keyword
+                                        list by</resp>
+          <name type="person" ref="http://syriaca.org/documentation/editors.xml#dschwartz">Daniel L. Schwartz</name>
+        </respStmt>
+      </titleStmt>
+      <editionStmt xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+        <edition n="1.0"/>
+      </editionStmt>
+      <publicationStmt>
+        <authority xmlns:skos="http://www.w3.org/2004/02/skos/core#">Syriaca.org: The Syriac Reference Portal</authority>
+        <idno type="URI">http://syriaca.org/keyword/council-of-nicaea-325/tei</idno>
+        <availability xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+          <licence target="http://creativecommons.org/licenses/by/3.0/">
+            <p>Distributed under a Creative Commons Attribution 3.0
+                                            Unported License.</p>
+          </licence>
+        </availability>
+        <date>2021-12-08-05:00</date>
+      </publicationStmt>
+      <seriesStmt xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+        <title level="s">A Taxonomy of Syriac Studies</title>
+        <editor role="general" ref="http://syriaca.org/documentation/editors.xml#sminov">Sergey
+                                    Minov</editor>
+        <editor role="general" ref="http://syriaca.org/documentation/editors.xml#dschwartz">Daniel L. Schwartz</editor>
+        <respStmt>
+          <resp>Edited by</resp>
+          <name type="person" ref="http://syriaca.org/documentation/editors.xml#sminov">Sergey Minov</name>
+        </respStmt>
+        <respStmt>
+          <resp>Edited by</resp>
+          <name type="person" ref="http://syriaca.org/documentation/editors.xml#dschwartz">Daniel L. Schwartz</name>
+        </respStmt>
+        <idno type="URI">http://syriaca.org/taxonomy</idno>
+      </seriesStmt>
+      <sourceDesc xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+        <p>Born digital.</p>
+      </sourceDesc>
+    </fileDesc>
+    <encodingDesc xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+      <editorialDecl>
+        <p>This record created following the Syriaca.org guidelines.
+                                    Documentation available at:<ref target="http://syriaca.org/documentation">http://syriaca.org/documentation</ref>.</p>
+        <interpretation>
+          <p>Approximate dates described in terms of centuries or partial
+                                        centuries have been interpreted as documented in<ref target="http://syriaca.org/documentation/dates.html">Syriaca.org Dates</ref>.</p>
+        </interpretation>
+      </editorialDecl>
+      <classDecl>
+        <taxonomy>
+          <category xml:id="syriaca-headword">
+            <catDesc>The name used by Syriaca.org for document titles,
+                                            citation, and disambiguation. These names have been
+                                            created according to the Syriaca.org guidelines for
+                                            headwords:<ref target="http://syriaca.org/documentation/headwords.html">http://syriaca.org/documentation/headwords.html</ref>.</catDesc>
+          </category>
+          <category xml:id="syriaca-anglicized">
+            <catDesc>An anglicized version of a name, included to
+                                            facilitate searching.</catDesc>
+          </category>
+        </taxonomy>
+      </classDecl>
+    </encodingDesc>
+    <profileDesc xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+      <langUsage>
+        <p>Languages codes used in this record follow the Syriaca.org guidelines. Documentation available at:<ref target="http://syriaca.org/documentation/langusage.xml">http://syriaca.org/documentation/langusage.xml</ref>
+        </p>
+      </langUsage>
+    </profileDesc>
+    <revisionDesc status="draft">
+      <change when="2021-12-08-05:00" who="http://syriaca.org/documentation/editors.xml#dschwartz">CREATED: keyword</change>
+    </revisionDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <entryFree xml:id="keyword-council-of-nicaea-325" type="skos:Concept">
+        <term xml:lang="en" xml:id="name-council-of-nicaea-325-en" srophe:tags="#syriaca-headword">Council of Nicaea (325)</term>
+        <listRelation>
+          <relation name="skos:closeMatch" ref="http://www.w3.org/2004/02/skos/core#closeMatch" active="http://syriaca.org/keyword/council-of-nicaea-325" passive="http://id.loc.gov/authorities/names/n82074285"/>
+          <relation name="skos:broader" ref="http://www.w3.org/2004/02/skos/core#broader" active="http://syriaca.org/keyword/council-of-nicaea-325" passive="http://syriaca.org/keyword/christianity"/>
+          <relation name="skos:broader" ref="http://www.w3.org/2004/02/skos/core#broader" active="http://syriaca.org/keyword/council-of-nicaea-325" passive="http://syriaca.org/keyword/events"/>
+          <relation name="skos:broader" ref="http://www.w3.org/2004/02/skos/core#broader" active="http://syriaca.org/keyword/council-of-nicaea-325" passive="http://syriaca.org/keyword/places"/>
+        </listRelation>
+        <idno type="URI">http://syriaca.org/keyword/council-of-nicaea-325</idno>
+      </entryFree>
+    </body>
+  </text>
+</TEI>
