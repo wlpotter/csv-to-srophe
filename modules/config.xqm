@@ -102,3 +102,10 @@ declare variable $config:editor-uri-base :=
 
 declare variable $config:base-language :=
   $config:config-file/meta/config/syriacaMetadata/baseLanguage/text();
+  
+declare variable $config:active-namespaces :=
+    for $ns in $config:config-file/meta/config/listNamespace/namespace
+    where contains(string($ns/@entity), "all") or contains(string($ns/@entity), $config:collection-type)
+    let $prefix := string($ns/@prefix)
+    let $nsUri := $ns/text()
+    return namespace {$prefix} {$nsUri};

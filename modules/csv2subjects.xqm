@@ -73,9 +73,10 @@ as document-node()
   let $text := functx:remove-attributes-deep($text, "resp") (: remove unneeded @resp attribute :)
   
   let $tei := 
-  <TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:svg="http://www.w3.org/2000/svg" xmlns:srophe="https://srophe.app" xmlns:syriaca="http://syriaca.org" xml:lang="{$config:base-language}">
+  element {QName("http://www.tei-c.org/ns/1.0", "TEI")} {$config:active-namespaces, attribute {"xml:lang"} {$config:base-language}, $teiHeader, $text}
+  (: <TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:srophe="https://srophe.app" xmlns:syriaca="http://syriaca.org" xml:lang="{$config:base-language}">
     {$teiHeader, $text}
-  </TEI>
+  </TEI> :)
   return document {$tei}
 };
 

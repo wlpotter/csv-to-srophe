@@ -119,14 +119,7 @@ as node()
   (: now the TEI node can be constructed; the xml:lang attribute comes from the record :)
   let $baseLanguage := string($record/TEI/@xml:lang)
   let $teiNode :=
-  (: NOTE: as there is not a way to select and copy the xmlns declarations from the template, this is somewhat of a hack based on places. 
-  : If needed, add more :)
-  <TEI xmlns:svg="http://www.w3.org/2000/svg" xmlns:syriaca="http://syriaca.org" xmlns:srophe="https://srophe.app" xml:lang="{$baseLanguage}">
-    {
-      $teiHeader,
-      $text
-    }
-  </TEI>
+  element {QName("http://www.tei-c.org/ns/1.0", "TEI")} {$config:active-namespaces, attribute {"xml:lang"} {$config:base-language}, $teiHeader, $text}
   
   (: build list of processing instructions based on template. This should be the various schema associations and any other CSS, etc. associations :)
   let $processingInstructions := $template/processing-instruction()
