@@ -117,6 +117,10 @@ as node()
   let $langCodeIdno := if(functx:trim($row/*:iso.langCode/text()) != "") then <idno xmlns="http://www.tei-c.org/ns/1.0">{functx:trim($row/*:iso.langCode/text())}</idno>
   let $abstracts := csv2srophe:build-element-sequence($row, $abstractIndex, $sources, "note", 0)
   
+  (: remove unused attributes from abstracts :)
+  let $abstracts := for $abs in $abstracts
+    return functx:remove-attributes(functx:remove-attributes($abs, "xml:id"), "type")
+  
   (: create subtype attribute if one exists :)
   let $subType := if(functx:trim($row/*:subjectSubType/text()) != "") then attribute {"subtype"} {functx:trim($row/*:subjectSubType/text())}
   (: compose tei:entryFree element and return it :)
