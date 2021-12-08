@@ -20,7 +20,7 @@
             -->
             <outputPath>test/out/csv-tests/subjects/</outputPath>
             <!-- This element controls the output either to 'console', for testing and debugging, or to 'file', i.e. when storing the results of processing as new TEI records.-->
-            <fileOrConsole>file</fileOrConsole>
+            <fileOrConsole>console</fileOrConsole>
         </io>
         <!-- specifies the type of data to be processed. Corresponds to the collections listed in meta/config/collections/collection/@name -->
         <collectionType>subjects</collectionType>
