@@ -31,15 +31,7 @@ import module namespace csv2srophe="http://wlpotter.github.io/ns/csv2srophe" at 
 (: Note that you should declare output options. :)
 
 
-(:
-Changes to output format
-- non-headword names hsould be <gloss xml:lang="en, etc."><term>x</term></gloss>
-- idno list
-    - may get more complicated because not all are URIs...Spear column is idno[@type="SPEAR"] and ISO codes don't have a type... (Simplest solve: if they have an idno.type, use the .type (which must be the **exact** @type value and is case sensitive). If none given, use "URI". For ISO codes this won't work...maybe have an idno. that is no type? or idno.NoType/None/etc. ? Or rewrite the column headers to require idno.URI on them. But that's somewhat tedious)
-    - it gets more complicated...
-    - if the idno is @type="SPEAR", it looks like the column G (relType) controls an @ana attribute on the idno (see alliance-with as an example)
-    - note that column B (***type) does not seem to do anything
-:)
+
 declare function csv2subjects:create-subject-from-row($row as element(),
                                                   $headerMap as element()+,
                                                   $indices as element()*)
