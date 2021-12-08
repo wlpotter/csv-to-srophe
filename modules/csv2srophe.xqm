@@ -849,19 +849,19 @@ as element()
     let $desc := element {QName("http://www.tei-c.org/ns/1.0", "desc")} {attribute {"xml:lang"} {"en"}, "This person is possibly identical with the person represented in another record"}
     return element {QName("http://www.tei-c.org/ns/1.0", "relation")} {$name, $mutual, $sourceAttr, $desc}
   case "skosBroadMatch" return
-    let $name := attribute {"ref"} {"skos:broadMatch"}
+    let $name := attribute {"name"} {"skos:broadMatch"}
     let $ref := attribute {"ref"} {"http://www.w3.org/2004/02/skos/core#broadMatch"}
     let $active := attribute {"active"} {$selfUri}
     let $passive := attribute {"passive"} {$otherUris}
     return element {QName("http://www.tei-c.org/ns/1.0", "relation")} {$name, $ref, $active, $passive}
   case "skosCloseMatch" return
-    let $name := attribute {"ref"} {"skos:closeMatch"}
+    let $name := attribute {"name"} {"skos:closeMatch"}
     let $ref := attribute {"ref"} {"http://www.w3.org/2004/02/skos/core#closeMatch"}
     let $active := attribute {"active"} {$selfUri}
     let $passive := attribute {"passive"} {$otherUris}
     return element {QName("http://www.tei-c.org/ns/1.0", "relation")} {$name, $ref, $active, $passive}
   case "skosBroader" return
-    let $name := attribute {"ref"} {"skos:broader"}
+    let $name := attribute {"name"} {"skos:broader"}
     let $ref := attribute {"ref"} {"http://www.w3.org/2004/02/skos/core#broader"}
     let $active := attribute {"active"} {$selfUri}
     let $passive := attribute {"passive"} {$otherUris}
