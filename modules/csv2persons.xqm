@@ -104,6 +104,9 @@ as node()
   
   (: build descendant nodes of the tei:person :)
   
+  (: HARD-CODED pending batch changes will affect this functionality :)
+  let $anaAttr := if(functx:trim($row/*[name() = "trait.en"]/text()) = "anonymous") then attribute {"ana"} {"#syriaca-anonymous"}
+  
   let $headwords := csv2srophe:build-element-sequence($row, $headwordIndex, $sources, "persName", 0)
   let $numHeadwords := count($headwords)
   let $anonymousDesc := csv2srophe:build-element-sequence($row, $anonymousDescIndex, $sources, "persName", $numHeadwords)
@@ -124,11 +127,11 @@ as node()
   
   let $bibls := csv2srophe:create-bibl-sequence($row, $sources)
   
-  (: compose tei:place element and return it :)
+  (: compose tei:person element and return it :)
   
   return 
   <person xmlns="http://www.tei-c.org/ns/1.0" xml:id="person-{$uriLocalName}">
-    {$headwords, $anonymousDesc, $persNames, $idnos, $trait, $sex, $dates, $abstracts, $bibls}
+    {$anaAttr, $headwords, $anonymousDesc, $persNames, $idnos, $trait, $sex, $dates, $abstracts, $bibls}
   </person>
 };
 
