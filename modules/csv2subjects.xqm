@@ -103,7 +103,9 @@ as node()
   let $numHeadwords := count($headwords)
   let $glosses := csv2srophe:build-element-sequence($row, $namesIndex, $sources, "gloss", $numHeadwords)
   
-  let $listRelation := csv2srophe:build-listRelation-element($row, $relationsIndex, $sources) (: FIX: need to build a relation for skos:broadMatch:)
+  let $listRelation := csv2srophe:build-listRelation-element($row, $relationsIndex, $sources)
+  
+  let $relationshipTypeNote := if(functx:trim($row/*:relType/text()) != "") then <note type="relationshipType" subtype="{functx:trim($row/*:relType/text())}"/>
   
   let $idnos := csv2srophe:create-idno-sequence-for-row($row, $config:uri-base)
   let $langCodeIdno := if(functx:trim($row/*:iso.langCode/text()) != "") then <idno xmlns="http://www.tei-c.org/ns/1.0">{functx:trim($row/*:iso.langCode/text())}</idno>
@@ -121,12 +123,5 @@ as node()
     {attribute {"xml:id"} {"keyword-" || $uriLocalName},
      attribute {"type"} {"http://www.w3.org/2004/02/skos/core#Concept"},
      $subType,
-     $headwords, $glosses, $listRelation, $idnos, $langCodeIdno, $abstracts}
+     $headwords, $glosses, $listRelation, $relationshipTypeNote, $idnos, $langCodeIdno, $abstracts}
 };
-
-(:
-Possibly need:
-
-- function stripping out unnecessary @resp attributes
-- 
-:)
