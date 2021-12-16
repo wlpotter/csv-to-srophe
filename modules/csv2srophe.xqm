@@ -837,7 +837,7 @@ as element()
   let $otherUris := functx:trim($relationData/textNode/text())
   let $otherUris := tokenize($otherUris, $separator)
   (: if the other uris are of the same entity type (e.g., persons in a person row), they will not have the URI-base :)
-  let $otherUris := for $uri in $otherUris return if(starts-with($uri, "http")) then $uri else $config:uri-base || $uri
+  let $otherUris := for $uri in $otherUris return if(starts-with($uri, "http") or starts-with($uri, "ISO") or starts-with($uri, "snap:")) then $uri else $config:uri-base || $uri
   let $otherUris := string-join($otherUris, " ")
   
   let $sourceAttr := if($source != "") then attribute {"source"} {$source} else attribute {"resp"} {"http://syriaca.org"}
