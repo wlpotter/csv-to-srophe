@@ -119,7 +119,7 @@ as node()
   return element 
     {QName("http://www.tei-c.org/ns/1.0", "entryFree")} 
     {attribute {"xml:id"} {"keyword-" || $uriLocalName},
-     attribute {"type"} {"skos:Concept"} (: hard-coding the entryFree/@type as "skos:Concept". Will this ever change? :),
+     attribute {"type"} {"http://www.w3.org/2004/02/skos/core#Concept"},
      $subType,
      $headwords, $glosses, $listRelation, $idnos, $langCodeIdno, $abstracts}
 };
