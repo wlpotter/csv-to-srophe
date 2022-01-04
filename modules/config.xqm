@@ -109,3 +109,15 @@ declare variable $config:active-namespaces :=
     let $prefix := string($ns/@prefix)
     let $nsUri := $ns/text()
     return namespace {$prefix} {$nsUri};
+    
+declare variable $config:index-url :=
+  string($config:collection-node/@index);
+
+declare variable $config:index-of-existing-uris :=
+  if($config:index-url = "") then <error type="warning"><desc>No index available for the selected entity type</desc></error>
+  else
+    let $response := http:send-request(<http:request method='get'/>, $config:index-url)
+    return if(string($response[1]/@status) = "200") then 
+      for $url in $response[2]/*/*
+      return string($url/@ref)
+    else <error type="warning"><desc>Unable to retrieve index from server</desc> {$response[1]}</error>;

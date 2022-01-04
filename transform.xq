@@ -53,12 +53,14 @@ return if(functx:atomic-type($inputCollection) = "xs:string")
          :  This base-uri is determined by the /meta/config/collections/collection/@record-URI-base of the collection whose @name matches /meta/config/collectionType/text():)
          let $inDocUri := $inDoc//text//idno[@type="URI" and starts-with(text(), $config:uri-base)]/text()
          
+         (: if the mark the URI if it exists; only check if the index creation did not raise an error. successful index creation results in a sequence of strings:)
+         let $uriExists := if($config:index-of-existing-uris[1] instance of xs:string) then functx:is-value-in-sequence($inDocUri, $config:index-of-existing-uris) else false
          let $outDoc := template:merge-record-into-template($inDoc, $config:record-template, $inDocUri)
          
          (: write to the output folder or return to console. Variable controlled by config.xml/meta/config/io/fileOrConsole :)
-         return if($config:file-or-console = "file") then
+         return if($config:file-or-console = "file" and not($uriExists)) then
                  let $docFileName := substring-after($inDocUri, $config:uri-base) || ".xml"
                  let $outputTarget := $config:output-path || $docFileName
                  return file:write($outputTarget, $outDoc, map {'method': 'xml', 'omit-xml-declaration': 'no'})
                 else
-                  $outDoc
+                  if($uriExists) then <error type="warning"><desc>This record already exists in data</desc><recordUri>{$inDocUri}</recordUri></error> else $outDoc
