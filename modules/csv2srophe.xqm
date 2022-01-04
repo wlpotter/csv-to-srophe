@@ -540,7 +540,19 @@ declare function csv2srophe:create-sources-index-for-row($sourcesIndex as elemen
 as element()*
 {
   let $sources := csv2srophe:populate-index-from-row($sourcesIndex, $row)
+  
+  (: remove sources that don't have a URI :)
   let $sources := $sources[sourceUri/text() != ""]
+  
+  (: normalize citation units for pages to be "p" and ensure all bibls have a citationUnit (which is "p" by default) :)
+  let $sources := 
+    for $source in $sources
+    let $normalizedPageCitationUnit := <citationUnit>p</citationUnit>
+    return 
+    (: if the source lacks a citation unit (either no element or an empty element) or it has "pp" instead of "p", use the normalized page unit of "p" :)
+      if(not($source/citationUnit/text()) or functx:trim($source/citationUnit/text()) = "pp") then <source>{$source/*[not(name() = "citationUnit")], $normalizedPageCitationUnit}</source>
+      else $source
+    
   (: remove redundant sources :)
   return functx:distinct-deep($sources)
 };
@@ -569,7 +581,7 @@ as element()*
                       then $sourceUri 
                       else "http://syriaca.org/bibl/" || $sourceUri
     let $sourceCitedRange := $source/*:citedRange/text()
-    let $sourceCitationUnit := if ($source/*:citationUnit/text() != "") then $source/*:citationUnit/text() else "p"
+    let $sourceCitationUnit := $source/*:citationUnit/text()
     let $citedRangeElement := if ($sourceCitedRange != "") then csv2srophe:create-citedRange-element($sourceCitedRange, $sourceCitationUnit)
     return
     <bibl xmlns="http://www.tei-c.org/ns/1.0" xml:id="bib{$uriLocalName}-{$number}">
@@ -691,9 +703,12 @@ declare function csv2srophe:create-source-attribute-for-element($itemData as ele
 as xs:string*
 {
   for $src at $srcNumber in $sourcesIndexForRow  (: step through the source index :)
+  (: normalize citation unit if it is a page-reference to be "p" :)
+  let $itemCitationUnit := if(not($itemData/*:citationUnit/text()) or string($itemData/*:citationUnit/text()) = "pp") then "p" else string($itemData/*:citationUnit/text())
+  
   where  $itemData/*:sourceUri/text() = $src/*:sourceUri/text() 
      and $itemData/*:citedRange/text() = $src/*:citedRange/text() 
-     and string($itemData/*:citationUnit/text()) = string($src/*:citationUnit/text())  (: URI and page from columns must match with iterated item in the source index :)
+     and $itemCitationUnit = string($src/*:citationUnit/text())  (: URI and page from columns must match with iterated item in the source index :)
   return if($itemData/*:sourceUri/text() != "") then "bib" || $uriLocalName||'-'||$srcNumber    (: create the last part of the source attribute :)
 };
 
