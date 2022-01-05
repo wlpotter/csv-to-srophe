@@ -63,4 +63,4 @@ return if(functx:atomic-type($inputCollection) = "xs:string")
                  let $outputTarget := $config:output-path || $docFileName
                  return file:write($outputTarget, $outDoc, map {'method': 'xml', 'omit-xml-declaration': 'no'})
                 else
-                  if($uriExists) then <error type="warning"><desc>This record already exists in data</desc><recordUri>{$inDocUri}</recordUri></error> else $outDoc
+                  if($uriExists) then <error type="error"><desc>This record already exists in data</desc><recordUri>{$inDocUri}</recordUri></error> else $outDoc
