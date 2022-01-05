@@ -54,7 +54,7 @@ return if(functx:atomic-type($inputCollection) = "xs:string")
          let $inDocUri := $inDoc//text//idno[@type="URI" and starts-with(text(), $config:uri-base)]/text()
          
          (: if the mark the URI if it exists; only check if the index creation did not raise an error. successful index creation results in a sequence of strings:)
-         let $uriExists := if($config:index-of-existing-uris[1] instance of xs:string) then functx:is-value-in-sequence($inDocUri, $config:index-of-existing-uris) else false
+         let $uriExists := if($config:index-of-existing-uris[1] instance of xs:string) then functx:is-value-in-sequence($inDocUri, $config:index-of-existing-uris) else false ()
          let $outDoc := template:merge-record-into-template($inDoc, $config:record-template, $inDocUri)
          
          (: write to the output folder or return to console. Variable controlled by config.xml/meta/config/io/fileOrConsole :)
@@ -64,3 +64,4 @@ return if(functx:atomic-type($inputCollection) = "xs:string")
                  return file:write($outputTarget, $outDoc, map {'method': 'xml', 'omit-xml-declaration': 'no'})
                 else
                   if($uriExists) then <error type="error"><desc>This record already exists in data</desc><recordUri>{$inDocUri}</recordUri></error> else $outDoc
+        )
