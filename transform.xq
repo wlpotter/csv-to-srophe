@@ -45,7 +45,8 @@ let $nothing := if($config:file-or-console = "file") then file:create-dir($confi
 
 
             
-return if(functx:atomic-type($inputCollection) = "xs:string") 
+return (if(not($config:index-of-existing-uris[1] instance of xs:string)) then $config:index-of-existing-uris, 
+        if(functx:atomic-type($inputCollection) = "xs:string") 
           then $inputCollection (: returns the error string if $config:input-type was assigned wrong :)
        else
          for $inDoc in $inputCollection
