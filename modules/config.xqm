@@ -121,3 +121,6 @@ declare variable $config:index-of-existing-uris :=
       for $url in $response[2]/*/*
       return string($url/@ref)
     else <error type="warning"><desc>Unable to retrieve index from server. Records created may have duplicated URIs.</desc> {$response[1]}</error>;
+    
+declare variable $config:taxonomy-outline :=
+  doc($config:nav-base||"parameters/config-taxonomy.xml");
