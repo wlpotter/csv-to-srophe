@@ -28,6 +28,7 @@ import module namespace functx="http://www.functx.com";
 import module namespace config="http://wlpotter.github.io/ns/config" at "modules/config.xqm";
 import module namespace csv2srophe="http://wlpotter.github.io/ns/csv2srophe" at "modules/csv2srophe.xqm";
 import module namespace csv2places="http://wlpotter.github.io/ns/csv2places" at "modules/csv2places.xqm";
+import module namespace csv2subjects="http://wlpotter.github.io/ns/csv2subjects" at "modules/csv2subjects.xqm";
 import module namespace template="http://wlpotter.github.io/ns/template" at "modules/template.xqm";
 
 
@@ -45,7 +46,8 @@ let $nothing := if($config:file-or-console = "file") then file:create-dir($confi
 
 
             
-return (if(not($config:index-of-existing-uris[1] instance of xs:string)) then $config:index-of-existing-uris, 
+return (if(not($config:index-of-existing-uris[1] instance of xs:string)) then $config:index-of-existing-uris,
+        if($config:collection-type = "subjects") then csv2subjects:create-taxonomy-index($config:taxonomy-outline, $inputCollection),
         if(functx:atomic-type($inputCollection) = "xs:string") 
           then $inputCollection (: returns the error string if $config:input-type was assigned wrong :)
        else
