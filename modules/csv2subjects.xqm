@@ -125,3 +125,28 @@ as node()
      $subType,
      $headwords, $glosses, $listRelation, $relationshipTypeNote, $idnos, $langCodeIdno, $abstracts}
 };
+
+declare function csv2subjects:create-taxonomy-index($taxonomyOutline as node(), $subjectRecords as node()+)
+as node()
+{
+  <taxonomy>
+    {csv2subjects:get-broad-matches($taxonomyOutline//taxonomy/list, $subjectRecords)}
+     <listURI type="taxonomyAllURIs">{for $rec in $subjectRecords return <uri>{$rec//*:entryFree/*:idno[@type="URI"]/text()}</uri>}</listURI>     
+  </taxonomy>
+};
+
+declare function csv2subjects:get-broad-matches($broaderConcepts as node()+, $allSubjectRecords as node()+)
+as node()+
+{
+  for $concept in $broaderConcepts
+  let $ref := $concept/ref/text()
+  let $matches := 
+    for $subject in $allSubjectRecords
+    (: where there is a skos:broader connection between the current concept and a given record :)
+    where $subject//*:entryFree/*:listRelation/*:relation[@ref="http://www.w3.org/2004/02/skos/core#broader"][@passive = $ref]
+    let $relation := $subject//*:entryFree/*:listRelation/*:relation[@ref="http://www.w3.org/2004/02/skos/core#broader"][@passive = $ref]
+    let $relationshipType := string($subject//*:entryFree/*:note[@type="relationshipType"]/@subtype)
+    let $relationshipType := if($relationshipType != "") then attribute {"ana"} {$relationshipType}
+    return element {"uri"} {$relationshipType, string($relation/@active)}
+  return element {"listURI"} {attribute {"ref"} {$ref}, $matches, if($concept/list) then csv2subjects:get-broad-matches($concept/list, $allSubjectRecords)}
+};
