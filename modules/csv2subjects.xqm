@@ -130,23 +130,36 @@ declare function csv2subjects:create-taxonomy-index($taxonomyOutline as node(), 
 as node()
 {
   <taxonomy>
-    {csv2subjects:get-broad-matches($taxonomyOutline//taxonomy/list, $subjectRecords)}
+    {csv2subjects:get-broad-matches($taxonomyOutline//taxonomy/listURI, $subjectRecords)}
      <listURI type="taxonomyAllURIs">{for $rec in $subjectRecords return <uri>{$rec//*:entryFree/*:idno[@type="URI"]/text()}</uri>}</listURI>     
   </taxonomy>
 };
 
-declare function csv2subjects:get-broad-matches($broaderConcepts as node()+, $allSubjectRecords as node()+)
+declare function csv2subjects:get-broad-matches($broaderConceptsList as node()+, $allSubjectRecords as node()+)
 as node()+
 {
-  for $concept in $broaderConcepts
-  let $ref := $concept/ref/text()
+  for $listUri in $broaderConceptsList
+  let $listType := $listUri/@type/string()
+  let $broaderUri := $config:uri-base||$listType
+  
   let $matches := 
+    if($listType = "relationships") then
+    for $broader in $listUri/broader/text()
     for $subject in $allSubjectRecords
-    (: where there is a skos:broader connection between the current concept and a given record :)
-    where $subject//*:entryFree/*:listRelation/*:relation[@ref="http://www.w3.org/2004/02/skos/core#broader"][@passive = $ref]
-    let $relation := $subject//*:entryFree/*:listRelation/*:relation[@ref="http://www.w3.org/2004/02/skos/core#broader"][@passive = $ref]
-    let $relationshipType := string($subject//*:entryFree/*:note[@type="relationshipType"]/@subtype)
-    let $relationshipType := if($relationshipType != "") then attribute {"ana"} {$relationshipType}
-    return element {"uri"} {$relationshipType, string($relation/@active)}
-  return element {"listURI"} {attribute {"ref"} {$ref}, $matches, if($concept/list) then csv2subjects:get-broad-matches($concept/list, $allSubjectRecords)}
+      (: where there is a skos:broader connection between the current concept and a given record :)
+      where $subject//*:entryFree/*:listRelation/*:relation[@ref="http://www.w3.org/2004/02/skos/core#broader"][@passive = $broader]
+      let $relation := $subject//*:entryFree/*:listRelation/*:relation[@ref="http://www.w3.org/2004/02/skos/core#broader"][@passive = $broader]
+      let $relationshipType := if($listUri/@includeRelationshipType/string() = "true") then $subject//*:entryFree/*:note[@type="relationshipType"]/@subtype/string()
+      let $relationshipType := if($relationshipType != "") then attribute {"ana"} {$relationshipType}
+      return element {"uri"} {$relationshipType, $relation/@active/string()}
+
+    else
+      for $subject in $allSubjectRecords
+      (: where there is a skos:broader connection between the current concept and a given record :)
+      where $subject//*:entryFree/*:listRelation/*:relation[@ref="http://www.w3.org/2004/02/skos/core#broader"][@passive = $broaderUri]
+      let $relation := $subject//*:entryFree/*:listRelation/*:relation[@ref="http://www.w3.org/2004/02/skos/core#broader"][@passive = $broaderUri]
+      let $relationshipType := if($listUri/@includeRelationshipType/string() = "true") then $subject//*:entryFree/*:note[@type="relationshipType"]/@subtype/string()
+      let $relationshipType := if($relationshipType != "") then attribute {"ana"} {$relationshipType}
+      return element {"uri"} {$relationshipType, $relation/@active/string()}
+  return element {"listURI"} {attribute {"type"} {$listType}, $matches}
 };
