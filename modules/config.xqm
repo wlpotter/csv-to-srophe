@@ -124,3 +124,6 @@ declare variable $config:index-of-existing-uris :=
     
 declare variable $config:taxonomy-config :=
   doc($config:nav-base||"parameters/config-taxonomy.xml");
+  
+declare variable $config:taxonomy-index-output-document-uri :=
+  $config:nav-base||$config:taxonomy-config//meta/config/io/outputPath/text();
