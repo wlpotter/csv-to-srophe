@@ -4,7 +4,8 @@
         <io>
             <!-- This is the path where the taxonomy file will be stored if the fileOrConsole variable in config.xml is set to "file" (/meta/config/io/fileOrConsole) -->
             <!-- This path should be declared as a relative path based on the variable in config.xml specified at /meta/config/io/localRepositoryUrl/ -->
-            <outputPath>out/subjects/2022-03-10/index/taxonomyIndex.xml</outputPath>
+            <outputPath>out/subjects/2022-03-10/index/</outputPath>
+            <outputFileName>taxonomyIndex.xml</outputFileName>
         </io>
         <taxonomy>
             <!-- each listURI/@type should be the unique part of the keyword URI.

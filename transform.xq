@@ -43,8 +43,7 @@ let $inputCollection :=
   else  "error: invalid input type selected in config.xml at XPath '/meta/config/io/inputPath/@type'. Should be 'csv' for processing a csv table or 'xml' for processing xml snippet records."
 
 let $nothing := if($config:file-or-console = "file") then file:create-dir($config:output-path) (: if writing to file and the output directory doesn't exist, create it :)
-
-
+let $nothing := if($config:file-or-console = "file" and $config:collection-type = "subjects") then file:create-dir($config:taxonomy-index-output-directory) (: if the entity type is 'subjects', create a directory for the taxonomy index output :)
             
 return (if(not($config:index-of-existing-uris[1] instance of xs:string)) then $config:index-of-existing-uris,
         if($config:collection-type = "subjects") then 
