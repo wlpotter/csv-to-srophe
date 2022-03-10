@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <meta>
     <config>
+        <io>
+            <!-- This is the path where the taxonomy file will be stored if the fileOrConsole variable in config.xml is set to "file" (/meta/config/io/fileOrConsole) -->
+            <!-- This path should be declared as a relative path based on the variable in config.xml specified at /meta/config/io/localRepositoryUrl/ -->
+            <outputPath>out/subjects/2022-03-10/index/taxonomyIndex.xml</outputPath>
+        </io>
         <taxonomy>
             <!-- each listURI/@type should be the unique part of the keyword URI.
                 Subjects are matched based on the tei:relation[@name="skos:Broader"] where the @passive attribute
@@ -13,7 +18,7 @@
             <listURI type="sanctity"/>
             <listURI type="socioeconomic-status"/>
             <listURI type="related-event"/>
-            <!-- This is a bit of a hack, but the listURI[@type="relationships"] is hard-coded to look get matching subjects using the
+            <!-- This is a bit of a hack, but the listURI[@type="relationships"] is hard-coded to get matching subjects using the
                 child <broader> elements. -->
             <!-- @includeRelationshipType is used to determine if the returned URI has an @ana value of "mutual" or "directed".
                   These values are selected by the keyword record's //note[@type="relationshipType"]/@subtype -->
