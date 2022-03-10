@@ -47,7 +47,7 @@ let $nothing := if($config:file-or-console = "file") then file:create-dir($confi
 
             
 return (if(not($config:index-of-existing-uris[1] instance of xs:string)) then $config:index-of-existing-uris,
-        if($config:collection-type = "subjects") then csv2subjects:create-taxonomy-index($config:taxonomy-outline, $inputCollection),
+        if($config:collection-type = "subjects") then csv2subjects:create-taxonomy-index($config:taxonomy-config, $inputCollection),
         if(functx:atomic-type($inputCollection) = "xs:string") 
           then $inputCollection (: returns the error string if $config:input-type was assigned wrong :)
        else
