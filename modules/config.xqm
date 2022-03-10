@@ -129,4 +129,4 @@ declare variable $config:taxonomy-index-output-directory :=
   $config:nav-base||$config:taxonomy-config//meta/config/io/outputPath/text();
   
 declare variable $config:taxonomy-index-output-document-uri :=
-  config:taxonomy-index-output-directory||$config:taxonomy-config//meta/config/io/outputFileName/text();
+  $config:taxonomy-index-output-directory||$config:taxonomy-config//meta/config/io/outputFileName/text();
