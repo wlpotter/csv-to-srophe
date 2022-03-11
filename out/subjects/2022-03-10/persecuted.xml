@@ -44,7 +44,7 @@
                                             Unported License.</p>
                </licence>
             </availability>
-        <date>2022-03-10-06:00</date>
+        <date>2022-03-11-06:00</date>
       </publicationStmt>
       <seriesStmt>
             <title level="s">A Taxonomy of Syriac Studies</title>
@@ -98,7 +98,7 @@
       </langUsage>
       </profileDesc>
     <revisionDesc status="draft">
-      <change when="2022-03-10-06:00" who="http://syriaca.org/documentation/editors.xml#dschwartz">CREATED: keyword</change>
+      <change when="2022-03-11-06:00" who="http://syriaca.org/documentation/editors.xml#dschwartz">CREATED: keyword</change>
     </revisionDesc>
   </teiHeader>
   <text>
@@ -111,7 +111,7 @@
         </listRelation>
         <note type="relationshipType" subtype="directed"/>
         <idno type="URI">http://syriaca.org/keyword/persecuted</idno>
-        <note xml:lang="en">A relationship between someone who persecutes another person, generally but not necessarily with legal sanction</note>
+        <desc xml:lang="en">A relationship between someone who persecutes another person, generally but not necessarily with legal sanction</desc>
       </entryFree>
     </body>
   </text>

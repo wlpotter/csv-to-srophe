@@ -45,7 +45,7 @@
                                             Unported License.</p>
                </licence>
             </availability>
-        <date>2022-03-10-06:00</date>
+        <date>2022-03-11-06:00</date>
       </publicationStmt>
       <seriesStmt>
             <title level="s">A Taxonomy of Syriac Studies</title>
@@ -99,7 +99,7 @@
       </langUsage>
       </profileDesc>
     <revisionDesc status="draft">
-      <change when="2022-03-10-06:00" who="http://syriaca.org/documentation/editors.xml#dschwartz">CREATED: keyword</change>
+      <change when="2022-03-11-06:00" who="http://syriaca.org/documentation/editors.xml#dschwartz">CREATED: keyword</change>
     </revisionDesc>
   </teiHeader>
   <text>
@@ -119,7 +119,7 @@
           <relation name="skos:broader" ref="http://www.w3.org/2004/02/skos/core#broader" active="http://syriaca.org/keyword/curator" passive="http://syriaca.org/keyword/economics"/>
         </listRelation>
         <idno type="URI">http://syriaca.org/keyword/curator</idno>
-        <note xml:lang="en">Used for officials in government administration who oversaw financial matters.</note>
+        <desc xml:lang="en">Used for officials in government administration who oversaw financial matters.</desc>
       </entryFree>
     </body>
   </text>

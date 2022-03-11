@@ -44,7 +44,7 @@
                                             Unported License.</p>
                </licence>
             </availability>
-        <date>2022-03-10-06:00</date>
+        <date>2022-03-11-06:00</date>
       </publicationStmt>
       <seriesStmt>
             <title level="s">A Taxonomy of Syriac Studies</title>
@@ -98,7 +98,7 @@
       </langUsage>
       </profileDesc>
     <revisionDesc status="draft">
-      <change when="2022-03-10-06:00" who="http://syriaca.org/documentation/editors.xml#dschwartz">CREATED: keyword</change>
+      <change when="2022-03-11-06:00" who="http://syriaca.org/documentation/editors.xml#dschwartz">CREATED: keyword</change>
     </revisionDesc>
   </teiHeader>
   <text>
@@ -111,7 +111,7 @@
         </listRelation>
         <note type="relationshipType" subtype="directed"/>
         <idno type="URI">http://syriaca.org/keyword/bringer-of-legal-charges-against</idno>
-        <note xml:lang="en">A relationship between a person who brought legal charges against antoher person in a civil, criminal, or ecclesiastical matter.</note>
+        <desc xml:lang="en">A relationship between a person who brought legal charges against antoher person in a civil, criminal, or ecclesiastical matter.</desc>
       </entryFree>
     </body>
   </text>

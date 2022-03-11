@@ -44,7 +44,7 @@
                                             Unported License.</p>
                </licence>
             </availability>
-        <date>2022-03-10-06:00</date>
+        <date>2022-03-11-06:00</date>
       </publicationStmt>
       <seriesStmt>
             <title level="s">A Taxonomy of Syriac Studies</title>
@@ -98,7 +98,7 @@
       </langUsage>
       </profileDesc>
     <revisionDesc status="draft">
-      <change when="2022-03-10-06:00" who="http://syriaca.org/documentation/editors.xml#dschwartz">CREATED: keyword</change>
+      <change when="2022-03-11-06:00" who="http://syriaca.org/documentation/editors.xml#dschwartz">CREATED: keyword</change>
     </revisionDesc>
   </teiHeader>
   <text>
@@ -110,7 +110,7 @@
           <relation name="skos:broader" ref="http://www.w3.org/2004/02/skos/core#broader" active="http://syriaca.org/keyword/commandments" passive="http://syriaca.org/keyword/religion"/>
         </listRelation>
         <idno type="URI">http://syriaca.org/keyword/commandments</idno>
-        <note xml:lang="en">Used for Old Testament law in general as well as specific subsets of that law such as the Ten Commandments.</note>
+        <desc xml:lang="en">Used for Old Testament law in general as well as specific subsets of that law such as the Ten Commandments.</desc>
       </entryFree>
     </body>
   </text>
