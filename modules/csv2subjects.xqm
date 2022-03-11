@@ -109,7 +109,7 @@ as node()
   
   let $idnos := csv2srophe:create-idno-sequence-for-row($row, $config:uri-base)
   let $langCodeIdno := if(functx:trim($row/*:iso.langCode/text()) != "") then <idno xmlns="http://www.tei-c.org/ns/1.0">{functx:trim($row/*:iso.langCode/text())}</idno>
-  let $abstracts := csv2srophe:build-element-sequence($row, $abstractIndex, $sources, "note", 0)
+  let $abstracts := csv2srophe:build-element-sequence($row, $abstractIndex, $sources, "desc", 0)
   
   (: remove unused attributes from abstracts :)
   let $abstracts := for $abs in $abstracts
