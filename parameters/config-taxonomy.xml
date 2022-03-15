@@ -7,6 +7,10 @@
             <outputPath>out/subjects/2022-03-10/index/</outputPath>
             <outputFileName>taxonomyIndex.xml</outputFileName>
         </io>
+        <existingTaxonomy>
+            <includeExsitingTaxonomy>true</includeExsitingTaxonomy>
+            <inputPath>C:\Users\anoni\Documents\GitHub\srophe\srophe-app-data\data\subjects\tei\</inputPath>
+        </existingTaxonomy>
         <taxonomy>
             <!-- each listURI/@type should be the unique part of the keyword URI.
                 Subjects are matched based on the tei:relation[@name="skos:Broader"] where the @passive attribute

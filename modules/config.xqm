@@ -130,3 +130,21 @@ declare variable $config:taxonomy-index-output-directory :=
   
 declare variable $config:taxonomy-index-output-document-uri :=
   $config:taxonomy-index-output-directory||$config:taxonomy-config//meta/config/io/outputFileName/text();
+  
+declare variable $config:include-existing-taxonomy :=
+  let $input := $config:taxonomy-config/meta/config/existingTaxonomy/includeExsitingTaxonomy/text()
+  return (lower-case($input) = "true" or lower-case($input) = "yes" or lower-case($input) = "y");
+  
+declare variable $config:existing-taxonomy :=
+  let $pathToCollection := $config:taxonomy-config/meta/config/existingTaxonomy/inputPath/text()
+  return
+    if($config:include-existing-taxonomy and $config:taxonomy-config/meta/config/existingTaxonomy/inputPath/text()) then
+      try { (: only returns if no errors are raised:)
+      collection($pathToCollection)
+      } catch * {
+      try { (: if an error :)
+        collection($config:nav-base||$pathToCollection)
+      } catch * {
+        ()
+      }
+    };
