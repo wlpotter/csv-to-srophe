@@ -28,10 +28,11 @@
             <!-- @includeRelationshipType is used to determine if the returned URI has an @ana value of "mutual" or "directed".
                   These values are selected by the keyword record's //note[@type="relationshipType"]/@subtype -->
             <listURI type="relationships" includeRelationshipType="true">
+                <broader>http://syriaca.org/keyword/bond</broader>
                 <broader>http://syriaca.org/keyword/extended-household-of</broader>
                 <broader>http://syriaca.org/keyword/slave-of</broader>
                 <broader>http://syriaca.org/keyword/household-of</broader>
-                <broader>http://syriaca.org/keyword/emnity-for</broader>
+                <broader>http://syriaca.org/keyword/enmity-for</broader>
                 <broader>http://syriaca.org/keyword/sender-of-letter-to</broader>
                 <broader>http://syriaca.org/keyword/alliance-with</broader>
                 <broader>http://syriaca.org/keyword/kin-of</broader>
