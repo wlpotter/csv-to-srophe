@@ -38,7 +38,7 @@
                 <broader includeSelf="true">http://syriaca.org/keyword/family-of</broader>
                 <broader includeSelf="true">http://syriaca.org/keyword/hereditary-family-of</broader>
                 <broader includeSelf="true">http://syriaca.org/keyword/extended-family-of</broader>
-                <broader includeSelf="true">http://syriaca.org/keyword/descendent-of</broader>
+                <broader includeSelf="true">http://syriaca.org/keyword/descendant-of</broader>
                 <broader includeSelf="true">http://syriaca.org/keyword/ancestor-of</broader>
                 <broader includeSelf="true">http://syriaca.org/keyword/serious-intimate-relationship-with</broader>
                 <broader includeSelf="true">http://syriaca.org/keyword/legally-recognized-relationship-with</broader>
