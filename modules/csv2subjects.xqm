@@ -144,14 +144,21 @@ as node()+
   
   let $matches := 
     if($listType = "relationships") then
-    for $broader in $listUri/broader/text()
-    for $subject in $allSubjectRecords
+    for $broader in $listUri/broader
+    let $uri := $broader/text()
+    let $selfRelationshipType := if($listUri/@includeRelationshipType/string() = "true") then 
+      $allSubjectRecords//*:entryFree[*:idno[@type="URI"]/text() = $uri]/*:note[@type="relationshipType"]/@subtype/string()
+    let $selfRelationshipType := if($selfRelationshipType != "") then attribute {"ana"} {$selfRelationshipType}
+    let $self := if($broader/@includeSelf = "true") then element {"uri"} {$selfRelationshipType, $uri}
+    let $matchedUris :=
+      for $subject in $allSubjectRecords
       (: where there is a skos:broader connection between the current concept and a given record :)
-      where $subject//*:entryFree/*:listRelation/*:relation[@ref="http://www.w3.org/2004/02/skos/core#broader"][@passive = $broader]
-      let $relation := $subject//*:entryFree/*:listRelation/*:relation[@ref="http://www.w3.org/2004/02/skos/core#broader"][@passive = $broader]
+      where $subject//*:entryFree/*:listRelation/*:relation[@ref="http://www.w3.org/2004/02/skos/core#broader"][@passive = $uri]
+      let $relation := $subject//*:entryFree/*:listRelation/*:relation[@ref="http://www.w3.org/2004/02/skos/core#broader"][@passive = $uri]
       let $relationshipType := if($listUri/@includeRelationshipType/string() = "true") then $subject//*:entryFree/*:note[@type="relationshipType"]/@subtype/string()
       let $relationshipType := if($relationshipType != "") then attribute {"ana"} {$relationshipType}
       return element {"uri"} {$relationshipType, $relation/@active/string()}
+    return ($self, $matchedUris)
 
     else
       for $subject in $allSubjectRecords
@@ -161,5 +168,7 @@ as node()+
       let $relationshipType := if($listUri/@includeRelationshipType/string() = "true") then $subject//*:entryFree/*:note[@type="relationshipType"]/@subtype/string()
       let $relationshipType := if($relationshipType != "") then attribute {"ana"} {$relationshipType}
       return element {"uri"} {$relationshipType, $relation/@active/string()}
+  let $matches := for $match in $matches order by $match/text() return $match
+  let $matches := functx:distinct-deep($matches)
   return element {"listURI"} {attribute {"type"} {$listType}, $matches}
 };
