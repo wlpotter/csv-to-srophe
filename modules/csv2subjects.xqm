@@ -131,7 +131,7 @@ as node()
 {
   <taxonomy>
     {csv2subjects:get-broad-matches($taxonomyOutline//taxonomy/listURI, $subjectRecords)}
-     <listURI type="taxonomyAllURIs">{for $rec in $subjectRecords return <uri>{$rec//*:entryFree/*:idno[@type="URI"]/text()}</uri>}</listURI>     
+     <listURI type="taxonomyAllURIs">{for $rec in $subjectRecords return <uri>{$rec//*:entryFree/*:idno[@type="URI"][contains(./text(), $config:uri-base)]/text()}</uri>}</listURI>     
   </taxonomy>
 };
 
