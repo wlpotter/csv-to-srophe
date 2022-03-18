@@ -28,31 +28,30 @@
             <!-- @includeRelationshipType is used to determine if the returned URI has an @ana value of "mutual" or "directed".
                   These values are selected by the keyword record's //note[@type="relationshipType"]/@subtype -->
             <listURI type="relationships" includeRelationshipType="true">
-                <broader>http://syriaca.org/keyword/bond</broader>
-                <broader>http://syriaca.org/keyword/extended-household-of</broader>
-                <broader>http://syriaca.org/keyword/slave-of</broader>
-                <broader>http://syriaca.org/keyword/household-of</broader>
-                <broader>http://syriaca.org/keyword/enmity-for</broader>
-                <broader>http://syriaca.org/keyword/sender-of-letter-to</broader>
-                <broader>http://syriaca.org/keyword/alliance-with</broader>
-                <broader>http://syriaca.org/keyword/kin-of</broader>
-                <broader>http://syriaca.org/keyword/family-of</broader>
-                <broader>http://syriaca.org/keyword/hereditary-family-of</broader>
-                <broader>http://syriaca.org/keyword/extended-family-of</broader>
-                <broader>http://syriaca.org/keyword/descendent-of</broader>
-                <broader>http://syriaca.org/keyword/ancestor-of</broader>
-                <broader>http://syriaca.org/keyword/serious-intimate-relationship-with</broader>
-                <broader>http://syriaca.org/keyword/legally-recognized-relationship-with</broader>
-                <broader>http://syriaca.org/keyword/professional-relationship</broader>
-                <broader>http://syriaca.org/keyword/military-relationship</broader>
-                <broader>http://syriaca.org/keyword/legal-relationship</broader>
-                <broader>http://syriaca.org/keyword/colleague-of</broader>
-                <broader>http://syriaca.org/keyword/religious-relationship</broader>
-                <broader>http://syriaca.org/keyword/monastic-relationship</broader>
-                <broader>http://syriaca.org/keyword/clerical-relationship</broader>
-                <broader>http://syriaca.org/keyword/bishop-over</broader>
-                <broader>http://syriaca.org/keyword/intellectual-relationship</broader>
-                <broader>http://syriaca.org/keyword/cited</broader>
+                <broader includeSelf="true">http://syriaca.org/keyword/extended-household-of</broader>
+                <broader includeSelf="true">http://syriaca.org/keyword/slave-of</broader>
+                <broader includeSelf="true">http://syriaca.org/keyword/household-of</broader>
+                <broader includeSelf="true">http://syriaca.org/keyword/enmity-for</broader>
+                <broader includeSelf="true">http://syriaca.org/keyword/sender-of-letter-to</broader>
+                <broader includeSelf="true">http://syriaca.org/keyword/alliance-with</broader>
+                <broader includeSelf="true">http://syriaca.org/keyword/kin-of</broader>
+                <broader includeSelf="true">http://syriaca.org/keyword/family-of</broader>
+                <broader includeSelf="true">http://syriaca.org/keyword/hereditary-family-of</broader>
+                <broader includeSelf="true">http://syriaca.org/keyword/extended-family-of</broader>
+                <broader includeSelf="true">http://syriaca.org/keyword/descendent-of</broader>
+                <broader includeSelf="true">http://syriaca.org/keyword/ancestor-of</broader>
+                <broader includeSelf="true">http://syriaca.org/keyword/serious-intimate-relationship-with</broader>
+                <broader includeSelf="true">http://syriaca.org/keyword/legally-recognized-relationship-with</broader>
+                <broader includeSelf="true">http://syriaca.org/keyword/professional-relationship</broader>
+                <broader includeSelf="true">http://syriaca.org/keyword/military-relationship</broader>
+                <broader includeSelf="true">http://syriaca.org/keyword/legal-relationship</broader>
+                <broader includeSelf="true">http://syriaca.org/keyword/colleague-of</broader>
+                <broader includeSelf="true">http://syriaca.org/keyword/religious-relationship</broader>
+                <broader includeSelf="true">http://syriaca.org/keyword/monastic-relationship</broader>
+                <broader includeSelf="true">http://syriaca.org/keyword/clerical-relationship</broader>
+                <broader includeSelf="true">http://syriaca.org/keyword/bishop-over</broader>
+                <broader includeSelf="true">http://syriaca.org/keyword/intellectual-relationship</broader>
+                <broader includeSelf="true">http://syriaca.org/keyword/cited</broader>
             </listURI>
             <listURI type="qualifier-relationship"/>
             <!-- the listURI for "taxonomyAllURIs" will be auto-generated and need not be included in the taxonomy config -->
