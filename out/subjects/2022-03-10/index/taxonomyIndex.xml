@@ -291,7 +291,6 @@
     <uri ana="directed">http://syriaca.org/keyword/confessor-for</uri>
     <uri ana="mutual">http://syriaca.org/keyword/cousin-of</uri>
     <uri ana="directed">http://syriaca.org/keyword/descendant-of</uri>
-    <uri>http://syriaca.org/keyword/descendent-of</uri>
     <uri ana="mutual">http://syriaca.org/keyword/disciplinary-associate</uri>
     <uri ana="directed">http://syriaca.org/keyword/employee-of</uri>
     <uri ana="directed">http://syriaca.org/keyword/enmity-for</uri>
