@@ -94,7 +94,8 @@ declare variable $config:record-template :=
   let $pathToTemplate := $config:nav-base || 
                          string($config:collection-node/@template)
   return if (doc-available($pathToTemplate)) then
-            doc($pathToTemplate);
+            doc($pathToTemplate)
+            else ();
             (: otherwise should probably raise an error? :)
             
 declare variable $config:editor-uri-base :=
@@ -147,4 +148,5 @@ declare variable $config:existing-taxonomy :=
       } catch * {
         ()
       }
-    };
+    }
+    else ();

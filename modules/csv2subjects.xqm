@@ -105,10 +105,10 @@ as node()
   
   let $listRelation := csv2srophe:build-listRelation-element($row, $relationsIndex, $sources)
   
-  let $relationshipTypeNote := if(functx:trim($row/*:relType/text()) != "") then <note type="relationshipType" subtype="{functx:trim($row/*:relType/text())}"/>
+  let $relationshipTypeNote := if(functx:trim($row/*:relType/text()) != "") then <note type="relationshipType" subtype="{functx:trim($row/*:relType/text())}"/> else ()
   
   let $idnos := csv2srophe:create-idno-sequence-for-row($row, $config:uri-base)
-  let $langCodeIdno := if(functx:trim($row/*:iso.langCode/text()) != "") then <idno xmlns="http://www.tei-c.org/ns/1.0">{functx:trim($row/*:iso.langCode/text())}</idno>
+  let $langCodeIdno := if(functx:trim($row/*:iso.langCode/text()) != "") then <idno xmlns="http://www.tei-c.org/ns/1.0">{functx:trim($row/*:iso.langCode/text())}</idno> else ()
   let $abstracts := csv2srophe:build-element-sequence($row, $abstractIndex, $sources, "desc", 0)
   
   (: remove unused attributes from abstracts :)
@@ -116,7 +116,7 @@ as node()
     return functx:remove-attributes(functx:remove-attributes($abs, "xml:id"), "type")
   
   (: create subtype attribute if one exists :)
-  let $subType := if(functx:trim($row/*:subjectSubType/text()) != "") then attribute {"subtype"} {functx:trim($row/*:subjectSubType/text())}
+  let $subType := if(functx:trim($row/*:subjectSubType/text()) != "") then attribute {"subtype"} {functx:trim($row/*:subjectSubType/text())} else ()
   (: compose tei:entryFree element and return it :)
   return element 
     {QName("http://www.tei-c.org/ns/1.0", "entryFree")} 
@@ -148,15 +148,16 @@ as node()+
     let $uri := $broader/text()
     let $selfRelationshipType := if($listUri/@includeRelationshipType/string() = "true") then 
       $allSubjectRecords//*:entryFree[*:idno[@type="URI"]/text() = $uri]/*:note[@type="relationshipType"]/@subtype/string()
-    let $selfRelationshipType := if($selfRelationshipType != "") then attribute {"ana"} {$selfRelationshipType}
-    let $self := if($broader/@includeSelf = "true") then element {"uri"} {$selfRelationshipType, $uri}
+      else ()
+    let $selfRelationshipType := if($selfRelationshipType != "") then attribute {"ana"} {$selfRelationshipType} else ()
+    let $self := if($broader/@includeSelf = "true") then element {"uri"} {$selfRelationshipType, $uri} else ()
     let $matchedUris :=
       for $subject in $allSubjectRecords
       (: where there is a skos:broader connection between the current concept and a given record :)
       where $subject//*:entryFree/*:listRelation/*:relation[@ref="http://www.w3.org/2004/02/skos/core#broader"][@passive = $uri]
       let $relation := $subject//*:entryFree/*:listRelation/*:relation[@ref="http://www.w3.org/2004/02/skos/core#broader"][@passive = $uri]
-      let $relationshipType := if($listUri/@includeRelationshipType/string() = "true") then $subject//*:entryFree/*:note[@type="relationshipType"]/@subtype/string()
-      let $relationshipType := if($relationshipType != "") then attribute {"ana"} {$relationshipType}
+      let $relationshipType := if($listUri/@includeRelationshipType/string() = "true") then $subject//*:entryFree/*:note[@type="relationshipType"]/@subtype/string() else ()
+      let $relationshipType := if($relationshipType != "") then attribute {"ana"} {$relationshipType} else ()
       return element {"uri"} {$relationshipType, $relation/@active/string()}
     return ($self, $matchedUris)
 
@@ -165,8 +166,8 @@ as node()+
       (: where there is a skos:broader connection between the current concept and a given record :)
       where $subject//*:entryFree/*:listRelation/*:relation[@ref="http://www.w3.org/2004/02/skos/core#broader"][@passive = $broaderUri]
       let $relation := $subject//*:entryFree/*:listRelation/*:relation[@ref="http://www.w3.org/2004/02/skos/core#broader"][@passive = $broaderUri]
-      let $relationshipType := if($listUri/@includeRelationshipType/string() = "true") then $subject//*:entryFree/*:note[@type="relationshipType"]/@subtype/string()
-      let $relationshipType := if($relationshipType != "") then attribute {"ana"} {$relationshipType}
+      let $relationshipType := if($listUri/@includeRelationshipType/string() = "true") then $subject//*:entryFree/*:note[@type="relationshipType"]/@subtype/string() else ()
+      let $relationshipType := if($relationshipType != "") then attribute {"ana"} {$relationshipType} else ()
       return element {"uri"} {$relationshipType, $relation/@active/string()}
   let $matches := for $match in $matches order by $match/text() return $match
   let $matches := functx:distinct-deep($matches)

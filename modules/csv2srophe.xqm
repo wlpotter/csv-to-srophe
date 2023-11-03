@@ -128,7 +128,8 @@ as element()*
 {
   (: For Windows paths, change "\" to "/" :)
   let $url := fn:replace($url, "\\", "/")
-  let $xmlDoc := csv:doc($url,
+  let $doc := file:read-text($url)
+  let $xmlDoc := csv:parse($doc,
                          map { 'header' : $header,'separator' : $delimiter })
   return $xmlDoc/csv/record
 };
@@ -219,11 +220,11 @@ as element()*
   return if (substring(tokenize($columnString,'\.')[1],1,string-length($columnName)) = $columnName) then
   element {$columnName} 
   {
-    if ($rightOfDotLabel != "") then element {$rightOfDotLabel} {$rightOfDot} else(),
+    if ($rightOfDotLabel != "") then element {$rightOfDotLabel} {$rightOfDot} else (),
     element {"textNodeColumnElementName"} {$column/name/string()},
     csv2srophe:associate-source-data-columns($leftOfDot, $headerMap, $rightOfDot)
    }
-  
+  else () 
 };
 
 declare function csv2srophe:associate-source-data-columns($parentColumnName as xs:string,
@@ -582,7 +583,7 @@ as element()*
                       else "http://syriaca.org/bibl/" || $sourceUri
     let $sourceCitedRange := $source/*:citedRange/text()
     let $sourceCitationUnit := $source/*:citationUnit/text()
-    let $citedRangeElement := if ($sourceCitedRange != "") then csv2srophe:create-citedRange-element($sourceCitedRange, $sourceCitationUnit)
+    let $citedRangeElement := if ($sourceCitedRange != "") then csv2srophe:create-citedRange-element($sourceCitedRange, $sourceCitationUnit) else ()
     return
     <bibl xmlns="http://www.tei-c.org/ns/1.0" xml:id="bib{$uriLocalName}-{$number}">
         <ptr target="{$sourceUri}"/>
@@ -709,7 +710,7 @@ as xs:string*
   where  $itemData/*:sourceUri/text() = $src/*:sourceUri/text() 
      and $itemData/*:citedRange/text() = $src/*:citedRange/text() 
      and $itemCitationUnit = string($src/*:citationUnit/text())  (: URI and page from columns must match with iterated item in the source index :)
-  return if($itemData/*:sourceUri/text() != "") then "bib" || $uriLocalName||'-'||$srcNumber    (: create the last part of the source attribute :)
+  return if($itemData/*:sourceUri/text() != "") then "bib" || $uriLocalName||'-'||$srcNumber    (: create the last part of the source attribute :) else ()
 };
 
 declare function csv2srophe:build-name-element($textNode as xs:string,
@@ -723,12 +724,14 @@ as element()
 {
   let $headwordAttr := if($isHeadword) then
     attribute {QName("https://srophe.app", "srophe:tags")} {"#syriaca-headword"}
+    else ()
   let $id := if($elementName != "gloss") then (: glosses are 'alternate names' for taxonomy entities and don't have xml:ids. :)
                  if($elementName = "term") then (: taxonomy headwords are tei:term elements with the xml:id pattern of 'name-$entityUri-$language' :)
                    "name-" || $entityUri || "-" || $language (: in this case $entityUri should be the lower-case value of $textNode :)
                  else
                    "name" || $entityUri || "-" || $namePositionInSequence (: all other entities have the xml:id pattern of "name$entityUri-$namePositionInSequence":)
-  let $xmlId := if($id != "") then attribute {"xml:id"} {$id}
+             else ()
+  let $xmlId := if($id != "") then attribute {"xml:id"} {$id} else ()
   let $xmlLang := attribute {"xml:lang"} {$language}
   let $sourceAttr := if($source != "") then
                        attribute {"source"} {"#" || $source}
@@ -759,6 +762,7 @@ as element()
 {
   let $id := if($entityUri != "") then 
               attribute {"xml:id"} {"abstract" || $entityUri || "-" || $abstractPositionInSequence}
+             else ()
   let $type := attribute {"type"} {"abstract"}
   let $xmlLang := attribute {"xml:lang"} {$language}
   let $sourceAttr := if($source != "") then
@@ -767,7 +771,7 @@ as element()
                         attribute {"resp"} {"http://syriaca.org"}
   let $quote := if($source != "") then element {QName("http://www.tei-c.org/ns/1.0", "quote")} {$sourceAttr, $textNode} else $textNode
   return element {QName("http://www.tei-c.org/ns/1.0", $elementName)}
-                  {$type, $id, $xmlLang, if($source = "") then $sourceAttr, $quote}
+                  {$type, $id, $xmlLang, if($source = "") then $sourceAttr else (), $quote}
 
 };
 
@@ -794,7 +798,7 @@ as element()
 declare function csv2srophe:build-sex-element($value as xs:string, $source as xs:string?)
 as element()
 {
-  let $textNode := if($value = "M") then "male" else if($value = "F") then "female"
+  let $textNode := if($value = "M") then "male" else if($value = "F") then "female" else ()
   let $sourceAttr := if($source != "") then attribute {"source"} {"#" || $source}
     else attribute {"resp"} {"http://syriaca.org"}
   let $valueAttr := attribute {"value"} {$value}
@@ -836,8 +840,8 @@ as xs:string
 {
   let $dateComponents := tokenize($date, "-")
   let $year := format-number(xs:integer($dateComponents[1]), "9999")
-  let $month := if($dateComponents[2] != "") then format-number(xs:integer($dateComponents[2]), "99")
-  let $day := if($dateComponents[3] != "") then format-number(xs:integer($dateComponents[3]), "99")
+  let $month := if($dateComponents[2] != "") then format-number(xs:integer($dateComponents[2]), "99") else()
+  let $day := if($dateComponents[3] != "") then format-number(xs:integer($dateComponents[3]), "99") else ()
   return string-join(($year, $month, $day), "-")
 };
 

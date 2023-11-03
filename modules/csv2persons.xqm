@@ -105,7 +105,7 @@ as node()
   (: build descendant nodes of the tei:person :)
   
   (: HARD-CODED pending batch changes will affect this functionality :)
-  let $anaAttr := if(functx:trim($row/*[name() = "trait.en"]/text()) = "anonymous") then attribute {"ana"} {"#syriaca-anonymous"}
+  let $anaAttr := if(functx:trim($row/*[name() = "trait.en"]/text()) = "anonymous") then attribute {"ana"} {"#syriaca-anonymous"} else ()
   
   let $headwords := csv2srophe:build-element-sequence($row, $headwordIndex, $sources, "persName", 0)
   let $numHeadwords := count($headwords)
@@ -141,5 +141,5 @@ as element()?
 {
   let $traitText := functx:trim($row/*[name() = "trait.en"]/text())
   let $label := element {QName("http://www.tei-c.org/ns/1.0", "label")} {$traitText}
-  return if($traitText != "") then element {QName("http://www.tei-c.org/ns/1.0", "trait")} {attribute {"xml:lang"} {"en"}, $label}
+  return if($traitText != "") then element {QName("http://www.tei-c.org/ns/1.0", "trait")} {attribute {"xml:lang"} {"en"}, $label} else ()
 };
