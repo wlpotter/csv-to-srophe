@@ -760,9 +760,6 @@ declare function csv2srophe:build-abstract-element($textNode as xs:string,
                                                    $abstractPositionInSequence as xs:integer)
 as element()
 {
-  let $id := if($entityUri != "") then 
-              attribute {"xml:id"} {"abstract" || $entityUri || "-" || $abstractPositionInSequence}
-             else ()
   let $type := attribute {"type"} {"abstract"}
   let $xmlLang := attribute {"xml:lang"} {$language}
   let $sourceAttr := if($source != "") then
@@ -771,7 +768,7 @@ as element()
                         attribute {"resp"} {"http://syriaca.org"}
   let $quote := if($source != "") then element {QName("http://www.tei-c.org/ns/1.0", "quote")} {$sourceAttr, $textNode} else $textNode
   return element {QName("http://www.tei-c.org/ns/1.0", $elementName)}
-                  {$type, $id, $xmlLang, if($source = "") then $sourceAttr else (), $quote}
+                  {$type, $xmlLang, if($source = "") then $sourceAttr else (), $quote}
 
 };
 
