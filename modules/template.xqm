@@ -153,22 +153,24 @@ as element()
 declare function template:build-persons-seriesStmt($template as node(), $personType as xs:string?)
 as element()+
 {
-  (: include the main Syriac Biographical Dictionary seriesStmt, with the corresponding biblScopes for each entity-type:)
   let $sbdSeriesStmt := $template//seriesStmt[idno[@type="URI"]/text() = "http://syriaca.org/persons"]
-  let $qadisheBiblScope := if(contains($personType, "#syriaca-saint")) then $sbdSeriesStmt/biblScope[@from="1"] else ()
-  let $authorsBiblScope := if(contains($personType, "#syriaca-author")) then $sbdSeriesStmt/biblScope[@from="2"] else ()
-  let $otherBiblScope := $sbdSeriesStmt/biblScope[text() = "3"]
+  let $gatewaySeriesStmt := $template//seriesStmt[idno[@type="URI"]/text() = "http://syriaca.org/saints"]
+  let $qadisheSeriesStmt := $template//seriesStmt[idno[@type="URI"]/text() = "http://syriaca.org/q"]
+  let $authorsSeriesStmt := $template//seriesStmt[idno[@type="URI"]/text() = "http://syriaca.org/authors"]
   
   (: include volumes 1 and/or 2 if the person is a saint and/or author:)
-  let $sbdSeriesStmt := 
-    if(contains($personType, "#syriaca-saint") or contains($personType, "#syriaca-author")) then
-    element {node-name($sbdSeriesStmt)} {$sbdSeriesStmt/*[not(name() = "biblScope")], $qadisheBiblScope, $authorsBiblScope}
-    else element{node-name($sbdSeriesStmt)} {$sbdSeriesStmt/*[not(name() = "biblScope")], $otherBiblScope}
+  let $sLevelSeriesStmts := 
+    if(contains($personType, "#syriaca-saint")) then ($sbdSeriesStmt, $gatewaySeriesStmt)
+    else $sbdSeriesStmt
   
-  (: include seriesStmt for Gateway to the Syriac Saints if the person is a saint :)
-  let $saintsSeriesStmt := if(contains($personType, "#syriaca-saint")) then
-    $template//seriesStmt[idno[@type="URI"]/text() = "http://syriaca.org/saints"]
+  (: if a saint, include the Qadishe series statement :)
+  let $mLevelSeriesStmts := 
+    if(contains($personType, "#syriaca-saint")) then $qadisheSeriesStmt
     else ()
+  (: if an author, append the Authors series statement :)
+  let $mLevelSeriesStmts :=
+    if(contains($personType, "#syriaca-author")) then ($mLevelSeriesStmts, $authorsSeriesStmt)
+    else $mLevelSeriesStmts
   
-  return ($sbdSeriesStmt, $saintsSeriesStmt)
+  return ($sLevelSeriesStmts, $mLevelSeriesStmts)
 };
