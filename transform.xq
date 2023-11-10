@@ -42,15 +42,16 @@ let $inputCollection :=
   else if ($config:input-type = "xml") then collection($config:input-path)
   else  "error: invalid input type selected in config.xml at XPath '/meta/config/io/inputPath/@type'. Should be 'csv' for processing a csv table or 'xml' for processing xml snippet records."
 
-let $nothing := if($config:file-or-console = "file") then file:create-dir($config:output-path) (: if writing to file and the output directory doesn't exist, create it :)
-let $nothing := if($config:file-or-console = "file" and $config:collection-type = "subjects") then file:create-dir($config:taxonomy-index-output-directory) (: if the entity type is 'subjects', create a directory for the taxonomy index output :)
+let $nothing := if($config:file-or-console = "file") then file:create-dir($config:output-path) else () (: if writing to file and the output directory doesn't exist, create it :)
+let $nothing := if($config:file-or-console = "file" and $config:collection-type = "subjects") then file:create-dir($config:taxonomy-index-output-directory) else () (: if the entity type is 'subjects', create a directory for the taxonomy index output :)
             
-return (if(not($config:index-of-existing-uris[1] instance of xs:string)) then $config:index-of-existing-uris,
+return (if(not($config:index-of-existing-uris[1] instance of xs:string)) then $config:index-of-existing-uris else (),
         if($config:collection-type = "subjects") then 
           let $taxonomyIndex := csv2subjects:create-taxonomy-index($config:taxonomy-config, $inputCollection)
           return if($config:file-or-console = "file") then 
             file:write($config:taxonomy-index-output-document-uri, $taxonomyIndex, map {'method': 'xml', 'omit-xml-declaration': 'no'})
-            else $taxonomyIndex,
+            else $taxonomyIndex
+        else (),
         if(functx:atomic-type($inputCollection) = "xs:string") 
           then $inputCollection (: returns the error string if $config:input-type was assigned wrong :)
        else
