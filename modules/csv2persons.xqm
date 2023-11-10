@@ -98,6 +98,7 @@ as node()
   let $abstractIndex := $indices/self::abstract
   let $anonymousDescIndex := $indices/self::anonymousDesc
   let $sexIndex := $indices/self::sex
+  let $genderIndex := $indices/self::gender
   let $datesIndex := $indices/self::date
   let $sourcesIndex := $indices/self::source
   let $sources := csv2srophe:create-sources-index-for-row($sourcesIndex, $row)
@@ -119,6 +120,7 @@ as node()
   
   let $trait := csv2persons:create-trait($row)
   let $sex := csv2srophe:build-element-sequence($row, $sexIndex, $sources, "sex", 0)
+  let $gender := csv2srophe:build-element-sequence($row, $genderIndex, $sources, "gender", 0)
   let $dates := csv2srophe:build-element-sequence($row, $datesIndex, $sources, "date", 0)
   
   (: pending: 
@@ -131,7 +133,7 @@ as node()
   
   return 
   <person xmlns="http://www.tei-c.org/ns/1.0">
-    {$anaAttr, $headwords, $anonymousDesc, $persNames, $idnos, $trait, $sex, $dates, $abstracts, $bibls}
+    {$anaAttr, $headwords, $anonymousDesc, $persNames, $idnos, $trait, $sex, $gender, $dates, $abstracts, $bibls}
   </person>
 };
 

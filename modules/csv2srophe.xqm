@@ -53,10 +53,11 @@ as document-node()*
   let $abstractIndex := csv2srophe:create-abstract-index($headerMap)
   let $anonymousDescIndex := csv2srophe:create-anonymousDesc-index($headerMap)
   let $sexIndex := csv2srophe:create-sex-index($headerMap)
+  let $genderIndex := csv2srophe:create-gender-index($headerMap)
   let $datesIndex := csv2srophe:create-dates-index($headerMap)
   let $relationsIndex := csv2srophe:create-relations-index($headerMap)
   
-  let $indices := ($headwordIndex, $namesIndex, $abstractIndex, $anonymousDescIndex, $sexIndex, $datesIndex, $relationsIndex)
+  let $indices := ($headwordIndex, $namesIndex, $abstractIndex, $anonymousDescIndex, $sexIndex, $genderIndex, $datesIndex, $relationsIndex)
   let $sourcesIndex := csv2srophe:create-sources-index($indices)
   let $indices := ($indices, $sourcesIndex)
   
@@ -371,6 +372,32 @@ as element()*
   return $sexIndex
 };
 
+(:~
+: returns a sequence that looks like this:
+:
+: <gender>
+:   <langCode>en</langCode>
+:   <textNodeColumnElementName>gender1.en</textNodeColumnElementName>
+:   <sourceUriElementName>sourceURI.gender1</sourceUriElementName>
+:   <citedRangeElementName>citedRange.gender1</citedRangeElementName>
+:   <citationUnitElementName>citationUnit.gender1</citationUnitElementName>
+: </gender>
+:
+: The gender index stores a sequence of columns where entity gender information
+: is kept. It is solely used for persons entities. It is used, for each row 
+: of data, to create the element(s) encoding the gender information for 
+: the entity.
+: 
+: @author William L. Potter
+:
+:)
+
+declare function csv2srophe:create-gender-index($headerMap as element()+)
+as element()*
+{
+  let $genderIndex := csv2srophe:create-column-index("gender", $headerMap, "")
+  return $genderIndex
+};
 (:~ 
 : returns a sequence looks like:
 : 
@@ -672,9 +699,10 @@ as element()*
     case "abstract" return csv2srophe:build-abstract-element($text, $elementName,$uriLocalName, $langAttr, $sourceAttr, $number + $enumerationOffset)
     case "anonymousDesc" return csv2srophe:build-anonymousDesc-element($text, $elementName, $uriLocalName, $langAttr, $sourceAttr, false (), $number + $enumerationOffset)
     case "sex" return csv2srophe:build-sex-element($text, $sourceAttr)
+    case "gender" return csv2srophe:build-gender-element($text, $sourceAttr)
     case "date" return csv2srophe:build-date-element($text, $sourceAttr, $item)
     case "relation" return csv2srophe:build-relation-element($item, $sourceAttr, $uriLocalName, "#") (: FIX: separator should not be hard-coded :)
-    (: add other cases, e.g., "date", "sex", "anonymous descs", etc. :)
+    (: add other cases, e.g., "anonymous descs", etc. :)
     default return () (: maybe have an error? :)
 };
 
@@ -800,6 +828,20 @@ as element()
     else attribute {"resp"} {"http://syriaca.org"}
   let $valueAttr := attribute {"value"} {$value}
   return element {QName("http://www.tei-c.org/ns/1.0", "sex")} {$sourceAttr, $valueAttr, $textNode}
+};
+
+(:~ 
+: returns a tei:gender element for use in persons entities.
+: @param $value should be a Syriaca keyword URI with a skos:broader of syriaca:gender
+ :)
+declare function csv2srophe:build-gender-element($value as xs:string, $source as xs:string?)
+as element()
+{
+  let $textNode := substring-after($value, "http://syriaca.org/keyword/")
+  let $sourceAttr := if($source != "") then attribute {"source"} {"#" || $source}
+    else attribute {"resp"} {"http://syriaca.org"}
+  let $anaAttr := attribute {"ana"} {$value}
+  return element {QName("http://www.tei-c.org/ns/1.0", "gender")} {$sourceAttr, $anaAttr, $textNode}
 };
 
 (: possibly a csv2srophe function if you use it for existence dates, etc.? 
