@@ -130,7 +130,7 @@ as node()
   (: compose tei:person element and return it :)
   
   return 
-  <person xmlns="http://www.tei-c.org/ns/1.0" xml:id="person-{$uriLocalName}">
+  <person xmlns="http://www.tei-c.org/ns/1.0">
     {$anaAttr, $headwords, $anonymousDesc, $persNames, $idnos, $trait, $sex, $dates, $abstracts, $bibls}
   </person>
 };
