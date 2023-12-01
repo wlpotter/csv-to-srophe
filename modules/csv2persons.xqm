@@ -122,6 +122,8 @@ as node()
   let $sex := csv2srophe:build-element-sequence($row, $sexIndex, $sources, "sex", 0)
   let $gender := csv2srophe:build-element-sequence($row, $genderIndex, $sources, "gender", 0)
   let $dates := csv2srophe:build-element-sequence($row, $datesIndex, $sources, "date", 0)
+  (: order for dates should be floruit, birth, death :)
+  let $dates := ($dates/self::*[name() = "floruit"], $dates/self::*[name() = "birth"], $dates/self::*[name() = "death"])
   
   (: pending: 
   - @ana attribute on tei:person for saint, author, etc.
@@ -133,7 +135,7 @@ as node()
   
   return 
   <person xmlns="http://www.tei-c.org/ns/1.0">
-    {$anaAttr, $headwords, $anonymousDesc, $persNames, $idnos, $trait, $sex, $gender, $dates, $abstracts, $bibls}
+    {$anaAttr, $headwords, $anonymousDesc, $persNames, $idnos, $abstracts, $dates, $gender, $sex, $trait, $bibls}
   </person>
 };
 
