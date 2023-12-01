@@ -106,7 +106,7 @@ as node()
   let $abstracts := csv2srophe:build-element-sequence($row, $abstractIndex, $sources, "desc", 0)
   
   (: currently not handling gps locations or relative locations :)
-  let $nestedLocations := csv2places:create-nested-locations($row, $sources)
+  (: let $nestedLocations := csv2places:create-nested-locations($row, $sources) :) (:DEPRECATED in favor of tei:relation elements of @type="contained-within":)
   
   let $idnos := csv2srophe:create-idno-sequence-for-row($row, $config:uri-base)
   
@@ -118,7 +118,7 @@ as node()
   
   return 
   <place xmlns="http://www.tei-c.org/ns/1.0" type="{$placeType}">
-    {$headwords, $placeNames, $abstracts, $nestedLocations, $idnos, $bibls}
+    {$headwords, $placeNames, $abstracts, $idnos, $bibls}
   </place>
 };
 
@@ -159,6 +159,7 @@ as element()*
 };
 
 (: somewhat hacked-together. Generalize with a look up based on sub-elements (e.g., nestedName.$$$ for settlement, region, etc. :)
+ (:DEPRECATED in favor of tei:relation elements of @type="contained-within":)
 declare function csv2places:create-nested-locations($row as element(), $sourcesIndex as element()*)
 as element()*
 {
