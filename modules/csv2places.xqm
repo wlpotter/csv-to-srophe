@@ -219,7 +219,7 @@ let $locationAttribute := $settlementSourceAttribute||$separator||$regionSourceA
             $regionElement
       }</location>
     else
-       <location xmlns="http://www.tei-c.org/ns/1.0" type="nested" resp="http://syriaca.org">{
+       <location xmlns="http://www.tei-c.org/ns/1.0" type="nested" resp="{$config:default-resp-statement}">{
             $settlementElement,
             $regionElement
       }</location>

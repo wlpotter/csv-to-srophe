@@ -764,7 +764,7 @@ as element()
   let $sourceAttr := if($source != "") then
                        attribute {"source"} {"#" || $source}
                      else
-                       attribute {"resp"} {"http://syriaca.org"}
+                       attribute {"resp"} {$config:default-resp-statement}
   let $textNode := if($elementName = "gloss") then element {QName("http://www.tei-c.org/ns/1.0", "term")} {$textNode} else $textNode (: nest a term in a gloss :)
   return
     element {QName("http://www.tei-c.org/ns/1.0", $elementName)} 
@@ -793,7 +793,7 @@ as element()
   let $sourceAttr := if($source != "") then
                         attribute {"source"} {"#" || $source}
                      else
-                        attribute {"resp"} {"http://syriaca.org"}
+                        attribute {"resp"} {$config:default-resp-statement}
   let $quote := if($source != "") then element {QName("http://www.tei-c.org/ns/1.0", "quote")} {$sourceAttr, $textNode} else $textNode
   return element {QName("http://www.tei-c.org/ns/1.0", $elementName)}
                   {$type, $xmlLang, if($source = "") then $sourceAttr else (), $quote}
@@ -825,7 +825,7 @@ as element()
 {
   let $textNode := if($value = "M") then "male" else if($value = "F") then "female" else ()
   let $sourceAttr := if($source != "") then attribute {"source"} {"#" || $source}
-    else attribute {"resp"} {"http://syriaca.org"}
+    else attribute {"resp"} {$config:default-resp-statement}
   let $valueAttr := attribute {"value"} {$value}
   return element {QName("http://www.tei-c.org/ns/1.0", "sex")} {$sourceAttr, $valueAttr, $textNode}
 };
@@ -839,7 +839,7 @@ as element()
 {
   let $textNode := substring-after($value, "http://syriaca.org/keyword/")
   let $sourceAttr := if($source != "") then attribute {"source"} {"#" || $source}
-    else attribute {"resp"} {"http://syriaca.org"}
+    else attribute {"resp"} {$config:default-resp-statement}
   let $anaAttr := attribute {"ana"} {$value}
   return element {QName("http://www.tei-c.org/ns/1.0", "gender")} {$sourceAttr, $anaAttr, $textNode}
 };
@@ -863,7 +863,7 @@ places:
 declare function csv2srophe:build-date-element($textNode as xs:string, $source as xs:string?, $associatedData as element())
 as element()
 {
-  let $sourceAttr := if($source != "") then attribute {"source"} {"#" || $source} else attribute {"resp"} {"http://syriaca.org"}
+  let $sourceAttr := if($source != "") then attribute {"source"} {"#" || $source} else attribute {"resp"} {$config:default-resp-statement}
   let $elementName := functx:trim($associatedData/*:type/text())
   let $dateAttrs :=
     for $item in $associatedData/*
@@ -898,7 +898,7 @@ as element()
   let $otherUris := for $uri in $otherUris return if(starts-with($uri, "http") or starts-with($uri, "ISO") or starts-with($uri, "snap:")) then $uri else $config:uri-base || $uri
   let $otherUris := string-join($otherUris, " ")
   
-  let $sourceAttr := if($source != "") then attribute {"source"} {$source} else attribute {"resp"} {"http://syriaca.org"}
+  let $sourceAttr := if($source != "") then attribute {"source"} {$source} else attribute {"resp"} {$config:default-resp-statement}
   
   let $relationType := functx:trim($relationData/type/text())
   

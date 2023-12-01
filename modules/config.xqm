@@ -101,6 +101,9 @@ declare variable $config:record-template :=
 declare variable $config:editor-uri-base :=
   $config:config-file/meta/config/syriacaMetadata/editorUriBase/text();
 
+declare variable $config:default-resp-statement := 
+  $config:config-file/meta/config/responsibility/defaultRespAttrVal/text();
+
 declare variable $config:base-language :=
   $config:config-file/meta/config/syriacaMetadata/baseLanguage/text();
   

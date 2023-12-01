@@ -42,6 +42,8 @@
                 <persons>CREATED: person</persons>
                 <subjects>CREATED: keyword</subjects>
             </changeLog>
+            <!-- The default URI value to supply for use in the `@resp` attributes -->
+            <defaultRespAttrVal>http://syriaca.org</defaultRespAttrVal>
         </responsibility>
         <collections>
             <collection name="places" record-URI-base="http://syriaca.org/place/" template="/templates/places-template.xml" index="https://syriaca.org/documentation/indexes/places.xml"/>
