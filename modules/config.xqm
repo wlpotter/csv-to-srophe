@@ -104,6 +104,9 @@ declare variable $config:editor-uri-base :=
 declare variable $config:default-resp-statement := 
   $config:config-file/meta/config/responsibility/defaultRespAttrVal/text();
 
+declare variable $config:default-bibl-uri-base :=
+  $config:config-file/meta/config/syriacaMetadata/defaultUriBase/text();
+  
 declare variable $config:base-language :=
   $config:config-file/meta/config/syriacaMetadata/baseLanguage/text();
   

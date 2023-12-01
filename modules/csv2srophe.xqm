@@ -837,7 +837,8 @@ as element()
 declare function csv2srophe:build-gender-element($value as xs:string, $source as xs:string?)
 as element()
 {
-  let $textNode := substring-after($value, "http://syriaca.org/keyword/")
+  (: $value should be a Syriaca keyword URI, otherwise return the full string :)
+  let $textNode := if(contains($value, "/")) then functx:substring-after-last($value, "/") else $value
   let $sourceAttr := if($source != "") then attribute {"source"} {"#" || $source}
     else attribute {"resp"} {$config:default-resp-statement}
   let $anaAttr := attribute {"ana"} {$value}
