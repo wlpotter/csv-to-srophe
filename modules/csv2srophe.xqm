@@ -872,7 +872,9 @@ as element()
     let $dateAttrValue := functx:trim($item/text())
     let $dateAttrValue := csv2srophe:enforce-iso-date-format($dateAttrValue) (: ensure date attribute is in proper ISO format :)
     return attribute {$item/name()} {$dateAttrValue}
-  return element {QName("http://www.tei-c.org/ns/1.0", $elementName)} {$sourceAttr, $dateAttrs, $textNode}
+  return element {QName("http://www.tei-c.org/ns/1.0", $elementName)} {
+    element {QName("http://www.tei-c.org/ns/1.0", "date")} {$sourceAttr, $dateAttrs, $textNode}
+  }
 };
 
 declare function csv2srophe:enforce-iso-date-format($date)
