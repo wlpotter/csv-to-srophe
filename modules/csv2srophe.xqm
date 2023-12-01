@@ -607,7 +607,7 @@ as element()*
     let $sourceUri := if(starts-with($sourceUri, "http")
                          and $sourceUri != "")
                       then $sourceUri 
-                      else "http://syriaca.org/bibl/" || $sourceUri
+                      else $config:default-bibl-uri-base || $sourceUri
     let $sourceCitedRange := $source/*:citedRange/text()
     let $sourceCitationUnit := $source/*:citationUnit/text()
     let $citedRangeElement := if ($sourceCitedRange != "") then csv2srophe:create-citedRange-element($sourceCitedRange, $sourceCitationUnit) else ()
