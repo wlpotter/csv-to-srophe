@@ -116,6 +116,10 @@ as node()
   (: the text node comes entirely from the $record :)
   let $text := $record//text
   
+  (: Add the @corresp attributes to the record's abstract(s) :)
+  let $seriesStmtIdnos := $seriesStmt/idno/text() => string-join(" ")
+  let $text := template:add-corresp-to-abstract($text, $seriesStmtIdnos)
+  
   (: now the TEI node can be constructed; the xml:lang attribute comes from the record :)
   let $baseLanguage := string($record/TEI/@xml:lang)
   let $teiNode :=
@@ -173,4 +177,27 @@ as element()+
     else $mLevelSeriesStmts
   
   return ($sLevelSeriesStmts, $mLevelSeriesStmts)
+};
+
+declare function template:add-corresp-to-abstract($textElement as node(), $seriesStmtIdnos as xs:string)
+as node()
+{
+  (: should be text, body, listEl, El, :)
+  let $body := $textElement/body
+  let $listEl := $body/*[1] (: the one ensures we don't pick up the listRelation element :)
+  let $entity := if(contains($listEl/name(), "list")) then $listEl/* else $listEl (: for subjects, the 'listEl' is actually entryFree :)
+  let $entity :=
+    element {$entity/name()} {$entity/@*,
+    for $ch in $entity/*
+    return if($ch/@type="abstract") then 
+       element {$ch/name()} {$ch/@*, attribute {"corresp"} {$seriesStmtIdnos}, $ch/*}
+    else $ch
+  }
+  let $listEl := 
+    if(contains($listEl/name(), "list")) then 
+      element {$listEl/name()} {$listEl/@*, $entity}
+    else $entity (: for subjects, the 'listEl' is actually entryFree :)
+  let $body := element {$body/name()} {$body/@*, $listEl, $body/*[2]}
+  let $text := element {$textElement/name()} {$textElement/@*, $body}
+  return $text
 };
