@@ -56,8 +56,9 @@ as document-node()*
   let $genderIndex := csv2srophe:create-gender-index($headerMap)
   let $datesIndex := csv2srophe:create-dates-index($headerMap)
   let $relationsIndex := csv2srophe:create-relations-index($headerMap)
+  let $gpsIndex := csv2srophe:create-gps-index($headerMap)
   
-  let $indices := ($headwordIndex, $namesIndex, $abstractIndex, $anonymousDescIndex, $sexIndex, $genderIndex, $datesIndex, $relationsIndex)
+  let $indices := ($headwordIndex, $namesIndex, $abstractIndex, $anonymousDescIndex, $sexIndex, $genderIndex, $datesIndex, $relationsIndex, $gpsIndex)
   let $sourcesIndex := csv2srophe:create-sources-index($indices)
   let $indices := ($indices, $sourcesIndex)
   
@@ -377,8 +378,7 @@ as element()*
 : returns a sequence that looks like this:
 :
 : <gender>
-:   <langCode>en</langCode>
-:   <textNodeColumnElementName>gender1.en</textNodeColumnElementName>
+:   <textNodeColumnElementName>gender1</textNodeColumnElementName>
 :   <sourceUriElementName>sourceURI.gender1</sourceUriElementName>
 :   <citedRangeElementName>citedRange.gender1</citedRangeElementName>
 :   <citationUnitElementName>citationUnit.gender1</citationUnitElementName>
@@ -417,6 +417,25 @@ as element()*
 {
   let $relationsIndex := csv2srophe:create-column-index("relation", $headerMap, "type")
   return $relationsIndex
+};
+
+(:~ 
+: returns a sequence looks like:
+: 
+: <gps>
+:  <textNodeColumnElementName>gps1</textNodeColumnElementName>
+:  <sourceUriElementName>sourceUri.gps1</sourceUriElementName>
+:  ... (etc. with citedRange and citationUnit)
+: </gps> 
+: ...
+:
+: These columns store information for tei:location elements with gps coordinates.
+:)
+declare function csv2srophe:create-gps-index($headerMap as element()+)
+as element()*
+{
+  let $gpsIndex := csv2srophe:create-column-index("gps", $headerMap, "")
+  return $gpsIndex
 };
 
 declare function csv2srophe:create-dates-index($headerMap as element()+)
@@ -702,6 +721,7 @@ as element()*
     case "sex" return csv2srophe:build-sex-element($text, $sourceAttr)
     case "gender" return csv2srophe:build-gender-element($text, $sourceAttr)
     case "date" return csv2srophe:build-date-element($text, $sourceAttr, $item)
+    case "gps" return csv2srophe:build-location-element($text, $sourceAttr, "gps")
     case "relation" return csv2srophe:build-relation-element($item, $sourceAttr, $uriLocalName, "#") (: FIX: separator should not be hard-coded :)
     (: add other cases, e.g., "anonymous descs", etc. :)
     default return () (: maybe have an error? :)
@@ -737,8 +757,8 @@ as xs:string*
   let $itemCitationUnit := if(not($itemData/*:citationUnit/text()) or string($itemData/*:citationUnit/text()) = "pp") then "p" else string($itemData/*:citationUnit/text())
   
   where  $itemData/*:sourceUri/text() = $src/*:sourceUri/text() 
-     and $itemData/*:citedRange/text() = $src/*:citedRange/text() 
-     and $itemCitationUnit = string($src/*:citationUnit/text())  (: URI and page from columns must match with iterated item in the source index :)
+     and normalize-space($itemData/*:citedRange/text()) = normalize-space($src/*:citedRange/text())
+     and ($itemCitationUnit = string($src/*:citationUnit/text()) or $itemCitationUnit = "")  (: URI and page from columns must match with iterated item in the source index :)
   return if($itemData/*:sourceUri/text() != "") then "bib" || $uriLocalName||'-'||$srcNumber    (: create the last part of the source attribute :) else ()
 };
 
@@ -956,6 +976,19 @@ as element()?
     element {QName("http://www.tei-c.org/ns/1.0", "listRelation")} {$relations}
   else ()
 };
+
+declare function csv2srophe:build-location-element($textNode as xs:string, $source as xs:string?, $type as xs:string)
+as element()
+  {
+    let $sourceAttr := if($source != "") then attribute {"source"} {"#" || $source}
+      else attribute {"resp"} {$config:default-resp-statement}    let $typeAttr := attribute {"type"} {$type}
+    return element {QName("http://www.tei-c.org/ns/1.0", "location")}
+      {$typeAttr, 
+      $sourceAttr, 
+      element {QName("http://www.tei-c.org/ns/1.0", "geo")} {$textNode} } 
+  };
+
+
 (: I'm not sure these final functions should be in this module. They are more
 : generic than just csv transform. Perhaps separate out into some util library? :)
 

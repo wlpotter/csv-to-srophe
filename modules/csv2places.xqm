@@ -94,6 +94,7 @@ as node()
   let $namesIndex := $indices/self::name
   let $abstractIndex := $indices/self::abstract
   let $datesIndex := $indices/self::date
+  let $gpsIndex := $indices/self::gps
   let $sourcesIndex := $indices/self::source
   let $sources := csv2srophe:create-sources-index-for-row($sourcesIndex, $row)
   
@@ -105,7 +106,8 @@ as node()
   let $placeNames := csv2srophe:build-element-sequence($row, $namesIndex, $sources, "placeName", $numHeadwords)
   let $abstracts := csv2srophe:build-element-sequence($row, $abstractIndex, $sources, "desc", 0)
   
-  (: currently not handling gps locations or relative locations :)
+  (: currently not handling relative locations :)
+    let $gps := csv2srophe:build-element-sequence($row, $gpsIndex, $sources, "location", 0)
   (: let $nestedLocations := csv2places:create-nested-locations($row, $sources) :) (:DEPRECATED in favor of tei:relation elements of @type="contained-within":)
   
   let $idnos := csv2srophe:create-idno-sequence-for-row($row, $config:uri-base)
@@ -118,7 +120,7 @@ as node()
   
   return 
   <place xmlns="http://www.tei-c.org/ns/1.0" type="{$placeType}">
-    {$headwords, $placeNames, $abstracts, $idnos, $bibls}
+    {$headwords, $placeNames, $abstracts, $gps, $idnos, $bibls}
   </place>
 };
 
