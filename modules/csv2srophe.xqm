@@ -416,7 +416,18 @@ declare function csv2srophe:create-relations-index($headerMap as element()+)
 as element()*
 {
   let $relationsIndex := csv2srophe:create-column-index("relation", $headerMap, "type")
-  return $relationsIndex
+  
+  (: collate additional relation information, such as placeName or desc columns :)
+  for $rel in $relationsIndex
+  let $rightOfDot := substring-before(functx:trim($rel/*:textNodeColumnElementName/text()), ".") (: the name of the relation, less the type :)
+  let $relAttrColumns :=  
+    for $column in $headerMap
+    let $columnName := functx:trim($column/*:name/text())
+    where substring-after($columnName, ".") = $rightOfDot (: screen for associated date columns :)
+    let $leftOfDot := substring-before($columnName, ".")
+    return element {$leftOfDot || "ElementName"} {$columnName}
+  let $relChildren := functx:distinct-deep(($rel/*, $relAttrColumns))
+  return <relation>{$relChildren}</relation>
 };
 
 (:~ 
@@ -955,8 +966,15 @@ as element()
     let $ref := attribute {"ref"} {"http://www.w3.org/2004/02/skos/core#broader"}
     let $active := attribute {"active"} {$selfUri}
     let $passive := attribute {"passive"} {$otherUris}
+    let $desc := element {QName("http://www.tei-c.org/ns/1.0", "desc")} {
+      attribute {"xml:lang"} {"en"}, (: probably don't want to hard-code? :)
+      element {QName("http://www.tei-c.org/ns/1.0", "placeName")} {
+        attribute {"ref"} {$otherUris},
+        $relationData/placeName/text()
+      }
+    }
     let $type := attribute {"type"} {"contained-within"}
-    return element {QName("http://www.tei-c.org/ns/1.0", "relation")} {$name, $ref, $type, $active, $passive}
+    return element {QName("http://www.tei-c.org/ns/1.0", "relation")} {$name, $ref, $type, $active, $passive, $desc}
   default return 
     let $name := attribute {"name"} {"see-also"}
     let $mutual := attribute {"mutual"} {$selfUri||" "||$otherUris}
