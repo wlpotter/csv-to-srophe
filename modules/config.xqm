@@ -94,12 +94,19 @@ declare variable $config:record-template :=
   let $pathToTemplate := $config:nav-base || 
                          string($config:collection-node/@template)
   return if (doc-available($pathToTemplate)) then
-            doc($pathToTemplate);
+            doc($pathToTemplate)
+            else ();
             (: otherwise should probably raise an error? :)
             
 declare variable $config:editor-uri-base :=
   $config:config-file/meta/config/syriacaMetadata/editorUriBase/text();
 
+declare variable $config:default-resp-statement := 
+  $config:config-file/meta/config/responsibility/defaultRespAttrVal/text();
+
+declare variable $config:default-bibl-uri-base :=
+  $config:config-file/meta/config/syriacaMetadata/defaultUriBase/text();
+  
 declare variable $config:base-language :=
   $config:config-file/meta/config/syriacaMetadata/baseLanguage/text();
   
@@ -147,4 +154,5 @@ declare variable $config:existing-taxonomy :=
       } catch * {
         ()
       }
-    };
+    }
+    else ();

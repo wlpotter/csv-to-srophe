@@ -4,7 +4,7 @@
         <!-- Configuration data for file inputs and outputs -->
         <io>
             <!-- The path on your local harddrive to where this repository is located -->
-            <localRepositoryUrl>C:\Users\anoni\Documents\GitHub\csv-to-srophe\</localRepositoryUrl>
+            <localRepositoryUrl>/home/arren/Documents/GitHub/csv-to-srophe</localRepositoryUrl>
             <!-- The url of where the remote copy of the repository is stored on GitHub.
                   This value is used as a fall-back in case the localRepositoryUrl cannot be accessed.-->
             <remoteRepositoryUrl></remoteRepositoryUrl>
@@ -14,23 +14,23 @@
                   The @type attribute specifies either "csv" or "collection", which the app uses to determine what to do with the element's text-node.
                   The @separator attribute specifies the separator used in a CSV file. Valid values are: 'comma', 'tab', 'pipe' (referring to the character, '|'), or 'semicolon'.
                   -->
-            <inputPath type="csv" separator="tab">/in/taxonomy_2022-03-10.csv</inputPath>
+            <inputPath type="csv" separator="tab">/in/2023-12-01_jeg.csv</inputPath>
             <!-- The output paths specify locations on your local harddrive to store the results of processing.
                   If writing files to the same local repository as the xquery scripts, you may supply relative paths rather than aboslute ones, e.g. "/csv/output/". However, if the app fails to resolve the localRepositoryUrl, you may need to supply an absolute path for this element
             -->
-            <outputPath>out/subjects/2022-03-10/</outputPath>
+            <outputPath>/out/jeg/places/2023-12-01/</outputPath>
             <!-- This element controls the output either to 'console', for testing and debugging, or to 'file', i.e. when storing the results of processing as new TEI records.-->
             <fileOrConsole>file</fileOrConsole>
         </io>
         <!-- specifies the type of data to be processed. Corresponds to the collections listed in meta/config/collections/collection/@name -->
-        <collectionType>subjects</collectionType>
+        <collectionType>jeg_places</collectionType>
         <!-- 
             Contains metadata describing responsibility for data creation
         -->
         <responsibility>
             <!-- These two elements contain the editor ID portion of the editor URI and the human-readable name of the person responsible for creating the CSV or skeleton xml files. -->
-            <creatorId>dschwartz</creatorId>
-            <creatorNameString>Daniel L. Schwartz</creatorNameString>
+            <creatorId>sroggo</creatorId>
+            <creatorNameString>Silvio Roggo</creatorNameString>
             <!-- Provides the description to be used in the tei:respStmt/tei:resp for the creation of the xml record -->
             <respDescription>URI minted and initial data collected by</respDescription>
             <!-- note: change-log message should be collection-specific (e.g., "CREATED: place") -->
@@ -41,14 +41,23 @@
                 <places>CREATED: place</places>
                 <persons>CREATED: person</persons>
                 <subjects>CREATED: keyword</subjects>
+                <jeg_places>CREATED: place</jeg_places>
             </changeLog>
+            <!-- The default URI value to supply for use in the `@resp` attributes -->
+            <defaultRespAttrVal>http://syriaca.org</defaultRespAttrVal>
         </responsibility>
         <collections>
             <collection name="places" record-URI-base="http://syriaca.org/place/" template="/templates/places-template.xml" index="https://syriaca.org/documentation/indexes/places.xml"/>
             <collection name="persons" record-URI-base="http://syriaca.org/person/" template="/templates/persons-template.xml" index="https://syriaca.org/documentation/indexes/persons.xml"/>
             <collection name="subjects" record-URI-base="http://syriaca.org/keyword/" template="/templates/subjects-template.xml"/>
+            <collection name="jeg_places" record-URI-base="http://syriaca.org/place/" template="/templates/jeg_places-template.xml" index="https://syriaca.org/documentation/indexes/places.xml"/>
             <!-- persons may be difficult if we need separate for saints and for authors -->
         </collections>
+        <!-- List the URI, in a <corresp> element, that generated abstracts should be associated with.
+            -->
+        <abstractCorresps>
+            
+        </abstractCorresps>
         <!-- The following namespaces will be declared on the root tei:TEI element as xmlns:$prefix="$text-node".
               Which namespaces are declared on which entity-type depends on the @entity attribute. A value of "all" 
               declares the namespace on any enity-type. Otherwise, a space-separated list of entities should be declared.
@@ -67,6 +76,7 @@
             <editorUriBase>http://syriaca.org/documentation/editors.xml</editorUriBase>
             <editorFileUri></editorFileUri> <!-- needed? -->
             <baseLanguage>en</baseLanguage>
+            <defaultUriBase>http://syriaca.org/bibl/</defaultUriBase>
         </syriacaMetadata>
     </config>
 </meta>

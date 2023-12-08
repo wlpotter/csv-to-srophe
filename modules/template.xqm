@@ -116,6 +116,10 @@ as node()
   (: the text node comes entirely from the $record :)
   let $text := $record//text
   
+  (: Add the @corresp attributes to the record's abstract(s) :)
+  let $seriesStmtIdnos := $seriesStmt/idno/text() => string-join(" ")
+  let $text := template:add-corresp-to-abstract($text, $seriesStmtIdnos)
+  
   (: now the TEI node can be constructed; the xml:lang attribute comes from the record :)
   let $baseLanguage := string($record/TEI/@xml:lang)
   let $teiNode :=
@@ -153,21 +157,47 @@ as element()
 declare function template:build-persons-seriesStmt($template as node(), $personType as xs:string?)
 as element()+
 {
-  (: include the main Syriac Biographical Dictionary seriesStmt, with the corresponding biblScopes for each entity-type:)
   let $sbdSeriesStmt := $template//seriesStmt[idno[@type="URI"]/text() = "http://syriaca.org/persons"]
-  let $qadisheBiblScope := if(contains($personType, "#syriaca-saint")) then $sbdSeriesStmt/biblScope[@from="1"]
-  let $authorsBiblScope := if(contains($personType, "#syriaca-author")) then $sbdSeriesStmt/biblScope[@from="2"]
-  let $otherBiblScope := $sbdSeriesStmt/biblScope[text() = "3"]
+  let $gatewaySeriesStmt := $template//seriesStmt[idno[@type="URI"]/text() = "http://syriaca.org/saints"]
+  let $qadisheSeriesStmt := $template//seriesStmt[idno[@type="URI"]/text() = "http://syriaca.org/q"]
+  let $authorsSeriesStmt := $template//seriesStmt[idno[@type="URI"]/text() = "http://syriaca.org/authors"]
   
   (: include volumes 1 and/or 2 if the person is a saint and/or author:)
-  let $sbdSeriesStmt := 
-    if(contains($personType, "#syriaca-saint") or contains($personType, "#syriaca-author")) then
-    element {node-name($sbdSeriesStmt)} {$sbdSeriesStmt/*[not(name() = "biblScope")], $qadisheBiblScope, $authorsBiblScope}
-    else element{node-name($sbdSeriesStmt)} {$sbdSeriesStmt/*[not(name() = "biblScope")], $otherBiblScope}
+  let $sLevelSeriesStmts := 
+    if(contains($personType, "#syriaca-saint")) then ($sbdSeriesStmt, $gatewaySeriesStmt)
+    else $sbdSeriesStmt
   
-  (: include seriesStmt for Gateway to the Syriac Saints if the person is a saint :)
-  let $saintsSeriesStmt := if(contains($personType, "#syriaca-saint")) then
-    $template//seriesStmt[idno[@type="URI"]/text() = "http://syriaca.org/saints"]
+  (: if a saint, include the Qadishe series statement :)
+  let $mLevelSeriesStmts := 
+    if(contains($personType, "#syriaca-saint")) then $qadisheSeriesStmt
+    else ()
+  (: if an author, append the Authors series statement :)
+  let $mLevelSeriesStmts :=
+    if(contains($personType, "#syriaca-author")) then ($mLevelSeriesStmts, $authorsSeriesStmt)
+    else $mLevelSeriesStmts
   
-  return ($sbdSeriesStmt, $saintsSeriesStmt)
+  return ($sLevelSeriesStmts, $mLevelSeriesStmts)
+};
+
+declare function template:add-corresp-to-abstract($textElement as node(), $seriesStmtIdnos as xs:string)
+as node()
+{
+  (: should be text, body, listEl, El, :)
+  let $body := $textElement/body
+  let $listEl := $body/*[1] (: the one ensures we don't pick up the listRelation element :)
+  let $entity := if(contains($listEl/name(), "list")) then $listEl/* else $listEl (: for subjects, the 'listEl' is actually entryFree :)
+  let $entity :=
+    element {$entity/name()} {$entity/@*,
+    for $ch in $entity/*
+    return if($ch/@type="abstract") then 
+       element {$ch/name()} {$ch/@*, attribute {"corresp"} {$seriesStmtIdnos}, $ch/*}
+    else $ch
+  }
+  let $listEl := 
+    if(contains($listEl/name(), "list")) then 
+      element {$listEl/name()} {$listEl/@*, $entity}
+    else $entity (: for subjects, the 'listEl' is actually entryFree :)
+  let $body := element {$body/name()} {$body/@*, $listEl, $body/*[2]}
+  let $text := element {$textElement/name()} {$textElement/@*, $body}
+  return $text
 };

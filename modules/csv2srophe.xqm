@@ -1,4 +1,4 @@
-xquery version "3.0";
+xquery version "3.1";
 
 (:
 : Module Name: Syriaca.org Data Pipeline CSV Transformations
@@ -53,10 +53,12 @@ as document-node()*
   let $abstractIndex := csv2srophe:create-abstract-index($headerMap)
   let $anonymousDescIndex := csv2srophe:create-anonymousDesc-index($headerMap)
   let $sexIndex := csv2srophe:create-sex-index($headerMap)
+  let $genderIndex := csv2srophe:create-gender-index($headerMap)
   let $datesIndex := csv2srophe:create-dates-index($headerMap)
   let $relationsIndex := csv2srophe:create-relations-index($headerMap)
+  let $gpsIndex := csv2srophe:create-gps-index($headerMap)
   
-  let $indices := ($headwordIndex, $namesIndex, $abstractIndex, $anonymousDescIndex, $sexIndex, $datesIndex, $relationsIndex)
+  let $indices := ($headwordIndex, $namesIndex, $abstractIndex, $anonymousDescIndex, $sexIndex, $genderIndex, $datesIndex, $relationsIndex, $gpsIndex)
   let $sourcesIndex := csv2srophe:create-sources-index($indices)
   let $indices := ($indices, $sourcesIndex)
   
@@ -65,6 +67,7 @@ as document-node()*
       case "places" return csv2places:create-place-from-row($row, $headerMap, $indices)
       case "persons" return csv2persons:create-person-from-row($row, $headerMap, $indices)
       case "subjects" return csv2subjects:create-subject-from-row($row, $headerMap, $indices)
+      case "jeg_places" return csv2places:create-place-from-row($row, $headerMap, $indices)
       default return ""
 };
                                         
@@ -128,7 +131,8 @@ as element()*
 {
   (: For Windows paths, change "\" to "/" :)
   let $url := fn:replace($url, "\\", "/")
-  let $xmlDoc := csv:doc($url,
+  let $doc := file:read-text($url)
+  let $xmlDoc := csv:parse($doc,
                          map { 'header' : $header,'separator' : $delimiter })
   return $xmlDoc/csv/record
 };
@@ -219,11 +223,11 @@ as element()*
   return if (substring(tokenize($columnString,'\.')[1],1,string-length($columnName)) = $columnName) then
   element {$columnName} 
   {
-    if ($rightOfDotLabel != "") then element {$rightOfDotLabel} {$rightOfDot} else(),
+    if ($rightOfDotLabel != "") then element {$rightOfDotLabel} {$rightOfDot} else (),
     element {"textNodeColumnElementName"} {$column/name/string()},
     csv2srophe:associate-source-data-columns($leftOfDot, $headerMap, $rightOfDot)
    }
-  
+  else () 
 };
 
 declare function csv2srophe:associate-source-data-columns($parentColumnName as xs:string,
@@ -370,6 +374,31 @@ as element()*
   return $sexIndex
 };
 
+(:~
+: returns a sequence that looks like this:
+:
+: <gender>
+:   <textNodeColumnElementName>gender1</textNodeColumnElementName>
+:   <sourceUriElementName>sourceURI.gender1</sourceUriElementName>
+:   <citedRangeElementName>citedRange.gender1</citedRangeElementName>
+:   <citationUnitElementName>citationUnit.gender1</citationUnitElementName>
+: </gender>
+:
+: The gender index stores a sequence of columns where entity gender information
+: is kept. It is solely used for persons entities. It is used, for each row 
+: of data, to create the element(s) encoding the gender information for 
+: the entity.
+: 
+: @author William L. Potter
+:
+:)
+
+declare function csv2srophe:create-gender-index($headerMap as element()+)
+as element()*
+{
+  let $genderIndex := csv2srophe:create-column-index("gender", $headerMap, "")
+  return $genderIndex
+};
 (:~ 
 : returns a sequence looks like:
 : 
@@ -387,7 +416,37 @@ declare function csv2srophe:create-relations-index($headerMap as element()+)
 as element()*
 {
   let $relationsIndex := csv2srophe:create-column-index("relation", $headerMap, "type")
-  return $relationsIndex
+  
+  (: collate additional relation information, such as placeName or desc columns :)
+  for $rel in $relationsIndex
+  let $rightOfDot := substring-before(functx:trim($rel/*:textNodeColumnElementName/text()), ".") (: the name of the relation, less the type :)
+  let $relAttrColumns :=  
+    for $column in $headerMap
+    let $columnName := functx:trim($column/*:name/text())
+    where substring-after($columnName, ".") = $rightOfDot (: screen for associated date columns :)
+    let $leftOfDot := substring-before($columnName, ".")
+    return element {$leftOfDot || "ElementName"} {$columnName}
+  let $relChildren := functx:distinct-deep(($rel/*, $relAttrColumns))
+  return <relation>{$relChildren}</relation>
+};
+
+(:~ 
+: returns a sequence looks like:
+: 
+: <gps>
+:  <textNodeColumnElementName>gps1</textNodeColumnElementName>
+:  <sourceUriElementName>sourceUri.gps1</sourceUriElementName>
+:  ... (etc. with citedRange and citationUnit)
+: </gps> 
+: ...
+:
+: These columns store information for tei:location elements with gps coordinates.
+:)
+declare function csv2srophe:create-gps-index($headerMap as element()+)
+as element()*
+{
+  let $gpsIndex := csv2srophe:create-column-index("gps", $headerMap, "")
+  return $gpsIndex
 };
 
 declare function csv2srophe:create-dates-index($headerMap as element()+)
@@ -579,10 +638,10 @@ as element()*
     let $sourceUri := if(starts-with($sourceUri, "http")
                          and $sourceUri != "")
                       then $sourceUri 
-                      else "http://syriaca.org/bibl/" || $sourceUri
+                      else $config:default-bibl-uri-base || $sourceUri
     let $sourceCitedRange := $source/*:citedRange/text()
     let $sourceCitationUnit := $source/*:citationUnit/text()
-    let $citedRangeElement := if ($sourceCitedRange != "") then csv2srophe:create-citedRange-element($sourceCitedRange, $sourceCitationUnit)
+    let $citedRangeElement := if ($sourceCitedRange != "") then csv2srophe:create-citedRange-element($sourceCitedRange, $sourceCitationUnit) else ()
     return
     <bibl xmlns="http://www.tei-c.org/ns/1.0" xml:id="bib{$uriLocalName}-{$number}">
         <ptr target="{$sourceUri}"/>
@@ -671,9 +730,11 @@ as element()*
     case "abstract" return csv2srophe:build-abstract-element($text, $elementName,$uriLocalName, $langAttr, $sourceAttr, $number + $enumerationOffset)
     case "anonymousDesc" return csv2srophe:build-anonymousDesc-element($text, $elementName, $uriLocalName, $langAttr, $sourceAttr, false (), $number + $enumerationOffset)
     case "sex" return csv2srophe:build-sex-element($text, $sourceAttr)
+    case "gender" return csv2srophe:build-gender-element($text, $sourceAttr)
     case "date" return csv2srophe:build-date-element($text, $sourceAttr, $item)
+    case "gps" return csv2srophe:build-location-element($text, $sourceAttr, "gps")
     case "relation" return csv2srophe:build-relation-element($item, $sourceAttr, $uriLocalName, "#") (: FIX: separator should not be hard-coded :)
-    (: add other cases, e.g., "date", "sex", "anonymous descs", etc. :)
+    (: add other cases, e.g., "anonymous descs", etc. :)
     default return () (: maybe have an error? :)
 };
 
@@ -707,9 +768,9 @@ as xs:string*
   let $itemCitationUnit := if(not($itemData/*:citationUnit/text()) or string($itemData/*:citationUnit/text()) = "pp") then "p" else string($itemData/*:citationUnit/text())
   
   where  $itemData/*:sourceUri/text() = $src/*:sourceUri/text() 
-     and $itemData/*:citedRange/text() = $src/*:citedRange/text() 
-     and $itemCitationUnit = string($src/*:citationUnit/text())  (: URI and page from columns must match with iterated item in the source index :)
-  return if($itemData/*:sourceUri/text() != "") then "bib" || $uriLocalName||'-'||$srcNumber    (: create the last part of the source attribute :)
+     and normalize-space($itemData/*:citedRange/text()) = normalize-space($src/*:citedRange/text())
+     and ($itemCitationUnit = string($src/*:citationUnit/text()) or $itemCitationUnit = "")  (: URI and page from columns must match with iterated item in the source index :)
+  return if($itemData/*:sourceUri/text() != "") then "bib" || $uriLocalName||'-'||$srcNumber    (: create the last part of the source attribute :) else ()
 };
 
 declare function csv2srophe:build-name-element($textNode as xs:string,
@@ -723,17 +784,19 @@ as element()
 {
   let $headwordAttr := if($isHeadword) then
     attribute {QName("https://srophe.app", "srophe:tags")} {"#syriaca-headword"}
+    else ()
   let $id := if($elementName != "gloss") then (: glosses are 'alternate names' for taxonomy entities and don't have xml:ids. :)
                  if($elementName = "term") then (: taxonomy headwords are tei:term elements with the xml:id pattern of 'name-$entityUri-$language' :)
                    "name-" || $entityUri || "-" || $language (: in this case $entityUri should be the lower-case value of $textNode :)
                  else
                    "name" || $entityUri || "-" || $namePositionInSequence (: all other entities have the xml:id pattern of "name$entityUri-$namePositionInSequence":)
-  let $xmlId := if($id != "") then attribute {"xml:id"} {$id}
+             else ()
+  let $xmlId := if($id != "") then attribute {"xml:id"} {$id} else ()
   let $xmlLang := attribute {"xml:lang"} {$language}
   let $sourceAttr := if($source != "") then
                        attribute {"source"} {"#" || $source}
                      else
-                       attribute {"resp"} {"http://syriaca.org"}
+                       attribute {"resp"} {$config:default-resp-statement}
   let $textNode := if($elementName = "gloss") then element {QName("http://www.tei-c.org/ns/1.0", "term")} {$textNode} else $textNode (: nest a term in a gloss :)
   return
     element {QName("http://www.tei-c.org/ns/1.0", $elementName)} 
@@ -757,17 +820,15 @@ declare function csv2srophe:build-abstract-element($textNode as xs:string,
                                                    $abstractPositionInSequence as xs:integer)
 as element()
 {
-  let $id := if($entityUri != "") then 
-              attribute {"xml:id"} {"abstract" || $entityUri || "-" || $abstractPositionInSequence}
   let $type := attribute {"type"} {"abstract"}
   let $xmlLang := attribute {"xml:lang"} {$language}
   let $sourceAttr := if($source != "") then
                         attribute {"source"} {"#" || $source}
                      else
-                        attribute {"resp"} {"http://syriaca.org"}
+                        attribute {"resp"} {$config:default-resp-statement}
   let $quote := if($source != "") then element {QName("http://www.tei-c.org/ns/1.0", "quote")} {$sourceAttr, $textNode} else $textNode
   return element {QName("http://www.tei-c.org/ns/1.0", $elementName)}
-                  {$type, $id, $xmlLang, if($source = "") then $sourceAttr, $quote}
+                  {$type, $xmlLang, if($source = "") then $sourceAttr else (), $quote}
 
 };
 
@@ -794,11 +855,26 @@ as element()
 declare function csv2srophe:build-sex-element($value as xs:string, $source as xs:string?)
 as element()
 {
-  let $textNode := if($value = "M") then "male" else if($value = "F") then "female"
+  let $textNode := if($value = "M") then "male" else if($value = "F") then "female" else ()
   let $sourceAttr := if($source != "") then attribute {"source"} {"#" || $source}
-    else attribute {"resp"} {"http://syriaca.org"}
+    else attribute {"resp"} {$config:default-resp-statement}
   let $valueAttr := attribute {"value"} {$value}
   return element {QName("http://www.tei-c.org/ns/1.0", "sex")} {$sourceAttr, $valueAttr, $textNode}
+};
+
+(:~ 
+: returns a tei:gender element for use in persons entities.
+: @param $value should be a Syriaca keyword URI with a skos:broader of syriaca:gender
+ :)
+declare function csv2srophe:build-gender-element($value as xs:string, $source as xs:string?)
+as element()
+{
+  (: $value should be a Syriaca keyword URI, otherwise return the full string :)
+  let $textNode := if(contains($value, "/")) then functx:substring-after-last($value, "/") else $value
+  let $sourceAttr := if($source != "") then attribute {"source"} {"#" || $source}
+    else attribute {"resp"} {$config:default-resp-statement}
+  let $anaAttr := attribute {"ana"} {$value}
+  return element {QName("http://www.tei-c.org/ns/1.0", "gender")} {$sourceAttr, $anaAttr, $textNode}
 };
 
 (: possibly a csv2srophe function if you use it for existence dates, etc.? 
@@ -820,7 +896,7 @@ places:
 declare function csv2srophe:build-date-element($textNode as xs:string, $source as xs:string?, $associatedData as element())
 as element()
 {
-  let $sourceAttr := if($source != "") then attribute {"source"} {"#" || $source} else attribute {"resp"} {"http://syriaca.org"}
+  let $sourceAttr := if($source != "") then attribute {"source"} {"#" || $source} else attribute {"resp"} {$config:default-resp-statement}
   let $elementName := functx:trim($associatedData/*:type/text())
   let $dateAttrs :=
     for $item in $associatedData/*
@@ -828,7 +904,9 @@ as element()
     let $dateAttrValue := functx:trim($item/text())
     let $dateAttrValue := csv2srophe:enforce-iso-date-format($dateAttrValue) (: ensure date attribute is in proper ISO format :)
     return attribute {$item/name()} {$dateAttrValue}
-  return element {QName("http://www.tei-c.org/ns/1.0", $elementName)} {$sourceAttr, $dateAttrs, $textNode}
+  return element {QName("http://www.tei-c.org/ns/1.0", $elementName)} {
+    element {QName("http://www.tei-c.org/ns/1.0", "date")} {$sourceAttr, $dateAttrs, $textNode}
+  }
 };
 
 declare function csv2srophe:enforce-iso-date-format($date)
@@ -836,8 +914,8 @@ as xs:string
 {
   let $dateComponents := tokenize($date, "-")
   let $year := format-number(xs:integer($dateComponents[1]), "9999")
-  let $month := if($dateComponents[2] != "") then format-number(xs:integer($dateComponents[2]), "99")
-  let $day := if($dateComponents[3] != "") then format-number(xs:integer($dateComponents[3]), "99")
+  let $month := if($dateComponents[2] != "") then format-number(xs:integer($dateComponents[2]), "99") else()
+  let $day := if($dateComponents[3] != "") then format-number(xs:integer($dateComponents[3]), "99") else ()
   return string-join(($year, $month, $day), "-")
 };
 
@@ -855,7 +933,7 @@ as element()
   let $otherUris := for $uri in $otherUris return if(starts-with($uri, "http") or starts-with($uri, "ISO") or starts-with($uri, "snap:")) then $uri else $config:uri-base || $uri
   let $otherUris := string-join($otherUris, " ")
   
-  let $sourceAttr := if($source != "") then attribute {"source"} {$source} else attribute {"resp"} {"http://syriaca.org"}
+  let $sourceAttr := if($source != "") then attribute {"source"} {$source} else attribute {"resp"} {$config:default-resp-statement}
   
   let $relationType := functx:trim($relationData/type/text())
   
@@ -883,6 +961,20 @@ as element()
     let $active := attribute {"active"} {$selfUri}
     let $passive := attribute {"passive"} {$otherUris}
     return element {QName("http://www.tei-c.org/ns/1.0", "relation")} {$name, $ref, $active, $passive}
+  case "containedWithin" return
+    let $name := attribute {"name"} {"skos:broader"}
+    let $ref := attribute {"ref"} {"http://www.w3.org/2004/02/skos/core#broader"}
+    let $active := attribute {"active"} {$selfUri}
+    let $passive := attribute {"passive"} {$otherUris}
+    let $desc := element {QName("http://www.tei-c.org/ns/1.0", "desc")} {
+      attribute {"xml:lang"} {"en"}, (: probably don't want to hard-code? :)
+      element {QName("http://www.tei-c.org/ns/1.0", "placeName")} {
+        attribute {"ref"} {$otherUris},
+        $relationData/placeName/text()
+      }
+    }
+    let $type := attribute {"type"} {"contained-within"}
+    return element {QName("http://www.tei-c.org/ns/1.0", "relation")} {$name, $ref, $type, $active, $passive, $desc}
   default return 
     let $name := attribute {"name"} {"see-also"}
     let $mutual := attribute {"mutual"} {$selfUri||" "||$otherUris}
@@ -902,6 +994,19 @@ as element()?
     element {QName("http://www.tei-c.org/ns/1.0", "listRelation")} {$relations}
   else ()
 };
+
+declare function csv2srophe:build-location-element($textNode as xs:string, $source as xs:string?, $type as xs:string)
+as element()
+  {
+    let $sourceAttr := if($source != "") then attribute {"source"} {"#" || $source}
+      else attribute {"resp"} {$config:default-resp-statement}    let $typeAttr := attribute {"type"} {$type}
+    return element {QName("http://www.tei-c.org/ns/1.0", "location")}
+      {$typeAttr, 
+      $sourceAttr, 
+      element {QName("http://www.tei-c.org/ns/1.0", "geo")} {$textNode} } 
+  };
+
+
 (: I'm not sure these final functions should be in this module. They are more
 : generic than just csv transform. Perhaps separate out into some util library? :)
 

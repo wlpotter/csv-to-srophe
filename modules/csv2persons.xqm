@@ -1,4 +1,4 @@
-xquery version "3.0";
+xquery version "3.1";
 
 (:
 : Module Name: Syriaca.org CSV to Persons Transformation
@@ -98,6 +98,7 @@ as node()
   let $abstractIndex := $indices/self::abstract
   let $anonymousDescIndex := $indices/self::anonymousDesc
   let $sexIndex := $indices/self::sex
+  let $genderIndex := $indices/self::gender
   let $datesIndex := $indices/self::date
   let $sourcesIndex := $indices/self::source
   let $sources := csv2srophe:create-sources-index-for-row($sourcesIndex, $row)
@@ -105,7 +106,7 @@ as node()
   (: build descendant nodes of the tei:person :)
   
   (: HARD-CODED pending batch changes will affect this functionality :)
-  let $anaAttr := if(functx:trim($row/*[name() = "trait.en"]/text()) = "anonymous") then attribute {"ana"} {"#syriaca-anonymous"}
+  let $anaAttr := if(functx:trim($row/*[name() = "trait.en"]/text()) = "anonymous") then attribute {"ana"} {"#syriaca-anonymous"} else ()
   
   let $headwords := csv2srophe:build-element-sequence($row, $headwordIndex, $sources, "persName", 0)
   let $numHeadwords := count($headwords)
@@ -119,7 +120,10 @@ as node()
   
   let $trait := csv2persons:create-trait($row)
   let $sex := csv2srophe:build-element-sequence($row, $sexIndex, $sources, "sex", 0)
+  let $gender := csv2srophe:build-element-sequence($row, $genderIndex, $sources, "gender", 0)
   let $dates := csv2srophe:build-element-sequence($row, $datesIndex, $sources, "date", 0)
+  (: order for dates should be floruit, birth, death :)
+  let $dates := ($dates/self::*[name() = "floruit"], $dates/self::*[name() = "birth"], $dates/self::*[name() = "death"])
   
   (: pending: 
   - @ana attribute on tei:person for saint, author, etc.
@@ -130,8 +134,8 @@ as node()
   (: compose tei:person element and return it :)
   
   return 
-  <person xmlns="http://www.tei-c.org/ns/1.0" xml:id="person-{$uriLocalName}">
-    {$anaAttr, $headwords, $anonymousDesc, $persNames, $idnos, $trait, $sex, $dates, $abstracts, $bibls}
+  <person xmlns="http://www.tei-c.org/ns/1.0">
+    {$anaAttr, $headwords, $anonymousDesc, $persNames, $idnos, $abstracts, $dates, $gender, $sex, $trait, $bibls}
   </person>
 };
 
@@ -141,5 +145,5 @@ as element()?
 {
   let $traitText := functx:trim($row/*[name() = "trait.en"]/text())
   let $label := element {QName("http://www.tei-c.org/ns/1.0", "label")} {$traitText}
-  return if($traitText != "") then element {QName("http://www.tei-c.org/ns/1.0", "trait")} {attribute {"xml:lang"} {"en"}, $label}
+  return if($traitText != "") then element {QName("http://www.tei-c.org/ns/1.0", "trait")} {attribute {"xml:lang"} {"en"}, $label} else ()
 };

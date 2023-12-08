@@ -1,4 +1,4 @@
-xquery version "3.0";
+xquery version "3.1";
 
 (:
 : Module Name: Syriaca.org CSV to Places Transformation
@@ -94,6 +94,7 @@ as node()
   let $namesIndex := $indices/self::name
   let $abstractIndex := $indices/self::abstract
   let $datesIndex := $indices/self::date
+  let $gpsIndex := $indices/self::gps
   let $sourcesIndex := $indices/self::source
   let $sources := csv2srophe:create-sources-index-for-row($sourcesIndex, $row)
   
@@ -105,8 +106,9 @@ as node()
   let $placeNames := csv2srophe:build-element-sequence($row, $namesIndex, $sources, "placeName", $numHeadwords)
   let $abstracts := csv2srophe:build-element-sequence($row, $abstractIndex, $sources, "desc", 0)
   
-  (: currently not handling gps locations or relative locations :)
-  let $nestedLocations := csv2places:create-nested-locations($row, $sources)
+  (: currently not handling relative locations :)
+    let $gps := csv2srophe:build-element-sequence($row, $gpsIndex, $sources, "location", 0)
+  (: let $nestedLocations := csv2places:create-nested-locations($row, $sources) :) (:DEPRECATED in favor of tei:relation elements of @type="contained-within":)
   
   let $idnos := csv2srophe:create-idno-sequence-for-row($row, $config:uri-base)
   
@@ -118,7 +120,7 @@ as node()
   
   return 
   <place xmlns="http://www.tei-c.org/ns/1.0" type="{$placeType}">
-    {$headwords, $placeNames, $abstracts, $nestedLocations, $idnos, $bibls}
+    {$headwords, $placeNames, $abstracts, $gps, $idnos, $bibls}
   </place>
 };
 
@@ -159,6 +161,7 @@ as element()*
 };
 
 (: somewhat hacked-together. Generalize with a look up based on sub-elements (e.g., nestedName.$$$ for settlement, region, etc. :)
+ (:DEPRECATED in favor of tei:relation elements of @type="contained-within":)
 declare function csv2places:create-nested-locations($row as element(), $sourcesIndex as element()*)
 as element()*
 {
@@ -167,9 +170,10 @@ as element()*
 let $settlementElement := 
     let $setName := functx:trim($row/*[name() = 'nestedName.settlement']/text())  (: this is a hack that just pulls the text from the sourcURI column.  Use the lookup method if it gets more complicated :)
     let $setUri := functx:trim($row/*[name() = 'nestedURI.settlement']/text())
-    let $setRefAttr := if ($setUri != "") then attribute {"ref"} {$setUri}
+    let $setRefAttr := if ($setUri != "") then attribute {"ref"} {$setUri} else ()
     return if ($setName != "" or $setUri != "") then (: build element only if text node or @ref are non-empty :)
       element {QName("http://www.tei-c.org/ns/1.0", "settlement")} {$setRefAttr, $setName}
+     else ()
 let $settlementSourceAttribute :=
     let $setSrc := functx:trim($row/*[name() = 'sourceURI.nested.settlement']/text())    
     let $setPg := functx:trim($row/*[name() = 'citedRange.nested.settlement']/text())
@@ -185,9 +189,10 @@ let $settlementSourceAttribute :=
 let $regionElement :=
     let $regName := functx:trim($row/*[name() = 'nestedName.region']/text())  (: this is a hack that just pulls the text from the sourcURI column.  Use the lookup method if it gets more complicated :)
     let $regUri := functx:trim($row/*[name() = 'nestedURI.region']/text())
-    let $regRefAttr := if ($regUri != "") then attribute {"ref"} {$regUri}
+    let $regRefAttr := if ($regUri != "") then attribute {"ref"} {$regUri} else ()
      return if($regName != "" or $regUri != "") then (: build element only if text node or @ref are non-empty :)
        element {QName("http://www.tei-c.org/ns/1.0", "region")} {$regRefAttr, $regName}
+     else ()
 let $regionSourceAttribute :=
     let $regSrc := functx:trim($row/*[name() = 'sourceURI.nested.region']/text())    
     let $regPg := functx:trim($row/*[name() = 'citedRange.nested.region']/text())
@@ -217,7 +222,7 @@ let $locationAttribute := $settlementSourceAttribute||$separator||$regionSourceA
             $regionElement
       }</location>
     else
-       <location xmlns="http://www.tei-c.org/ns/1.0" type="nested" resp="http://syriaca.org">{
+       <location xmlns="http://www.tei-c.org/ns/1.0" type="nested" resp="{$config:default-resp-statement}">{
             $settlementElement,
             $regionElement
       }</location>
