@@ -29,8 +29,8 @@
         -->
         <responsibility>
             <!-- These two elements contain the editor ID portion of the editor URI and the human-readable name of the person responsible for creating the CSV or skeleton xml files. -->
-            <creatorId>dschwartz</creatorId>
-            <creatorNameString>Daniel L. Schwartz</creatorNameString>
+            <creatorId>sroggo</creatorId>
+            <creatorNameString>Silvio Roggo</creatorNameString>
             <!-- Provides the description to be used in the tei:respStmt/tei:resp for the creation of the xml record -->
             <respDescription>URI minted and initial data collected by</respDescription>
             <!-- note: change-log message should be collection-specific (e.g., "CREATED: place") -->
@@ -41,6 +41,7 @@
                 <places>CREATED: place</places>
                 <persons>CREATED: person</persons>
                 <subjects>CREATED: keyword</subjects>
+                <jeg_places>CREATED: place</jeg_places>
             </changeLog>
             <!-- The default URI value to supply for use in the `@resp` attributes -->
             <defaultRespAttrVal>http://syriaca.org</defaultRespAttrVal>
