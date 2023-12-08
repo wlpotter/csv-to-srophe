@@ -68,6 +68,7 @@ as document-node()*
       case "persons" return csv2persons:create-person-from-row($row, $headerMap, $indices)
       case "subjects" return csv2subjects:create-subject-from-row($row, $headerMap, $indices)
       case "jeg_places" return csv2places:create-place-from-row($row, $headerMap, $indices)
+      case "jeg_persons" return csv2persons:create-person-from-row($row, $headerMap, $indices)
       default return ""
 };
                                         
