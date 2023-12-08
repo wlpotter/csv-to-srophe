@@ -930,6 +930,13 @@ as element()
     let $active := attribute {"active"} {$selfUri}
     let $passive := attribute {"passive"} {$otherUris}
     return element {QName("http://www.tei-c.org/ns/1.0", "relation")} {$name, $ref, $active, $passive}
+  case "containedWithin" return
+    let $name := attribute {"name"} {"skos:broader"}
+    let $ref := attribute {"ref"} {"http://www.w3.org/2004/02/skos/core#broader"}
+    let $active := attribute {"active"} {$selfUri}
+    let $passive := attribute {"passive"} {$otherUris}
+    let $type := attribute {"type"} {"contained-within"}
+    return element {QName("http://www.tei-c.org/ns/1.0", "relation")} {$name, $ref, $type, $active, $passive}
   default return 
     let $name := attribute {"name"} {"see-also"}
     let $mutual := attribute {"mutual"} {$selfUri||" "||$otherUris}
