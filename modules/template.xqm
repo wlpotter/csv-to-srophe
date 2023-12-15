@@ -197,8 +197,9 @@ as node()
 {
   (: should be text, body, listEl, El, :)
   let $body := $textElement/body
-  let $listEl := $body/*[1] (: the one ensures we don't pick up the listRelation element :)
-  let $entity := if(contains($listEl/name(), "list")) then $listEl/*[1] (: for places, listRelation is listEl[2] :)else $listEl (: for subjects, the 'listEl' is actually entryFree :)
+  let $listEl := $body/* (: the one ensures we don't pick up the listRelation element :)
+  let $entity := if(contains($listEl/name(), "list")) then $listEl/*[1] (: for places and persons, listRelation is listEl/*[2] :)else $listEl (: for subjects, the 'listEl' is actually entryFree :)
+  let $entitySiblings := $listEl/*[2] (: listRelation for persons and places :)
   let $entity :=
     element {$entity/name()} {$entity/@*,
     for $ch in $entity/*
@@ -208,7 +209,7 @@ as node()
   }
   let $listEl := 
     if(contains($listEl/name(), "list")) then 
-      element {$listEl/name()} {$listEl/@*, $entity}
+      element {$listEl/name()} {$listEl/@*, $entity, $entitySiblings}
     else $entity (: for subjects, the 'listEl' is actually entryFree :)
   let $body := element {$body/name()} {$body/@*, $listEl, $body/*[2]}
   let $text := element {$textElement/name()} {$textElement/@*, $body}
