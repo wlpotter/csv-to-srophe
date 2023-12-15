@@ -940,10 +940,11 @@ as element()
   
   return switch($relationType)
   case "possiblyIdentical" return 
-    let $name := attribute {"name"} {"possibly-identical"}
+    let $type := attribute {"type"} {"disambiguation"}
+    let $ref := attribute {"ref"} {"http://syriaca.org/keyword/possibly-identical"}
     let $mutual := attribute {"mutual"} {$selfUri||" "||$otherUris}
-    let $desc := element {QName("http://www.tei-c.org/ns/1.0", "desc")} {attribute {"xml:lang"} {"en"}, "This person is possibly identical with the person represented in another record"}
-    return element {QName("http://www.tei-c.org/ns/1.0", "relation")} {$name, $mutual, $sourceAttr, $desc}
+    let $desc := element {QName("http://www.tei-c.org/ns/1.0", "desc")} {attribute {"xml:lang"} {"en"}, attribute {"type"} {"note"}, "This person is possibly identical with the person represented in another record"}
+    return element {QName("http://www.tei-c.org/ns/1.0", "relation")} {$type, $ref, $mutual, $sourceAttr, $desc}
   case "skosBroadMatch" return
     let $name := attribute {"name"} {"skos:broadMatch"}
     let $ref := attribute {"ref"} {"http://www.w3.org/2004/02/skos/core#broadMatch"}
