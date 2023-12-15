@@ -62,9 +62,9 @@ as document-node()
   <text xmlns="http://www.tei-c.org/ns/1.0">
     <body>
       <listPlace>
-        {csv2places:build-place-node-from-row($row, $headerMap, $indices)}
+        {csv2places:build-place-node-from-row($row, $headerMap, $indices)},
+        {csv2srophe:build-listRelation-element($row, $relationsIndex, $sources)}
       </listPlace>
-      {csv2srophe:build-listRelation-element($row, $relationsIndex, $sources)}
     </body>
   </text>
   

@@ -975,7 +975,7 @@ as element()
       }
     }
     let $type := attribute {"type"} {"contained-within"}
-    return element {QName("http://www.tei-c.org/ns/1.0", "relation")} {$name, $ref, $type, $active, $passive, $desc}
+    return element {QName("http://www.tei-c.org/ns/1.0", "relation")} {$name, $ref, $type, $active, $passive, $sourceAttr, $desc}
   default return 
     let $name := attribute {"name"} {"see-also"}
     let $mutual := attribute {"mutual"} {$selfUri||" "||$otherUris}
