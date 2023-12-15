@@ -55,11 +55,6 @@
             <collection name="jeg_persons" record-URI-base="http://syriaca.org/person/" template="/templates/jeg_persons-template.xml" index="https://syriaca.org/documentation/indexes/persons.xml"/>
             <!-- persons may be difficult if we need separate for saints and for authors -->
         </collections>
-        <!-- List the URI, in a <corresp> element, that generated abstracts should be associated with.
-            -->
-        <abstractCorresps>
-            
-        </abstractCorresps>
         <!-- The following namespaces will be declared on the root tei:TEI element as xmlns:$prefix="$text-node".
               Which namespaces are declared on which entity-type depends on the @entity attribute. A value of "all" 
               declares the namespace on any enity-type. Otherwise, a space-separated list of entities should be declared.
