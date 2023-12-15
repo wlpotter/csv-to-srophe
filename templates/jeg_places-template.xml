@@ -1,26 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-model href="https://raw.githubusercontent.com/srophe/srophe-eXist-app/master/documentation/schemas/out/syriacaPlaces.compiled.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
-<?xml-model href="https://raw.githubusercontent.com/srophe/srophe-eXist-app/master/documentation/schemas/out/syriacaPlaces.compiled.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-<?xml-model href="https://raw.githubusercontent.com/srophe/srophe-eXist-app/master/documentation/schemas/uniqueLangHW.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-model href="https://raw.githubusercontent.com/srophe/syriaca/2023_SchemaWork/documentation/schemas/out/syriacaPlaces.compiled.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="https://raw.githubusercontent.com/srophe/syriaca/2023_SchemaWork/documentation/schemas/out/syriacaPlaces.compiled.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-model href="https://raw.githubusercontent.com/srophe/syriaca/2023_SchemaWork/documentation/schemas/uniqueLangHW.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:svg="http://www.w3.org/2000/svg" xmlns:srophe="https://srophe.app" xmlns:syriaca="http://syriaca.org" xml:lang="en">
     <teiHeader>
         <fileDesc>
             <titleStmt>
-                
-                <!-- WLP: for records that are made after the 2.0 update, will we still include the respStmts for normalizations, etc. for 2.0?
-                Here's how they look: 
-                <resp>Record validation, normalization, and revisions for the second edition (2.0) by</resp>
-          <name ref="http://syriaca.org/documentation/editors.xml#dmichelson">David A. Michelson</name>
-        </respStmt>
-        <respStmt>
-          <resp>Record validation, normalization, and revisions for the second edition (2.0) by</resp>
-          <name ref="http://syriaca.org/documentation/editors.xml#wpotter">William L. Potter</name>
-        </respStmt>
-        <respStmt>
-          <resp>Record validation, normalization, and revisions for the second edition (2.0) by</resp>
-          <name ref="http://syriaca.org/documentation/editors.xml#dschwartz">Daniel L. Schwartz</name>
-        </respStmt>
-                -->
+                <sponsor>Syriaca.org: The Syriac Reference Portal</sponsor>
       </titleStmt>
             <editionStmt>
                 <edition n="2.0"/>
@@ -29,8 +15,8 @@
                 <authority>Syriaca.org: The Syriac Reference Portal</authority>
                 <idno type="URI"></idno>
                 <availability>
-                    <licence target="http://creativecommons.org/licenses/by/3.0/">
-                        <p>Distributed under a Creative Commons Attribution 3.0 Unported License.</p>
+                    <licence target="http://creativecommons.org/licenses/by/4.0/">
+                        <p>Distributed under a Creative Commons Attribution 4.0 International License.</p>
                     </licence>
                 </availability>
             </publicationStmt>
@@ -55,13 +41,13 @@
                 <title level="s" xml:lang="en">A Guide to John of Ephesus</title>
                 <editor role="general" ref="http://syriaca.org/documentation/editors.xml#sroggo">
                     <persName>Silvio Roggo</persName>, <date from="2023">2023-present</date>.</editor>
-                <idno type="URI">http://jeg.syriaca.org</idno>
+                <idno type="URI">http://syriaca.org/johnofephesus</idno>
             </seriesStmt>
             <seriesStmt>
-                <title level="m" xml:lang="en">Places: A Guide to John of Ephesus</title>
+                <title level="m" xml:lang="en">Gazetteer to John of Ephesus’s Ecclesiastical History</title>
                 <editor role="general" ref="http://syriaca.org/documentation/editors.xml#sroggo">
                     <persName>Silvio Roggo</persName>, <date from="2023">2023-present</date>.</editor>
-                <idno type="URI">http://jeg.syriaca.org/places</idno>
+                <idno type="URI">http://syriaca.org/johnofephesus/places</idno>
             </seriesStmt>
             <sourceDesc>
                 <p>Born digital.</p>
