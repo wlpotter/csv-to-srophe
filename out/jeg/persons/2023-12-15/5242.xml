@@ -22,7 +22,7 @@
       </editionStmt>
       <publicationStmt>
         <authority>Syriaca.org: The Syriac Reference Portal</authority>
-        <idno type="URI">http://syriaca.org/person/BJFJXJJE/tei</idno>
+        <idno type="URI">http://syriaca.org/person/5242/tei</idno>
         <availability>
           <licence target="http://creativecommons.org/licenses/by/4.0/">
             <p>Distributed under a Creative Commons Attribution 4.0 International License.</p>
@@ -95,34 +95,34 @@
     <body>
       <listPerson>
         <person>
-          <persName xml:lang="en" xml:id="nameBJFJXJJE-1" srophe:tags="#syriaca-headword" resp="http://syriaca.org">Constantine</persName>
-          <persName xml:lang="syr" xml:id="nameBJFJXJJE-2" srophe:tags="#syriaca-headword" source="#bibBJFJXJJE-1">ܩܘܣܛܢܛܝܢܘܣ</persName>
-          <persName xml:lang="en" xml:id="nameBJFJXJJE-3" source="#bibBJFJXJJE-2">Constantinus</persName>
-          <idno type="URI">http://syriaca.org/person/BJFJXJJE</idno>
+          <persName xml:lang="en" xml:id="name5242-1" srophe:tags="#syriaca-headword" resp="http://syriaca.org">Constantine</persName>
+          <persName xml:lang="syr" xml:id="name5242-2" srophe:tags="#syriaca-headword" source="#bib5242-1">ܩܘܣܛܢܛܝܢܘܣ</persName>
+          <persName xml:lang="en" xml:id="name5242-3" source="#bib5242-2">Constantinus</persName>
+          <idno type="URI">http://syriaca.org/person/5242</idno>
           <idno type="URI">http://syriaca.org/johnofephesus/persons/BJFJXJJE</idno>
           <idno type="URI">https://en.wikipedia.org/wiki/Constantine_the_Great</idno>
           <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons http://syriaca.org/johnofephesus/persons">
-            <quote source="#bibBJFJXJJE-3">Arguably the most famous emperor of Late Antiquity, Constantine was the first emperor to embrace Christianity after his victory in battle in 312. He re-united the Roman Empire, thus bringing to an end the period of the Tetrarchy, and convened the first ecumenical council in Nicaea in 325.</quote>
+            <quote source="#bib5242-3">Arguably the most famous emperor of Late Antiquity, Constantine was the first emperor to embrace Christianity after his victory in battle in 312. He re-united the Roman Empire, thus bringing to an end the period of the Tetrarchy, and convened the first ecumenical council in Nicaea in 325.</quote>
           </note>
           <floruit>
-            <date source="#bibBJFJXJJE-3">306-337</date>
+            <date source="#bib5242-3">306-337</date>
           </floruit>
-          <gender source="#bibBJFJXJJE-4" ana="http://syriaca.org/keyword/male">male</gender>
-          <bibl xml:id="bibBJFJXJJE-1">
+          <gender source="#bib5242-4" ana="http://syriaca.org/keyword/male">male</gender>
+          <bibl xml:id="bib5242-1">
             <ptr target="http://syriaca.org/bibl/9KL93RUC"/>
             <citedRange unit="p">129; 140; 264</citedRange>
             <citedRange unit="chapter">3.3.5; 3.3.14; 3.5.14</citedRange>
           </bibl>
-          <bibl xml:id="bibBJFJXJJE-2">
+          <bibl xml:id="bib5242-2">
             <ptr target="http://syriaca.org/bibl/HJ85NAV2"/>
             <citedRange unit="entry">Constantinus 4</citedRange>
             <citedRange unit="p">223-224</citedRange>
           </bibl>
-          <bibl xml:id="bibBJFJXJJE-3">
+          <bibl xml:id="bib5242-3">
             <ptr target="http://syriaca.org/bibl/N42AM4Q2"/>
             <citedRange unit="p">383-387</citedRange>
           </bibl>
-          <bibl xml:id="bibBJFJXJJE-4">
+          <bibl xml:id="bib5242-4">
             <ptr target="http://syriaca.org/bibl/9KL93RUC"/>
             <citedRange unit="p">129; 140; 264</citedRange>
           </bibl>
