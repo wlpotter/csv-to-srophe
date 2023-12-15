@@ -47,6 +47,7 @@
                 <title level="m" xml:lang="en">Gazetteer to John of Ephesus’s Ecclesiastical History</title>
                 <editor role="general" ref="http://syriaca.org/documentation/editors.xml#sroggo">
                     <persName>Silvio Roggo</persName>, <date from="2023">2023-present</date>.</editor>
+                <biblScope unit="volume" n="2">II</biblScope>
                 <idno type="URI">http://syriaca.org/johnofephesus/places</idno>
             </seriesStmt>
             <sourceDesc>
