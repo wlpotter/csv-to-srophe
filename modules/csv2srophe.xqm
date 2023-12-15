@@ -829,7 +829,7 @@ as element()
                         attribute {"resp"} {$config:default-resp-statement}
   let $quote := if($source != "") then element {QName("http://www.tei-c.org/ns/1.0", "quote")} {$sourceAttr, $textNode} else $textNode
   return element {QName("http://www.tei-c.org/ns/1.0", $elementName)}
-                  {$type, $xmlLang, if($source = "") then $sourceAttr else (), $quote}
+                  {$type, $xmlLang, if(normalize-space($source) = "") then $sourceAttr else (), $quote}
 
 };
 
