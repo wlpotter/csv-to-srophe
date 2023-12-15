@@ -131,8 +131,8 @@
           </bibl>
         </person>
         <listRelation>
-          <relation name="possibly-identical" mutual="http://syriaca.org/person/5169 http://syriaca.org/person/784" resp="http://syriaca.org">
-            <desc xml:lang="en">This person is possibly identical with the person represented in another record</desc>
+          <relation type="disambiguation" ref="http://syriaca.org/keyword/possibly-identical" mutual="http://syriaca.org/person/5169 http://syriaca.org/person/784" resp="http://syriaca.org">
+            <desc xml:lang="en" type="note">This person is possibly identical with the person represented in another record</desc>
           </relation>
         </listRelation>
       </listPerson>
