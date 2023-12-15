@@ -100,7 +100,7 @@
           <placeName xml:lang="en" xml:id="name5619-1" srophe:tags="#syriaca-headword" resp="http://syriaca.org">Marina palace</placeName>
           <placeName xml:lang="syr" xml:id="name5619-2" srophe:tags="#syriaca-headword" resp="http://syriaca.org">ܒܝܬܐ ܕܡܪܝܢܘܣ</placeName>
           <placeName xml:lang="syr" xml:id="name5619-3" source="#bib5619-1">ܡܪܝܢܘܣ</placeName>
-          <placeName xml:lang="gr" xml:id="name5619-4" source="#bib5619-2">τὰ Μαρίνης</placeName>
+          <placeName xml:lang="grc" xml:id="name5619-4" source="#bib5619-2">τὰ Μαρίνης</placeName>
           <placeName xml:lang="fr" xml:id="name5619-5" source="#bib5619-2">Palais de Marina</placeName>
           <desc type="abstract" xml:lang="en" corresp="http://syriaca.org/geo http://syriaca.org/johnofephesus http://syriaca.org/johnofephesus/places">
             <quote source="#bib5619-3">Constructed in the fifth century as residence for Marina, daughter to the emperor Arcadius, the palace became part of the imperial estate after her death. Joh. Eph., EH 3.16, records that anti-Chalcedonians used to gather there for worship.</quote>
@@ -110,7 +110,7 @@
           <bibl xml:id="bib5619-1">
             <ptr target="http://syriaca.org/bibl/9KL93RUC"/>
             <citedRange unit="p">118; 142</citedRange>
-            <citedRange unit="ch">3.3.16</citedRange>
+            <citedRange unit="chapter">3.3.16</citedRange>
           </bibl>
           <bibl xml:id="bib5619-2">
             <ptr target="http://syriaca.org/bibl/VIKP2CT3"/>
@@ -122,13 +122,6 @@
           </bibl>
         </place>
       </listPlace>
-      <listRelation>
-        <relation name="skos:broader" ref="http://www.w3.org/2004/02/skos/core#broader" type="contained-within" active="http://syriaca.org/place/5619" passive="http://syriaca.org/place/586">
-          <desc xml:lang="en">
-            <placeName ref="http://syriaca.org/place/586">Constantinople</placeName>
-          </desc>
-        </relation>
-      </listRelation>
     </body>
   </text>
 </TEI>

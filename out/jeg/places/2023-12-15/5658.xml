@@ -107,7 +107,7 @@
           <bibl xml:id="bib5658-1">
             <ptr target="http://syriaca.org/bibl/9KL93RUC"/>
             <citedRange unit="p">97; 100</citedRange>
-            <citedRange unit="ch">3.2.31; 3.2.35</citedRange>
+            <citedRange unit="chapter">3.2.31; 3.2.35</citedRange>
           </bibl>
           <bibl xml:id="bib5658-2">
             <ptr target="http://syriaca.org/bibl/A2A9FHUR"/>

@@ -101,7 +101,7 @@
           <placeName xml:lang="syr" xml:id="name5584-2" srophe:tags="#syriaca-headword" resp="http://syriaca.org">ܐܪܒܝܣܘܣ</placeName>
           <placeName xml:lang="en" xml:id="name5584-3" resp="http://syriaca.org">Arabissos</placeName>
           <placeName xml:lang="syr" xml:id="name5584-4" source="#bib5584-1">ܐܪܒܝܣܘܣ</placeName>
-          <placeName xml:lang="gr" xml:id="name5584-5" source="#bib5584-2">Ἀραβισσός</placeName>
+          <placeName xml:lang="grc" xml:id="name5584-5" source="#bib5584-2">Ἀραβισσός</placeName>
           <desc type="abstract" xml:lang="en" corresp="http://syriaca.org/geo http://syriaca.org/johnofephesus http://syriaca.org/johnofephesus/places">
             <quote source="#bib5584-2">A city in Cappadocia, it was the hometown of emperor Maurice (582-602), who embellished it with the construction of representative builidings, as is stated in Joh. Eph., EH 5.22 and 23.</quote>
           </desc>
@@ -115,7 +115,7 @@
           <bibl xml:id="bib5584-1">
             <ptr target="http://syriaca.org/bibl/N42AM4Q2"/>
             <citedRange unit="p">253; 273; 274; 330</citedRange>
-            <citedRange unit="ch">3.5.22; 3.5.23; 3.6.27</citedRange>
+            <citedRange unit="chapter">3.5.22; 3.5.23; 3.6.27</citedRange>
           </bibl>
           <bibl xml:id="bib5584-2">
             <ptr target="http://syriaca.org/bibl/BJFJXJJE"/>
@@ -126,13 +126,6 @@
           </bibl>
         </place>
       </listPlace>
-      <listRelation>
-        <relation name="skos:broader" ref="http://www.w3.org/2004/02/skos/core#broader" type="contained-within" active="http://syriaca.org/place/5584" passive="http://syriaca.org/place/2763">
-          <desc xml:lang="en">
-            <placeName ref="http://syriaca.org/place/2763">Cappadocia</placeName>
-          </desc>
-        </relation>
-      </listRelation>
     </body>
   </text>
 </TEI>

@@ -101,7 +101,7 @@
           <placeName xml:lang="syr" xml:id="name5590-2" srophe:tags="#syriaca-headword" resp="http://syriaca.org">ܥܕܬܐ ܕܛܘܒܢܝܬܐ ܝܠܕܬ ܐܠܗܐ ܕܟܠܩܦܪܛܝܘܢ</placeName>
           <placeName xml:lang="en" xml:id="name5590-3" resp="http://syriaca.org">Church of the Virgin in the Coppermarket</placeName>
           <placeName xml:lang="syr" xml:id="name5590-4" source="#bib5590-1">ܥܕܬܐ ܕܛܘܒܢܝܬܐ ܝܠܕܬ ܐܠܗܐ ܕܟܠܩܦܪܛܝܘܢ</placeName>
-          <placeName xml:lang="gr" xml:id="name5590-5" source="#bib5590-2">Θεοτόκος τῶν Χαλκοπρατείων</placeName>
+          <placeName xml:lang="grc" xml:id="name5590-5" source="#bib5590-2">Θεοτόκος τῶν Χαλκοπρατείων</placeName>
           <placeName xml:lang="fr" xml:id="name5590-6" source="#bib5590-3">Théotocos des Chalkoproateia</placeName>
           <desc type="abstract" xml:lang="en" corresp="http://syriaca.org/geo http://syriaca.org/johnofephesus http://syriaca.org/johnofephesus/places">
             <quote source="#bib5590-4">Built in the late fifth century, this church was located close to Hagia Sophia and was one of the four patriarchal churches of Constantinople. It housed one of the most important relics, the girdle of the Virgin Mary.</quote>
@@ -111,7 +111,7 @@
           <bibl xml:id="bib5590-1">
             <ptr target="http://syriaca.org/bibl/9KL93RUC"/>
             <citedRange unit="p">144</citedRange>
-            <citedRange unit="ch">3.3.17</citedRange>
+            <citedRange unit="chapter">3.3.17</citedRange>
           </bibl>
           <bibl xml:id="bib5590-2">
             <ptr target="http://syriaca.org/bibl/B4PXYLJC"/>
@@ -127,13 +127,6 @@
           </bibl>
         </place>
       </listPlace>
-      <listRelation>
-        <relation name="skos:broader" ref="http://www.w3.org/2004/02/skos/core#broader" type="contained-within" active="http://syriaca.org/place/5590" passive="http://syriaca.org/place/586">
-          <desc xml:lang="en">
-            <placeName ref="http://syriaca.org/place/586">Constantinople</placeName>
-          </desc>
-        </relation>
-      </listRelation>
     </body>
   </text>
 </TEI>

@@ -114,7 +114,7 @@
           <bibl xml:id="bib5587-1">
             <ptr target="http://syriaca.org/bibl/9KL93RUC"/>
             <citedRange unit="p">48</citedRange>
-            <citedRange unit="ch">3.1.39</citedRange>
+            <citedRange unit="chapter">3.1.39</citedRange>
           </bibl>
           <bibl xml:id="bib5587-2">
             <ptr target="http://syriaca.org/bibl/N42AM4Q2"/>

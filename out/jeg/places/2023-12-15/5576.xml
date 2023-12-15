@@ -101,7 +101,7 @@
           <placeName xml:lang="syr" xml:id="name5576-2" srophe:tags="#syriaca-headword" resp="http://syriaca.org">ܒܝܬ ܐܒܪܗܡ</placeName>
           <placeName xml:lang="en" xml:id="name5576-3" resp="http://syriaca.org">Monastery of the Abrahamites</placeName>
           <placeName xml:lang="syr" xml:id="name5576-4" source="#bib5576-1">ܒܝܬ ܐܒܪܗܡ</placeName>
-          <placeName xml:lang="gr" xml:id="name5576-5" source="#bib5576-2">Μονὴ τῶν Ἀβραμιτῶν</placeName>
+          <placeName xml:lang="grc" xml:id="name5576-5" source="#bib5576-2">Μονὴ τῶν Ἀβραμιτῶν</placeName>
           <placeName xml:lang="fr" xml:id="name5576-6" source="#bib5576-2">Monastère des Abramites</placeName>
           <desc type="abstract" xml:lang="en" corresp="http://syriaca.org/geo http://syriaca.org/johnofephesus http://syriaca.org/johnofephesus/places">
             <quote source="#bib5576-2">This monastery, mentioned in Joh. Eph., EH 1.15 as a place of imprisonment for miaphysite clerics, is probably identical with the monastery founded by Abraham, archbishop of Ephesus, at the start of the sixth century. It was located in Constantinople close to the Theodosian walls at the Golden Gate.</quote>
@@ -111,7 +111,7 @@
           <bibl xml:id="bib5576-1">
             <ptr target="http://syriaca.org/bibl/9KL93RUC"/>
             <citedRange unit="p">15; 55</citedRange>
-            <citedRange unit="ch">3.1.15; 3.2.2</citedRange>
+            <citedRange unit="chapter">3.1.15; 3.2.2</citedRange>
           </bibl>
           <bibl xml:id="bib5576-2">
             <ptr target="http://syriaca.org/bibl/B4PXYLJC "/>
@@ -119,13 +119,6 @@
           </bibl>
         </place>
       </listPlace>
-      <listRelation>
-        <relation name="skos:broader" ref="http://www.w3.org/2004/02/skos/core#broader" type="contained-within" active="http://syriaca.org/place/5576" passive="http://syriaca.org/place/586">
-          <desc xml:lang="en">
-            <placeName ref="http://syriaca.org/place/586">Constantinople</placeName>
-          </desc>
-        </relation>
-      </listRelation>
     </body>
   </text>
 </TEI>

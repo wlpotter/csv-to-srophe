@@ -113,7 +113,7 @@
           <bibl xml:id="bib5644-1">
             <ptr target="http://syriaca.org/bibl/9KL93RUC"/>
             <citedRange unit="p">276; 310; 331; 338; 339</citedRange>
-            <citedRange unit="ch">3.6.14; 3.6.27; 3.6.34; 3.6.35</citedRange>
+            <citedRange unit="chapter">3.6.14; 3.6.27; 3.6.34; 3.6.35</citedRange>
           </bibl>
           <bibl xml:id="bib5644-2">
             <ptr target="http://syriaca.org/bibl/N42AM4Q2"/>
@@ -124,13 +124,6 @@
           </bibl>
         </place>
       </listPlace>
-      <listRelation>
-        <relation name="skos:broader" ref="http://www.w3.org/2004/02/skos/core#broader" type="contained-within" active="http://syriaca.org/place/5644" passive="http://syriaca.org/place/576">
-          <desc xml:lang="en">
-            <placeName ref="http://syriaca.org/place/576">Armenia</placeName>
-          </desc>
-        </relation>
-      </listRelation>
     </body>
   </text>
 </TEI>

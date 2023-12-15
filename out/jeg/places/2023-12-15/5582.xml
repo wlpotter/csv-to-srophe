@@ -110,7 +110,7 @@
           <bibl xml:id="bib5582-1">
             <ptr target="http://syriaca.org/bibl/9KL93RUC"/>
             <citedRange unit="p">314; 315</citedRange>
-            <citedRange unit="ch">3.6.19</citedRange>
+            <citedRange unit="chapter">3.6.19</citedRange>
           </bibl>
           <bibl xml:id="bib5582-2">
             <ptr target="http://syriaca.org/bibl/N42AM4Q2"/>
@@ -118,13 +118,6 @@
           </bibl>
         </place>
       </listPlace>
-      <listRelation>
-        <relation name="skos:broader" ref="http://www.w3.org/2004/02/skos/core#broader" type="contained-within" active="http://syriaca.org/place/5582" passive="http://syriaca.org/place/1452">
-          <desc xml:lang="en">
-            <placeName ref="http://syriaca.org/place/1452">Mesopotamia</placeName>
-          </desc>
-        </relation>
-      </listRelation>
     </body>
   </text>
 </TEI>

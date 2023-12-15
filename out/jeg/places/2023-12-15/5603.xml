@@ -101,7 +101,7 @@
           <placeName xml:lang="syr" xml:id="name5603-2" srophe:tags="#syriaca-headword" resp="http://syriaca.org">ܐܟܣܢܕܟܝܢ ܕܐܘܒܘܠܘ</placeName>
           <placeName xml:lang="en" xml:id="name5603-3" resp="http://syriaca.org">Hospice of Eubulus</placeName>
           <placeName xml:lang="syr" xml:id="name5603-4" source="#bib5603-1">ܐܟܣܢܕܟܝܢ ܕܐܘܒܘܠܘ</placeName>
-          <placeName xml:lang="gr" xml:id="name5603-5" source="#bib5603-2">τὰ Εὐβούλου</placeName>
+          <placeName xml:lang="grc" xml:id="name5603-5" source="#bib5603-2">τὰ Εὐβούλου</placeName>
           <desc type="abstract" xml:lang="en" corresp="http://syriaca.org/geo http://syriaca.org/johnofephesus http://syriaca.org/johnofephesus/places">
             <quote source="#bib5603-2">Located to the north-east of Hagia Sophia, this hospice dates back to at least the start of the sixth century. Destroyed during the Nika riots in 532, it was rebuilt and served as place of confinement for John of Ephesus in 571/572, as is narrated in Joh. Eph., EH 2.4-7.</quote>
           </desc>
@@ -110,7 +110,7 @@
           <bibl xml:id="bib5603-1">
             <ptr target="http://syriaca.org/bibl/9KL93RUC"/>
             <citedRange unit="p">58; 65; 74</citedRange>
-            <citedRange unit="ch">3.2.4; 3.2.6; 3.2.7; 3.2.13</citedRange>
+            <citedRange unit="chapter">3.2.4; 3.2.6; 3.2.7; 3.2.13</citedRange>
           </bibl>
           <bibl xml:id="bib5603-2">
             <ptr target="http://syriaca.org/bibl/B4PXYLJC"/>
@@ -118,13 +118,6 @@
           </bibl>
         </place>
       </listPlace>
-      <listRelation>
-        <relation name="skos:broader" ref="http://www.w3.org/2004/02/skos/core#broader" type="contained-within" active="http://syriaca.org/place/5603" passive="http://syriaca.org/place/586">
-          <desc xml:lang="en">
-            <placeName ref="http://syriaca.org/place/586">Constantinople</placeName>
-          </desc>
-        </relation>
-      </listRelation>
     </body>
   </text>
 </TEI>

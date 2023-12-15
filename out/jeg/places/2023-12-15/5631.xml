@@ -106,7 +106,7 @@
           <bibl xml:id="bib5631-1">
             <ptr target="http://syriaca.org/bibl/9KL93RUC"/>
             <citedRange unit="p">158</citedRange>
-            <citedRange unit="ch">3.3.29</citedRange>
+            <citedRange unit="chapter">3.3.29</citedRange>
           </bibl>
           <bibl xml:id="bib5631-2">
             <ptr target="http://syriaca.org/bibl/9KL93RUC"/>
@@ -114,13 +114,6 @@
           </bibl>
         </place>
       </listPlace>
-      <listRelation>
-        <relation name="skos:broader" ref="http://www.w3.org/2004/02/skos/core#broader" type="contained-within" active="http://syriaca.org/place/5631" passive="http://syriaca.org/place/10">
-          <desc xml:lang="en">
-            <placeName ref="http://syriaca.org/place/10">Antioch</placeName>
-          </desc>
-        </relation>
-      </listRelation>
     </body>
   </text>
 </TEI>
