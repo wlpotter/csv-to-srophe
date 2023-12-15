@@ -72,7 +72,7 @@ as node()
   </publicationStmt>
   
   (: build the seriesStmt from tepmlate :)
-  let $seriesStmt := if($config:collection-type = "persons")
+  let $seriesStmt := if($config:collection-type = "persons" or $config:collection-type = "jeg_persons")
     (: for persons, the seriesStmt depends on if the person is an author and/or saint :)
     then template:build-persons-seriesStmt($template, string($record//text/body/listPerson/person/@ana))
     else $template//seriesStmt
@@ -158,15 +158,23 @@ declare function template:build-persons-seriesStmt($template as node(), $personT
 as element()+
 {
   let $sbdSeriesStmt := $template//seriesStmt[idno[@type="URI"]/text() = "http://syriaca.org/persons"]
+  let $jegSeriesStmt := $template//seriesStmt[idno[@type="URI"]/text() = "http://syriaca.org/johnofephesus"]
   let $gatewaySeriesStmt := $template//seriesStmt[idno[@type="URI"]/text() = "http://syriaca.org/saints"]
   let $qadisheSeriesStmt := $template//seriesStmt[idno[@type="URI"]/text() = "http://syriaca.org/q"]
   let $authorsSeriesStmt := $template//seriesStmt[idno[@type="URI"]/text() = "http://syriaca.org/authors"]
+  let $jegPersSeriesStmt := $template//seriesStmt[idno[@type="URI"]/text() = "http://syriaca.org/johnofephesus/persons"]
   
   (: include volumes 1 and/or 2 if the person is a saint and/or author:)
   let $sLevelSeriesStmts := 
     if(contains($personType, "#syriaca-saint")) then ($sbdSeriesStmt, $gatewaySeriesStmt)
     else $sbdSeriesStmt
-  
+    
+  (: include project-specific seriesStmts :)
+  let $sLevelSeriesStmt := 
+    if($config:collection-type = "jeg_persons") then
+      ($sLevelSeriesStmts, $jegSeriesStmt)
+    else $sLevelSeriesStmts
+    
   (: if a saint, include the Qadishe series statement :)
   let $mLevelSeriesStmts := 
     if(contains($personType, "#syriaca-saint")) then $qadisheSeriesStmt
@@ -174,6 +182,11 @@ as element()+
   (: if an author, append the Authors series statement :)
   let $mLevelSeriesStmts :=
     if(contains($personType, "#syriaca-author")) then ($mLevelSeriesStmts, $authorsSeriesStmt)
+    else $mLevelSeriesStmts
+  (: include project-specific m-level seriesStmt :)
+  let $mLevelSeriesStmts :=
+    if($config:collection-type = "jeg_persons") then
+      ($mLevelSeriesStmts, $jegPersSeriesStmt)
     else $mLevelSeriesStmts
   
   return ($sLevelSeriesStmts, $mLevelSeriesStmts)
@@ -185,7 +198,7 @@ as node()
   (: should be text, body, listEl, El, :)
   let $body := $textElement/body
   let $listEl := $body/*[1] (: the one ensures we don't pick up the listRelation element :)
-  let $entity := if(contains($listEl/name(), "list")) then $listEl/* else $listEl (: for subjects, the 'listEl' is actually entryFree :)
+  let $entity := if(contains($listEl/name(), "list")) then $listEl/*[1] (: for places, listRelation is listEl[2] :)else $listEl (: for subjects, the 'listEl' is actually entryFree :)
   let $entity :=
     element {$entity/name()} {$entity/@*,
     for $ch in $entity/*
