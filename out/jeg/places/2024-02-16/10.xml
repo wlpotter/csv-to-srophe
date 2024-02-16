@@ -6,7 +6,7 @@
   <teiHeader>
     <fileDesc>
       <titleStmt>
-        <title level="a" xml:lang="en">Akbas - <foreign xml:lang="syr">ܐܩܒܐ</foreign>
+        <title level="a" xml:lang="en">Antioch - <foreign xml:lang="syr">ܐܢܛܝܟܝܐ</foreign>
         </title>
         <sponsor>Syriaca.org: The Syriac Reference Portal</sponsor>
         <funder>Deutsche Forschungsgemeinschaft</funder>
@@ -21,7 +21,7 @@
       </editionStmt>
       <publicationStmt>
         <authority>Syriaca.org: The Syriac Reference Portal</authority>
-        <idno type="URI">http://syriaca.org/place/5578/tei</idno>
+        <idno type="URI">http://syriaca.org/place/10/tei</idno>
         <availability>
           <licence target="http://creativecommons.org/licenses/by/4.0/">
             <p>Distributed under a Creative Commons Attribution 4.0 International License.</p>
@@ -97,42 +97,34 @@
   <text>
     <body>
       <listPlace>
-        <place type="fortification">
-          <placeName xml:lang="en" xml:id="name5578-1" srophe:tags="#syriaca-headword" resp="http://syriaca.org">Akbas</placeName>
-          <placeName xml:lang="syr" xml:id="name5578-2" srophe:tags="#syriaca-headword" resp="http://syriaca.org">ܐܩܒܐ</placeName>
-          <placeName xml:lang="en" xml:id="name5578-3" source="#bib5578-1">Akbas</placeName>
-          <placeName xml:lang="syr" xml:id="name5578-4" source="#bib5578-2">ܐܩܒܐ</placeName>
-          <desc type="abstract" xml:lang="en" corresp="http://syriaca.org/geo http://syriaca.org/johnofephesus http://syriaca.org/johnofephesus/places">
-            <quote source="#bib5578-3">Akbas was a Persian fortress on the river Batman close to Martyropolis in southern Armenia. Joh. Eph., EH 6.36, describes its capture and destruction by the Romans in 583.</quote>
-          </desc>
-          <location type="gps" source="#bib5578-4">
-            <geo>38.263455, 41.038876</geo>
-          </location>
-          <idno type="URI">http://syriaca.org/place/5578</idno>
-          <idno type="URI">http://syriaca.org/johnofephesus/places/5578</idno>
-          <idno type="URI">https://pleiades.stoa.org/places/874309</idno>
-          <idno type="URI">https://en.wikipedia.org/wiki/Acbas</idno>
-          <bibl xml:id="bib5578-1">
-            <ptr target="http://syriaca.org/bibl/7WE2F3KF"/>
-            <citedRange unit="p">272</citedRange>
-          </bibl>
-          <bibl xml:id="bib5578-2">
+        <place type="settlement">
+          <placeName xml:lang="en" xml:id="name10-1" srophe:tags="#syriaca-headword" resp="http://syriaca.org">Antioch</placeName>
+          <placeName xml:lang="syr" xml:id="name10-2" srophe:tags="#syriaca-headword" resp="http://syriaca.org">ܐܢܛܝܟܝܐ</placeName>
+          <placeName xml:lang="syr" xml:id="name10-3" source="#bib10-1">ܐܢܛܝܘܟܝܐ</placeName>
+          <placeName xml:lang="syr" xml:id="name10-4" source="#bib10-2">ܐܢܛܝܟܝܐ</placeName>
+          <placeName xml:lang="syr" xml:id="name10-5" source="#bib10-3">ܡܕܝܢܬܐ</placeName>
+          <idno type="URI">http://syriaca.org/place/10</idno>
+          <idno type="URI">http://syriaca.org/johnofephesus/places/10</idno>
+          <bibl xml:id="bib10-1">
             <ptr target="http://syriaca.org/bibl/9KL93RUC"/>
-            <citedRange unit="p">276; 339; 340</citedRange>
-            <citedRange unit="chapter">3.6.36; 3.6.37</citedRange>
+            <citedRange unit="p">9; 49; 50; 50; 51; 52; 66; 119; 146; 155; 156; 157; 157; 158; 160; 174; 190; 191; 196; 200; 201; 202; 204; 211; 222; 222; 223; 225; 227; 228; 252; 267; 267; 268; 276; 283; 284; 292; 314; 315; 321; 328</citedRange>
+            <citedRange unit="chapter">3.1.10; 3.1.40; 3.1.41; 3.1.42; 3.2.8; 3.3.19; 3.3.27; 3.3.28; 3.3.29; 3.3.30; 3.3.31; 3.3.40; 3.4.10; 3.4.12; 3.4.15; 3.4.16; 3.4.17; 3.4.31; 3.4.41; 3.4.44; 3.4.45; 3.5.17; 3.6.4; 3.6.6; 3.6.19; 3.6.22; 3.6.26</citedRange>
           </bibl>
-          <bibl xml:id="bib5578-3">
-            <ptr target="http://syriaca.org/bibl/7WE2F3KF"/>
-            <citedRange unit="p">255 and 272</citedRange>
+          <bibl xml:id="bib10-2">
+            <ptr target="http://syriaca.org/bibl/9KL93RUC"/>
+            <citedRange unit="p">19</citedRange>
+            <citedRange unit="chapter">3.1.17</citedRange>
           </bibl>
-          <bibl xml:id="bib5578-4">
-            <ptr target="https://pleiades.stoa.org/places/874309"/>
+          <bibl xml:id="bib10-3">
+            <ptr target="http://syriaca.org/bibl/9KL93RUC"/>
+            <citedRange unit="p">157; 268</citedRange>
+            <citedRange unit="chapter">3.3.29; 3.5.17</citedRange>
           </bibl>
         </place>
         <listRelation>
-          <relation ref="skos:broader" name="http://www.w3.org/2004/02/skos/core#broader" type="contained-within" active="http://syriaca.org/place/5578" passive="http://syriaca.org/place/576" resp="http://syriaca.org">
+          <relation ref="skos:broader" name="http://www.w3.org/2004/02/skos/core#broader" type="contained-within" active="http://syriaca.org/place/10" passive="http://syriaca.org/place/486" resp="http://syriaca.org">
             <desc xml:lang="en">
-              <placeName ref="http://syriaca.org/place/576">Armenia</placeName>
+              <placeName ref="http://syriaca.org/place/486">Syria</placeName>
             </desc>
           </relation>
         </listRelation>

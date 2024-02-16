@@ -6,7 +6,7 @@
   <teiHeader>
     <fileDesc>
       <titleStmt>
-        <title level="a" xml:lang="en">Akbas - <foreign xml:lang="syr">ܐܩܒܐ</foreign>
+        <title level="a" xml:lang="en">Red Sea - <foreign xml:lang="syr">ܝܡܐ ܕܣܘܦ</foreign>
         </title>
         <sponsor>Syriaca.org: The Syriac Reference Portal</sponsor>
         <funder>Deutsche Forschungsgemeinschaft</funder>
@@ -21,7 +21,7 @@
       </editionStmt>
       <publicationStmt>
         <authority>Syriaca.org: The Syriac Reference Portal</authority>
-        <idno type="URI">http://syriaca.org/place/5578/tei</idno>
+        <idno type="URI">http://syriaca.org/place/2933/tei</idno>
         <availability>
           <licence target="http://creativecommons.org/licenses/by/4.0/">
             <p>Distributed under a Creative Commons Attribution 4.0 International License.</p>
@@ -97,45 +97,33 @@
   <text>
     <body>
       <listPlace>
-        <place type="fortification">
-          <placeName xml:lang="en" xml:id="name5578-1" srophe:tags="#syriaca-headword" resp="http://syriaca.org">Akbas</placeName>
-          <placeName xml:lang="syr" xml:id="name5578-2" srophe:tags="#syriaca-headword" resp="http://syriaca.org">ܐܩܒܐ</placeName>
-          <placeName xml:lang="en" xml:id="name5578-3" source="#bib5578-1">Akbas</placeName>
-          <placeName xml:lang="syr" xml:id="name5578-4" source="#bib5578-2">ܐܩܒܐ</placeName>
+        <place type="open-water">
+          <placeName xml:lang="en" xml:id="name2933-1" srophe:tags="#syriaca-headword" resp="http://syriaca.org">Red Sea</placeName>
+          <placeName xml:lang="syr" xml:id="name2933-2" srophe:tags="#syriaca-headword" resp="http://syriaca.org">ܝܡܐ ܕܣܘܦ</placeName>
+          <placeName xml:lang="syr" xml:id="name2933-3" source="#bib2933-1">ܝܡܐ ܕܣܘܦ</placeName>
           <desc type="abstract" xml:lang="en" corresp="http://syriaca.org/geo http://syriaca.org/johnofephesus http://syriaca.org/johnofephesus/places">
-            <quote source="#bib5578-3">Akbas was a Persian fortress on the river Batman close to Martyropolis in southern Armenia. Joh. Eph., EH 6.36, describes its capture and destruction by the Romans in 583.</quote>
+            <quote source="#bib2933-2">The sea between Egypt/Nubia and Arabia is mentioned in Joh. Eph., EH 4.51 and 53.</quote>
           </desc>
-          <location type="gps" source="#bib5578-4">
-            <geo>38.263455, 41.038876</geo>
+          <location type="gps" source="#bib2933-3">
+            <geo>19.0, 39.5</geo>
           </location>
-          <idno type="URI">http://syriaca.org/place/5578</idno>
-          <idno type="URI">http://syriaca.org/johnofephesus/places/5578</idno>
-          <idno type="URI">https://pleiades.stoa.org/places/874309</idno>
-          <idno type="URI">https://en.wikipedia.org/wiki/Acbas</idno>
-          <bibl xml:id="bib5578-1">
-            <ptr target="http://syriaca.org/bibl/7WE2F3KF"/>
-            <citedRange unit="p">272</citedRange>
-          </bibl>
-          <bibl xml:id="bib5578-2">
+          <idno type="URI">http://syriaca.org/place/2933</idno>
+          <idno type="URI">http://syriaca.org/johnofephesus/places/2933</idno>
+          <idno type="URI">https://pleiades.stoa.org/places/39290</idno>
+          <idno type="URI">https://en.wikipedia.org/wiki/Red_Sea</idno>
+          <bibl xml:id="bib2933-1">
             <ptr target="http://syriaca.org/bibl/9KL93RUC"/>
-            <citedRange unit="p">276; 339; 340</citedRange>
-            <citedRange unit="chapter">3.6.36; 3.6.37</citedRange>
+            <citedRange unit="p">237; 241</citedRange>
+            <citedRange unit="chapter">3.4.51; 3.4.53</citedRange>
           </bibl>
-          <bibl xml:id="bib5578-3">
-            <ptr target="http://syriaca.org/bibl/7WE2F3KF"/>
-            <citedRange unit="p">255 and 272</citedRange>
+          <bibl xml:id="bib2933-2">
+            <ptr target="http://syriaca.org/bibl/9KL93RUC"/>
+            <citedRange unit="p">237</citedRange>
           </bibl>
-          <bibl xml:id="bib5578-4">
-            <ptr target="https://pleiades.stoa.org/places/874309"/>
+          <bibl xml:id="bib2933-3">
+            <ptr target="https://pleiades.stoa.org/places/39290"/>
           </bibl>
         </place>
-        <listRelation>
-          <relation ref="skos:broader" name="http://www.w3.org/2004/02/skos/core#broader" type="contained-within" active="http://syriaca.org/place/5578" passive="http://syriaca.org/place/576" resp="http://syriaca.org">
-            <desc xml:lang="en">
-              <placeName ref="http://syriaca.org/place/576">Armenia</placeName>
-            </desc>
-          </relation>
-        </listRelation>
       </listPlace>
     </body>
   </text>
