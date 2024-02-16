@@ -159,7 +159,7 @@ as element()?
         {attribute {"type"} {"status"},
          attribute {"resp"} {"http://syriaca.org"},
          attribute {"ref"} {"http://syriaca.org/keyword/anonymous"},
-         element {QName("http://www.tei-c.org/ns/1.0", "label")} {
+         element {QName("http://www.tei-c.org/ns/1.0", "desc")} {
            attribute {"xml:lang"} {"en"},
            "Anonymous"
          }
