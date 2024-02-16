@@ -43,7 +43,7 @@ declare namespace srophe="https://srophe.app";
 
 declare function csv2srophe:process-csv($csvFilePath as xs:string,
                                         $separator as xs:string)
-as document-node()*
+as node()*
 {
   let $data := csv2srophe:get-data($csvFilePath, $separator)
   let $headerMap := csv2srophe:create-header-map($csvFilePath, $separator)
@@ -63,13 +63,26 @@ as document-node()*
   let $indices := ($indices, $sourcesIndex)
   
   for $row in $data
-    return switch($config:collection-type) (: perhaps switch collection type to be a parameter? Then call with the config variable (this might help with testing purposes?):)
+    return try {
+      switch($config:collection-type) (: perhaps switch collection type to be a parameter? Then call with the config variable (this might help with testing purposes?):)
       case "places" return csv2places:create-place-from-row($row, $headerMap, $indices)
       case "persons" return csv2persons:create-person-from-row($row, $headerMap, $indices)
       case "subjects" return csv2subjects:create-subject-from-row($row, $headerMap, $indices)
       case "jeg_places" return csv2places:create-place-from-row($row, $headerMap, $indices)
       case "jeg_persons" return csv2persons:create-person-from-row($row, $headerMap, $indices)
       default return ""
+    }
+    catch * {
+      element {"failure"} {
+        element {"code"} {$err:code},
+        element {"description"} {$err:description},
+        element {"value"} {$err:value},
+        element {"module"} {$err:module},
+        element {"location"} {$err:line-number||": "||$err:column-number},
+        element {"additional"} {$err:additional},
+        $row
+      }
+    }
 };
                                         
 (:~ 

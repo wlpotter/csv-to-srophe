@@ -62,10 +62,10 @@ return (if(not($config:index-of-existing-uris[1] instance of xs:string)) then $c
          
          (: if the mark the URI if it exists; only check if the index creation did not raise an error. successful index creation results in a sequence of strings:)
          let $uriExists := if($config:index-of-existing-uris[1] instance of xs:string) then functx:is-value-in-sequence($inDocUri, $config:index-of-existing-uris) else false ()
-         let $outDoc := template:merge-record-into-template($inDoc, $config:record-template, $inDocUri)
+         let $outDoc := if($inDoc/descendant-or-self::*:failure) then $inDoc else template:merge-record-into-template($inDoc, $config:record-template, $inDocUri)
          
          (: write to the output folder or return to console. Variable controlled by config.xml/meta/config/io/fileOrConsole :)
-         return if($config:file-or-console = "file" and not($uriExists)) then
+         return if($config:file-or-console = "file" and not($uriExists) and not($inDoc/descendant-or-self::*:failure)) then
                  let $docFileName := substring-after($inDocUri, $config:uri-base) || ".xml"
                  let $outputTarget := $config:output-path || $docFileName
                  return file:write($outputTarget, $outDoc, map {'method': 'xml', 'omit-xml-declaration': 'no'})
