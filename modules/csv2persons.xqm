@@ -106,7 +106,7 @@ as node()
   (: build descendant nodes of the tei:person :)
   
   (: HARD-CODED pending batch changes will affect this functionality :)
-  let $anaAttr := if(functx:trim($row/*[name() = "trait.en"]/text()) = "anonymous") then attribute {"ana"} {"#syriaca-anonymous"} else ()
+  let $anaAttr := if(functx:trim($row/*[name() = "state.en"]/text()) => lower-case() = "anonymous") then attribute {"ana"} {"#syriaca-anonymous"} else ()
   
   let $headwords := csv2srophe:build-element-sequence($row, $headwordIndex, $sources, "persName", 0)
   let $numHeadwords := count($headwords)
@@ -118,7 +118,7 @@ as node()
   let $abstracts := csv2srophe:build-element-sequence($row, $abstractIndex, $sources, "note", 0)
   
   
-  let $trait := csv2persons:create-trait($row)
+  let $state := csv2persons:create-state($row)
   let $sex := csv2srophe:build-element-sequence($row, $sexIndex, $sources, "sex", 0)
   let $gender := csv2srophe:build-element-sequence($row, $genderIndex, $sources, "gender", 0)
   let $dates := csv2srophe:build-element-sequence($row, $datesIndex, $sources, "date", 0)
@@ -135,15 +135,34 @@ as node()
   
   return 
   <person xmlns="http://www.tei-c.org/ns/1.0">
-    {$anaAttr, $headwords, $anonymousDesc, $persNames, $idnos, $abstracts, $dates, $gender, $sex, $trait, $bibls}
+    {$anaAttr, $headwords, $anonymousDesc, $persNames, $idnos, $abstracts, $dates, $gender, $sex, $state, $bibls}
   </person>
 };
 
-(: currently hard-coded as this function will likely change considerably :)
+(: DEPRECATED, please use csv2persons:create-state instead. :)
 declare function csv2persons:create-trait($row as element())
 as element()?
 {
   let $traitText := functx:trim($row/*[name() = "trait.en"]/text())
   let $label := element {QName("http://www.tei-c.org/ns/1.0", "label")} {$traitText}
   return if($traitText != "") then element {QName("http://www.tei-c.org/ns/1.0", "trait")} {attribute {"xml:lang"} {"en"}, $label} else ()
+};
+
+(: temporary fix for anonymous state, should become a more complex csv2srophe function with columns for @ref, desc, etc. :)
+declare function csv2persons:create-state($row as element())
+as element()?
+{
+  let $stateText := functx:trim($row/*[name() = "state.en"]/text()) => lower-case()
+  return switch ($stateText)
+    case "anonymous" return 
+      element {QName("http://www.tei-c.org/ns/1.0", "state")} 
+        {attribute {"type"} {"status"},
+         attribute {"resp"} {"http://syriaca.org"},
+         attribute {"ref"} {"http://syriaca.org/keyword/anonymous"},
+         element {QName("http://www.tei-c.org/ns/1.0", "label")} {
+           attribute {"xml:lang"} {"en"},
+           "Anonymous"
+         }
+       }
+    default return ()
 };
