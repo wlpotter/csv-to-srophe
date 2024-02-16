@@ -162,6 +162,7 @@ as element()+
   let $gatewaySeriesStmt := $template//seriesStmt[idno[@type="URI"]/text() = "http://syriaca.org/saints"]
   let $qadisheSeriesStmt := $template//seriesStmt[idno[@type="URI"]/text() = "http://syriaca.org/q"]
   let $authorsSeriesStmt := $template//seriesStmt[idno[@type="URI"]/text() = "http://syriaca.org/authors"]
+  let $anonymiSeriesStmt := $template//seriesStmt[idno[@type="URI"]/text() = "http://syriaca.org/anonymi"]
   let $jegPersSeriesStmt := $template//seriesStmt[idno[@type="URI"]/text() = "http://syriaca.org/johnofephesus/persons"]
   
   (: include volumes 1 and/or 2 if the person is a saint and/or author:)
@@ -170,7 +171,7 @@ as element()+
     else $sbdSeriesStmt
     
   (: include project-specific seriesStmts :)
-  let $sLevelSeriesStmt := 
+  let $sLevelSeriesStmts := 
     if($config:collection-type = "jeg_persons") then
       ($sLevelSeriesStmts, $jegSeriesStmt)
     else $sLevelSeriesStmts
@@ -182,6 +183,10 @@ as element()+
   (: if an author, append the Authors series statement :)
   let $mLevelSeriesStmts :=
     if(contains($personType, "#syriaca-author")) then ($mLevelSeriesStmts, $authorsSeriesStmt)
+    else $mLevelSeriesStmts
+   (: if an author, append the Authors series statement :)
+  let $mLevelSeriesStmts :=
+    if(contains($personType, "#syriaca-anonymous")) then ($mLevelSeriesStmts, $anonymiSeriesStmt)
     else $mLevelSeriesStmts
   (: include project-specific m-level seriesStmt :)
   let $mLevelSeriesStmts :=
