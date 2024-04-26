@@ -653,6 +653,11 @@ as element()*
                          and $sourceUri != "")
                       then $sourceUri 
                       else $config:default-bibl-uri-base || $sourceUri
+    (: for non-Syriaca bibl ptrs, needs a title to display based on the ptr URL :)
+    let $sourceTitle := 
+      if(not(contains($sourceUri, $config:default-bibl-uri-base))) then
+        element {QName("http://www.tei-c.org/ns/1.0", "title")} {$sourceUri}
+      else ()
     let $sourceCitedRange := $source/*:citedRange/text()
     let $sourceCitationUnit := $source/*:citationUnit/text()
     let $citedRangeElement := if ($sourceCitedRange != "") then csv2srophe:create-citedRange-element($sourceCitedRange, $sourceCitationUnit) else ()
