@@ -392,6 +392,7 @@ as element()*
 : returns a sequence that looks like this:
 :
 : <gender>
+:   <uri>uri.gender1</uri>
 :   <textNodeColumnElementName>gender1</textNodeColumnElementName>
 :   <sourceUriElementName>sourceURI.gender1</sourceUriElementName>
 :   <citedRangeElementName>citedRange.gender1</citedRangeElementName>
@@ -411,7 +412,17 @@ declare function csv2srophe:create-gender-index($headerMap as element()+)
 as element()*
 {
   let $genderIndex := csv2srophe:create-column-index("gender", $headerMap, "")
-  return $genderIndex
+  (: collate additional relation information, such as placeName or desc columns :)
+  for $gender in $genderIndex
+  let $rightOfDot := functx:trim($gender/*:textNodeColumnElementName/text())
+  let $genderAttrColumns :=  
+    for $column in $headerMap
+    let $columnName := functx:trim($column/*:name/text())
+    where substring-after($columnName, ".") = $rightOfDot (: screen for associated uri columns :)
+    let $leftOfDot := substring-before($columnName, ".")
+    return element {$leftOfDot || "ElementName"} {$columnName}
+  let $genderChildren := functx:distinct-deep(($gender/*, $genderAttrColumns))
+  return <gender>{$genderChildren}</gender>
 };
 (:~ 
 : returns a sequence looks like:
@@ -749,7 +760,7 @@ as element()*
     case "abstract" return csv2srophe:build-abstract-element($text, $elementName,$uriLocalName, $langAttr, $sourceAttr, $number + $enumerationOffset)
     case "anonymousDesc" return csv2srophe:build-anonymousDesc-element($text, $elementName, $uriLocalName, $langAttr, $sourceAttr, false (), $number + $enumerationOffset)
     case "sex" return csv2srophe:build-sex-element($text, $sourceAttr)
-    case "gender" return csv2srophe:build-gender-element($text, $sourceAttr)
+    case "gender" return csv2srophe:build-gender-element($text, $sourceAttr, $item)
     case "date" return csv2srophe:build-date-element($text, $sourceAttr, $item)
     case "gps" return csv2srophe:build-location-element($text, $sourceAttr, "gps")
     case "relation" return csv2srophe:build-relation-element($item, $sourceAttr, $uriLocalName, "#") (: FIX: separator should not be hard-coded :)
@@ -885,14 +896,15 @@ as element()
 : returns a tei:gender element for use in persons entities.
 : @param $value should be a Syriaca keyword URI with a skos:broader of syriaca:gender
  :)
-declare function csv2srophe:build-gender-element($value as xs:string, $source as xs:string?)
+declare function csv2srophe:build-gender-element($value as xs:string, $source as xs:string?, $associatedData as element())
 as element()
 {
   (: $value should be a Syriaca keyword URI, otherwise return the full string :)
   let $textNode := if(contains($value, "/")) then functx:substring-after-last($value, "/") else $value
+  let $taxonomyUri := $associatedData/*:uri/text()
   let $sourceAttr := if($source != "") then attribute {"source"} {"#" || $source}
     else attribute {"resp"} {$config:default-resp-statement}
-  let $anaAttr := attribute {"ana"} {$value}
+  let $anaAttr := attribute {"ana"} {$taxonomyUri}
   return element {QName("http://www.tei-c.org/ns/1.0", "gender")} {$sourceAttr, $anaAttr, $textNode}
 };
 
