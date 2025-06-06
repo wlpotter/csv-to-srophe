@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-model href="https://raw.githubusercontent.com/srophe/syriaca/2023_SchemaWork/documentation/schemas/out/syriacaPersons.compiled.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?><?xml-model href="https://raw.githubusercontent.com/srophe/syriaca/2023_SchemaWork/documentation/schemas/out/syriacaPersons.compiled.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?><?xml-model href="https://raw.githubusercontent.com/srophe/syriaca/2023_SchemaWork/documentation/schemas/uniqueLangHW.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?><TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:srophe="https://srophe.app" xmlns:syriaca="http://syriaca.org" xml:lang="en"><teiHeader><fileDesc><titleStmt><title level="a" xml:lang="en">Theodora, Roman empress - <foreign xml:lang="syr">ܬܐܕܘܪܐ</foreign></title><sponsor>Syriaca.org: The Syriac Reference Portal</sponsor><funder>Deutsche Forschungsgemeinschaft</funder><editor role="creator" ref="http://syriaca.org/documentation/editors.xml#sroggo">Silvio Roggo</editor><respStmt><resp>URI minted and initial data collected by</resp><name ref="http://syriaca.org/documentation/editors.xml#sroggo">Silvio Roggo</name></respStmt></titleStmt><editionStmt>
+                <edition n="1.0"/>
+            </editionStmt><publicationStmt><authority>Syriaca.org: The Syriac Reference Portal</authority><idno type="URI">http://syriaca.org/person/779/tei</idno><availability>
+                    <licence target="http://creativecommons.org/licenses/by/4.0/">
+                        <p>Distributed under a Creative Commons Attribution 4.0 International License.</p>
+                    </licence>
+                </availability><date>2025-06-06-05:00</date></publicationStmt><seriesStmt>
+                <title level="s">The Syriac Biographical Dictionary</title>
+                <editor role="general" ref="http://syriaca.org/documentation/editors.xml#ngibson">Nathan P. Gibson</editor>
+                <editor role="general" ref="http://syriaca.org/documentation/editors.xml#dmichelson">David A. Michelson</editor>
+                <editor role="general" ref="http://syriaca.org/documentation/editors.xml#jnsaint-laurent">Jeanne-Nicole Mellon Saint-Laurent</editor>
+                <editor role="general" ref="http://syriaca.org/documentation/editors.xml#dschwartz">Daniel L. Schwartz</editor>
+                <editor role="technical" ref="http://syriaca.org/documentation/editors.xml#wpotter">William L. Potter</editor>
+                <editor role="technical" ref="http://syriaca.org/documentation/editors.xml#dschwartz">Daniel L. Schwartz</editor>
+                <idno type="URI">http://syriaca.org/persons</idno>
+            </seriesStmt><seriesStmt>
+                <title level="s" xml:lang="en">A Guide to John of Ephesus</title>
+                <editor role="general" ref="http://syriaca.org/documentation/editors.xml#sroggo">
+                    <persName>Silvio Roggo</persName>, <date from="2023">2023-present</date>.</editor>
+                <idno type="URI">http://syriaca.org/johnofephesus</idno>
+            </seriesStmt><seriesStmt>
+                <title level="m" xml:lang="en">Prosopography to John of Ephesus’s Ecclesiastical History</title>
+                <editor role="general" ref="http://syriaca.org/documentation/editors.xml#sroggo">
+                    <persName>Silvio Roggo</persName>, <date from="2023">2023-present</date>.</editor>
+                <biblScope unit="volume" n="4">IV</biblScope>
+                <idno type="URI">http://syriaca.org/johnofephesus/persons</idno>
+            </seriesStmt><sourceDesc>
+                <p>Born digital.</p>
+            </sourceDesc></fileDesc><encodingDesc>
+            <editorialDecl>
+                <p>This record created following the Syriaca.org guidelines.
+                        Documentation available at: <ref target="http://syriaca.org/documentation">http://syriaca.org/documentation</ref>.</p>
+                <interpretation>
+                    <p>Approximate dates described in terms of centuries or partial centuries
+                            have been interpreted as documented in 
+                            <ref target="http://syriaca.org/documentation/dates.html">Syriaca.org Dates</ref>.</p>
+                </interpretation>
+            </editorialDecl>
+            <classDecl>
+                <taxonomy>
+                    <category xml:id="syriaca-headword">
+                        <catDesc>The name used by Syriaca.org for document titles, citation, and
+                                disambiguation. These names have been created according to the
+                                Syriac.org guidelines for headwords: <ref target="http://syriaca.org/documentation/headwords.html">http://syriaca.org/documentation/headwords.html</ref>.</catDesc>
+                    </category>
+                    <category xml:id="syriaca-anglicized">
+                        <catDesc>An anglicized version of a name, included to facilitate
+                                searching.</catDesc>
+                    </category>
+                </taxonomy>
+                <taxonomy>
+                    <category xml:id="syriaca-author">
+                        <catDesc>A person who is relevant to the Guide to Syriac Authors</catDesc>
+                    </category>
+                    <category xml:id="syriaca-saint">
+                        <catDesc>A person who is relevant to the Bibliotheca Hagiographica
+                                Syriaca.</catDesc>
+                    </category>
+                </taxonomy>
+            </classDecl>
+        </encodingDesc><profileDesc>
+            <langUsage>
+        <p>
+                    Languages codes used in this record follow the Syriaca.org guidelines. Documentation available at: 
+                    <ref target="http://syriaca.org/documentation/langusage.xml">http://syriaca.org/documentation/langusage.xml</ref>
+        </p>
+      </langUsage>
+        </profileDesc><revisionDesc status="draft"><change when="2025-06-06-05:00" who="http://syriaca.org/documentation/editors.xml#sroggo">CREATED: person</change></revisionDesc></teiHeader><text><body><listPerson><person><persName xml:lang="en" xml:id="name779-1" srophe:tags="#syriaca-headword" resp="http://syriaca.org">Theodora, Roman empress</persName><persName xml:lang="syr" xml:id="name779-2" srophe:tags="#syriaca-headword" source="#bib779-1">ܬܐܕܘܪܐ</persName><persName xml:lang="syr" xml:id="name779-3" resp="http://syriaca.org" srophe:tags="#anonymous-description">ܡܠܟܬܐ</persName><persName xml:lang="en" xml:id="name779-4" source="#bib779-2">Theodora</persName><idno type="URI">http://syriaca.org/person/779</idno><idno type="URI">http://syriaca.org/johnofephesus/persons/779</idno><idno type="URI">https://en.wikipedia.org/wiki/Theodora_(wife_of_Justinian_I)</idno><note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons http://syriaca.org/johnofephesus http://syriaca.org/johnofephesus/persons"><quote source="#bib779-3">Before her rise to the throne as the wife of emperor Justinian, Theodora had been an actress, a profession which gave rise to rumours that she had been a prostitute. John of Ephesus remembers Theodora fondly because she protected a large number of miaphysite monks and clerics in Constantinople until her death in 548.</quote></note><floruit><date source="#bib779-3" notBefore="0527-04-01">527-548</date></floruit><death><date source="#bib779-3">0548-06-28</date></death><gender source="#bib779-4" ana="http://syriaca.org/taxonomy/women">female</gender><bibl xml:id="bib779-1"><ptr target="http://syriaca.org/cbss/9KL93RUC"/><citedRange unit="p">9; 67; 70; 72; 183; 187; 233; 253</citedRange><citedRange unit="chapter">3.1.10; 3.2.9; 3.2.10; 3.2.11; 3.4.6; 3.4.8; 3.4.49; 3.5.1</citedRange></bibl><bibl xml:id="bib779-2"><ptr target="http://syriaca.org/cbss/7K28WD3W"/><citedRange unit="entry">Theodora 1</citedRange><citedRange unit="p">1240-1241</citedRange></bibl><bibl xml:id="bib779-3"><ptr target="http://syriaca.org/cbss/7K28WD3W"/><citedRange unit="p">1240-1241</citedRange></bibl><bibl xml:id="bib779-4"><ptr target="http://syriaca.org/cbss/9KL93RUC"/><citedRange unit="p">9; 67; 70; 72; 183; 187; 233; 253</citedRange></bibl></person></listPerson></body></text></TEI>
