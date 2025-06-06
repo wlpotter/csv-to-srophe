@@ -68,7 +68,7 @@ return (if(not($config:index-of-existing-uris[1] instance of xs:string)) then $c
          return if($config:file-or-console = "file" and not($uriExists) and not($inDoc/descendant-or-self::*:failure)) then
                  let $docFileName := substring-after($inDocUri, $config:uri-base) || ".xml"
                  let $outputTarget := $config:output-path || $docFileName
-                 return file:write($outputTarget, $outDoc, map {'method': 'xml', 'omit-xml-declaration': 'no'})
+                 return file:write($outputTarget, $outDoc, map {'method': 'xml', 'omit-xml-declaration': 'no', 'indent': 'yes'})
                 else
                   if($uriExists) then <error type="error"><desc>This record already exists in data</desc><recordUri>{$inDocUri}</recordUri></error> else $outDoc
         )
