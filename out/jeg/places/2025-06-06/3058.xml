@@ -104,6 +104,7 @@
           <placeName xml:lang="syr" xml:id="name3058-2" srophe:tags="#syriaca-headword" resp="http://syriaca.org">ܛܪܦܙܘܢܛܐ</placeName>
           <placeName xml:lang="syr" xml:id="name3058-3" source="#bib3058-1">ܛܪܦܙܘܢܛܐ</placeName>
           <idno type="URI">http://syriaca.org/place/3058</idno>
+          <idno type="URI">http://syriaca.org/johnofephesus/places/3058</idno>
           <bibl xml:id="bib3058-1">
             <ptr target="http://syriaca.org/cbss/9KL93RUC"/>
             <citedRange unit="p">51</citedRange>

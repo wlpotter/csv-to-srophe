@@ -109,6 +109,7 @@
             <quote source="#bib5634-2">Joh. Eph., EH 2.13, is the only source for the existence of this monastery in Late Antiquity. John Mauropous, an author of the 11th century, notes that it was founded around 490 and that it was located close to the Theodosian walls and the Gate of St Romanus (now Topkapi).</quote>
           </desc>
           <idno type="URI">http://syriaca.org/place/5634</idno>
+          <idno type="URI">http://syriaca.org/johnofephesus/places/5634</idno>
           <bibl xml:id="bib5634-1">
             <ptr target="http://syriaca.org/cbss/9KL93RUC"/>
             <citedRange unit="p">75</citedRange>

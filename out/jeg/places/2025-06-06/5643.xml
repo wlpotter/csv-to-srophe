@@ -114,6 +114,7 @@
           </location>
           <idno type="URI">http://syriaca.org/place/5643</idno>
           <idno type="URI">https://en.wikipedia.org/wiki/Sarmin</idno>
+          <idno type="URI">http://syriaca.org/johnofephesus/places/5643</idno>
           <bibl xml:id="bib5643-1">
             <ptr target="http://syriaca.org/cbss/7K28WD3W"/>
             <citedRange unit="p">671</citedRange>

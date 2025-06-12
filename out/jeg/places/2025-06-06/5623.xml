@@ -112,6 +112,7 @@
           </location>
           <idno type="URI">http://syriaca.org/place/5623</idno>
           <idno type="URI">https://pleiades.stoa.org/places/307220778</idno>
+          <idno type="URI">http://syriaca.org/johnofephesus/places/5623</idno>
           <bibl xml:id="bib5623-1">
             <ptr target="http://syriaca.org/cbss/2XPM6DJ6"/>
             <citedRange unit="p">33</citedRange>
