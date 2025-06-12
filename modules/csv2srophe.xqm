@@ -996,8 +996,8 @@ as element()
   case "containedWithin" return
     (: let $name := attribute {"name"} {"skos:broader"}
     let $ref := attribute {"ref"} {"http://www.w3.org/2004/02/skos/core#broader"} :)
-    let $name := attribute {"ref"} {"skos:broader"}
-    let $ref := attribute {"name"} {"http://www.w3.org/2004/02/skos/core#broader"}
+    (: ref="http://syriaca.org/taxonomy/broader" type="contained-within" :)
+    let $ref := attribute {"ref"} {"http://syriaca.org/taxonomy/broader"}
     
     let $active := attribute {"active"} {$selfUri}
     let $passive := attribute {"passive"} {$otherUris}
@@ -1009,7 +1009,7 @@ as element()
       }
     }
     let $type := attribute {"type"} {"contained-within"}
-    return element {QName("http://www.tei-c.org/ns/1.0", "relation")} {$name, $ref, $type, $active, $passive, $sourceAttr, $desc}
+    return element {QName("http://www.tei-c.org/ns/1.0", "relation")} {$ref, $type, $active, $passive, $sourceAttr, $desc}
   default return 
     let $name := attribute {"name"} {"see-also"}
     let $mutual := attribute {"mutual"} {$selfUri||" "||$otherUris}
