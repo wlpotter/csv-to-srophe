@@ -156,3 +156,34 @@ declare variable $config:existing-taxonomy :=
       }
     }
     else ();
+
+declare variable $config:place-type-uri-lookup-table :=
+  <table>
+    <type><value>building</value><uri>http://syriaca.org/taxonomy/buildings</uri></type>
+    <type><value>church</value><uri>http://syriaca.org/taxonomy/churches</uri></type>
+    <type><value>composite</value><uri>http://syriaca.org/taxonomy/composite</uri></type>
+    <type><value>designated-space</value><uri>http://syriaca.org/taxonomy/designated-spaces</uri></type>
+    <type><value>diocese</value><uri>http://syriaca.org/taxonomy/dioceses</uri></type>
+    <type><value>fortification</value><uri>http://syriaca.org/taxonomy/fortifications</uri></type>
+    <type><value>hospice</value><uri>http://syriaca.org/taxonomy/hospices</uri></type>
+    <type><value>island</value><uri>http://syriaca.org/taxonomy/islands</uri></type>
+    <type><value>madrasa</value><uri>http://syriaca.org/taxonomy/madrasas</uri></type>
+    <type><value>monastery</value><uri>http://syriaca.org/taxonomy/monasteries</uri></type>
+    <type><value>mosque</value><uri>http://syriaca.org/taxonomy/mosques</uri></type>
+    <type><value>mountain</value><uri>http://syriaca.org/taxonomy/mountains</uri></type>
+    <type><value>natural-feature</value><uri>http://syriaca.org/taxonomy/natural-features</uri></type>
+    <type><value>open-water</value><uri>http://syriaca.org/taxonomy/open-water</uri></type>
+    <type><value>parish</value><uri>http://syriaca.org/taxonomy/parishes</uri></type>
+    <type><value>province</value><uri>http://syriaca.org/taxonomy/provinces</uri></type>
+    <type><value>quarter</value><uri>http://syriaca.org/taxonomy/quarters</uri></type>
+    <type><value>region</value><uri>http://syriaca.org/taxonomy/regions</uri></type>
+    <type><value>residence</value><uri>http://syriaca.org/taxonomy/residences</uri></type>
+    <type><value>river</value><uri>http://syriaca.org/taxonomy/rivers</uri></type>
+    <type><value>settlement</value><uri>http://syriaca.org/taxonomy/settlements</uri></type>
+    <type><value>state</value><uri>http://syriaca.org/taxonomy/states</uri></type>
+    <type><value>synagogue</value><uri>http://syriaca.org/taxonomy/synagogues</uri></type>
+    <type><value>temple</value><uri>http://syriaca.org/taxonomy/temples</uri></type>
+    <type><value>cemetery</value><uri>http://syriaca.org/taxonomy/tombs</uri></type>
+    <type><value>unknown</value><uri>http://syriaca.org/taxonomy/unknown</uri></type>
+    <type><value>valley</value><uri>http://syriaca.org/taxonomy/valleys</uri></type>
+  </table>;

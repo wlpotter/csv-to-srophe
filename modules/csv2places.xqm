@@ -100,6 +100,7 @@ as node()
   
   (: build descendant nodes of the tei:place :)
   let $placeType := csv2places:get-place-type-from-row($row)
+  let $placeTypeUri := csv2places:lookup-place-type-uri($placeType)
   
   let $headwords := csv2srophe:build-element-sequence($row, $headwordIndex, $sources, "placeName", 0)
   let $numHeadwords := count($headwords)
@@ -119,7 +120,7 @@ as node()
   (: compose tei:place element and return it :)
   
   return 
-  <place xmlns="http://www.tei-c.org/ns/1.0" type="{$placeType}">
+  <place xmlns="http://www.tei-c.org/ns/1.0" type="{$placeType}" ana="{$placeTypeUri}">
     {$headwords, $placeNames, $abstracts, $gps, $idnos, $bibls}
   </place>
 };
@@ -130,6 +131,12 @@ as xs:string
 {
   let $placeType := $row/placeType/text()
   return functx:trim($placeType)
+};
+
+declare function csv2places:lookup-place-type-uri($placeType as xs:string)
+as xs:string
+{
+  $config:place-type-uri-lookup-table/type[value/text() = $placeType]/uri/text()
 };
 
 declare function csv2places:create-abstracts($row as element(),
