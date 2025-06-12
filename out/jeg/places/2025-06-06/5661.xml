@@ -105,6 +105,7 @@
             <quote source="#bib5661-2">Joh. Eph., EH 1.15, states that the miaphysite bishop Elisha fell ill when imprisoned and was then allowed to visit a bath for healing purposes. Possibly, these were the therms of Pythia mentioned in Joh. Eph., EH 2.46.</quote>
           </desc>
           <idno type="URI">http://syriaca.org/place/5661</idno>
+          <idno type="URI">http://syriaca.org/johnofephesus/places/5661</idno>
           <bibl xml:id="bib5661-1">
             <ptr target="http://syriaca.org/cbss/9KL93RUC"/>
             <citedRange unit="p">15</citedRange>
