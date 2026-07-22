@@ -697,7 +697,11 @@ as element()+
   let $citationUnitSeq := tokenize($citationUnit, "#")
   
   for $range at $i in $citedRangeSeq
-  return element {QName("http://www.tei-c.org/ns/1.0", "citedRange")} {attribute {"unit"} {$citationUnitSeq[$i]}, $range}
+  let $target := 
+    if($citationUnitSeq[$i] = "URL") then attribute {"target"} {$range} else ()
+  return element {QName("http://www.tei-c.org/ns/1.0", "citedRange")} {attribute {"unit"} {$citationUnitSeq[$i]},
+  $target, (: For URL-type citedRanges add a target attribute with the value of the URL :)
+  $range}
 };
 
 declare function csv2srophe:create-idno-sequence-for-row($row as element(), $uriBase as xs:string?)
