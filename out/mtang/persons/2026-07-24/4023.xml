@@ -100,9 +100,7 @@
           <idno type="URI">https://en.wikisource.org/wiki/Portal:Socrates</idno>
           <idno type="URI">https://d-nb.info/gnd/118615270</idno>
           <idno type="URI">https://www.trismegistos.org/author/3623</idno>
-          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons">
-            <quote source="#bib4023-3">Traditionally regarded as the founder of Attic philosophy. His life and teaching are difficult to reconstruct because of conflicting ancient traditions and later interpretations. He was remembered as the son of Sophroniscus and Phainarete, as a public opponent of injustice, and as the philosopher whose trial and execution in 399 BCE made him one of antiquity’s defining intellectual figures.</quote>
-          </note>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4023-3">Traditionally regarded as the founder of Attic philosophy. His life and teaching are difficult to reconstruct because of conflicting ancient traditions and later interpretations. He was remembered as the son of Sophroniscus and Phainarete, as a public opponent of injustice, and as the philosopher whose trial and execution in 399 BCE made him one of antiquity’s defining intellectual figures.</note>
           <bibl xml:id="bib4023-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">2</citedRange>

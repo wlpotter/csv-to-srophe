@@ -95,9 +95,7 @@
           <idno type="URI">http://syriaca.org/person/3802</idno>
           <idno type="URI">https://en.wikipedia.org/wiki/Severian_of_Gabala</idno>
           <idno type="URI">https://d-nb.info/gnd/118796771</idno>
-          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons">
-            <quote source="#bib3802-2">A Syrian bishop known for his role in the conflict that led to the downfall of John Chrysostom. After gaining popularity as a preacher in Constantinople, he became involved in political and ecclesiastical intrigues against Chrysostom, aligning with Empress Eudoxia and participating in the accusations at the Synod of the Oak. A number of his sermons survive, including homilies on Genesis and the creation of the world.</quote>
-          </note>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib3802-2">A Syrian bishop known for his role in the conflict that led to the downfall of John Chrysostom. After gaining popularity as a preacher in Constantinople, he became involved in political and ecclesiastical intrigues against Chrysostom, aligning with Empress Eudoxia and participating in the accusations at the Synod of the Oak. A number of his sermons survive, including homilies on Genesis and the creation of the world.</note>
           <bibl xml:id="bib3802-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">3</citedRange>

@@ -97,9 +97,7 @@
           <idno type="URI">https://en.wikisource.org/wiki/Author:Justin_Martyr</idno>
           <idno type="URI">https://d-nb.info/gnd/118714341</idno>
           <idno type="URI">https://www.trismegistos.org/author/467</idno>
-          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons">
-            <quote source="#bib4092-2">A second-century Christian apologist and martyr who presented Christianity as the true philosophy, drawing on his earlier training in pagan philosophical schools, especially Platonism. Active at Rome in the mid-second century, he is known above all for his two Apologies and the Dialogue with Trypho, and he was executed under the urban prefect Junius Rusticus.</quote>
-          </note>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4092-2">A second-century Christian apologist and martyr who presented Christianity as the true philosophy, drawing on his earlier training in pagan philosophical schools, especially Platonism. Active at Rome in the mid-second century, he is known above all for his two Apologies and the Dialogue with Trypho, and he was executed under the urban prefect Junius Rusticus.</note>
           <bibl xml:id="bib4092-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">3</citedRange>

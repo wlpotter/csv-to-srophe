@@ -96,9 +96,7 @@
           <idno type="URI">https://en.wikipedia.org/wiki/Antiochus_(bishop_of_Ptolemais)</idno>
           <idno type="URI">https://d-nb.info/gnd/102379971</idno>
           <idno type="URI">https://www.trismegistos.org/author/1590</idno>
-          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons">
-            <quote source="#bib4053-2">Bishop of Ptolemais in Palestine around 400 CE. He was renowned as an orator and for a time enjoyed great acclaim in Constantinople, where he became one of Chrysostom’s fiercest opponents. He wrote homilies as well as a large work against avarice.</quote>
-          </note>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4053-2">Bishop of Ptolemais in Palestine around 400 CE. He was renowned as an orator and for a time enjoyed great acclaim in Constantinople, where he became one of Chrysostom’s fiercest opponents. He wrote homilies as well as a large work against avarice.</note>
           <bibl xml:id="bib4053-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">3</citedRange>

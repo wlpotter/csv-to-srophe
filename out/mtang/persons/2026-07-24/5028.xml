@@ -100,9 +100,7 @@
           <idno type="URI">https://it.wikisource.org/wiki/Autore:Diocle_di_Pepareto</idno>
           <idno type="URI">https://d-nb.info/gnd/102390649</idno>
           <idno type="URI">https://www.trismegistos.org/author/4395</idno>
-          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons">
-            <quote source="#bib5028-3">A Greek historian associated in later tradition with an early Greek version of Rome’s foundation legend, especially the story of Romulus and Remus. Although later antiquarian sources treat him as an important authority for the received narrative, his precise role remains uncertain, and the surviving excerpt attributed to him ends with the fall of Amulius rather than the founding of Rome.</quote>
-          </note>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib5028-3">A Greek historian associated in later tradition with an early Greek version of Rome’s foundation legend, especially the story of Romulus and Remus. Although later antiquarian sources treat him as an important authority for the received narrative, his precise role remains uncertain, and the surviving excerpt attributed to him ends with the fall of Amulius rather than the founding of Rome.</note>
           <bibl xml:id="bib5028-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">2</citedRange>

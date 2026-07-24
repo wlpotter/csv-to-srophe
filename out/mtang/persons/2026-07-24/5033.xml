@@ -93,9 +93,7 @@
           <persName xml:lang="en" xml:id="name5033-1" srophe:tags="#syriaca-headword" source="#bib5033-1">Themistius</persName>
           <idno type="URI">http://syriaca.org/person/5033</idno>
           <idno type="URI">https://en.wikipedia.org/wiki/Themistius</idno>
-          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons">
-            <quote source="#bib5033-2">A pagan philosopher, rhetorician, and statesman active in Constantinople. He served emperors from Constantius II to Theodosius I and later as prefect of the city. Educated in philosophy with a strong engagement with Aristotle, he combined public oratory with philosophical thought and wrote orations and Aristotelian commentaries.</quote>
-          </note>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib5033-2">A pagan philosopher, rhetorician, and statesman active in Constantinople. He served emperors from Constantius II to Theodosius I and later as prefect of the city. Educated in philosophy with a strong engagement with Aristotle, he combined public oratory with philosophical thought and wrote orations and Aristotelian commentaries.</note>
           <bibl xml:id="bib5033-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">3</citedRange>

@@ -97,9 +97,7 @@
           <idno type="URI">https://en.wikisource.org/wiki/Author:Felix_I</idno>
           <idno type="URI">https://d-nb.info/gnd/119221799</idno>
           <idno type="URI">https://www.trismegistos.org/author/317</idno>
-          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons">
-            <quote source="#bib4017-2">Bishop of Rome from 269 to 274. He is said to have corresponded with Domnus of Antioch and Maximus of Alexandria during controversies surrounding Paul of Samosata.</quote>
-          </note>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4017-2">Bishop of Rome from 269 to 274. He is said to have corresponded with Domnus of Antioch and Maximus of Alexandria during controversies surrounding Paul of Samosata.</note>
           <bibl xml:id="bib4017-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">3</citedRange>

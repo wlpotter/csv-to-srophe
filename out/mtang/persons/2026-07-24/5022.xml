@@ -93,9 +93,7 @@
           <persName xml:lang="en" xml:id="name5022-1" srophe:tags="#syriaca-headword" source="#bib5022-1">Plato</persName>
           <idno type="URI">http://syriaca.org/person/5022</idno>
           <idno type="URI">https://en.wikipedia.org/wiki/Plato</idno>
-          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons">
-            <quote source="#bib5022-2">An Athenian philosopher, born in the late fifth century BCE, and a devoted follower of Socrates. He founded the Academy, the school from which Platonism took its name. Ancient tradition presented him as a supremely wise and divinely favored teacher, and through biographies, dialogues, letters, and the school that continued after him, he became the central figure of the Platonic tradition.</quote>
-          </note>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib5022-2">An Athenian philosopher, born in the late fifth century BCE, and a devoted follower of Socrates. He founded the Academy, the school from which Platonism took its name. Ancient tradition presented him as a supremely wise and divinely favored teacher, and through biographies, dialogues, letters, and the school that continued after him, he became the central figure of the Platonic tradition.</note>
           <bibl xml:id="bib5022-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">3</citedRange>

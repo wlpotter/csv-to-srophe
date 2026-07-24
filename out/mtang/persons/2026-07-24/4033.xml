@@ -97,9 +97,7 @@
           <idno type="URI">https://de.wikisource.org/wiki/Isokrates</idno>
           <idno type="URI">https://d-nb.info/gnd/118556010</idno>
           <idno type="URI">https://www.trismegistos.org/author/448</idno>
-          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons">
-            <quote source="#bib4033-2">An Athenian orator, teacher, and prose stylist whose rhetorical vision helped shape classical Greek education and civic discourse; his surviving works include political speeches, educational essays, and letters. Trained among the leading intellectual circles of his age, he founded an influential school of rhetoric and became one of antiquity’s central theorists of paideia and public speech.</quote>
-          </note>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4033-2">An Athenian orator, teacher, and prose stylist whose rhetorical vision helped shape classical Greek education and civic discourse; his surviving works include political speeches, educational essays, and letters. Trained among the leading intellectual circles of his age, he founded an influential school of rhetoric and became one of antiquity’s central theorists of paideia and public speech.</note>
           <bibl xml:id="bib4033-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">3</citedRange>

@@ -97,9 +97,7 @@
           <idno type="URI">https://de.wikipedia.org/wiki/Pontius_Pilatus</idno>
           <idno type="URI">https://en.wikisource.org/wiki/Author:Pontius_Pilate</idno>
           <idno type="URI">https://d-nb.info/gnd/118792172</idno>
-          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons">
-            <quote source="#bib4031-2">Roman procurator of Judea from 26–36 CE and best known in Christian tradition as the official who presided over the trial of Jesus. In the New Testament he appears primarily in the passion narratives, with additional references in Luke, Acts, and 1 Timothy, reflecting his enduring role in early Christian memory of Jesus’s death.</quote>
-          </note>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4031-2">Roman procurator of Judea from 26–36 CE and best known in Christian tradition as the official who presided over the trial of Jesus. In the New Testament he appears primarily in the passion narratives, with additional references in Luke, Acts, and 1 Timothy, reflecting his enduring role in early Christian memory of Jesus’s death.</note>
           <bibl xml:id="bib4031-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">3</citedRange>

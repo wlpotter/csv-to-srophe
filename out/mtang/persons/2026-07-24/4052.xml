@@ -97,9 +97,7 @@
           <idno type="URI">https://en.wikipedia.org/wiki/Gelasius_of_Caesarea</idno>
           <idno type="URI">https://d-nb.info/gnd/118690302</idno>
           <idno type="URI">https://www.trismegistos.org/author/2374</idno>
-          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons">
-            <quote source="#bib4052-3">A bishop of Caesarea in Palestine around 390, probably a nephew of Cyril of Jerusalem, and was regarded as a learned and rhetorically polished theologian in the tradition of mediating Nicene orthodoxy. He wrote against the Anomoeans and was also associated with the Greek transmission of Rufinus’ church history, though the exact extent of his authorship remains uncertain.</quote>
-          </note>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4052-3">A bishop of Caesarea in Palestine around 390, probably a nephew of Cyril of Jerusalem, and was regarded as a learned and rhetorically polished theologian in the tradition of mediating Nicene orthodoxy. He wrote against the Anomoeans and was also associated with the Greek transmission of Rufinus’ church history, though the exact extent of his authorship remains uncertain.</note>
           <bibl xml:id="bib4052-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">3</citedRange>

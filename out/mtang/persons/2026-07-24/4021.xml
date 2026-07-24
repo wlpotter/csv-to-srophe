@@ -98,9 +98,7 @@
           <idno type="URI">https://de.wikisource.org/wiki/Homer</idno>
           <idno type="URI">https://d-nb.info/gnd/11855333X</idno>
           <idno type="URI">https://www.trismegistos.org/author/393</idno>
-          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons">
-            <quote source="#bib4021-3">Traditionally regarded as the author of the Iliad and Odyssey. His life and identity are uncertain in antiquity and reconstructed from later traditions. Ancient sources variously associated him with cities such as Smyrna and Chios and developed biographical legends about his origin and career as a poet.</quote>
-          </note>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4021-3">Traditionally regarded as the author of the Iliad and Odyssey. His life and identity are uncertain in antiquity and reconstructed from later traditions. Ancient sources variously associated him with cities such as Smyrna and Chios and developed biographical legends about his origin and career as a poet.</note>
           <bibl xml:id="bib4021-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">3</citedRange>

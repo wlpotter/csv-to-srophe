@@ -97,9 +97,7 @@
           <idno type="URI">https://de.wikisource.org/wiki/Plutarch</idno>
           <idno type="URI">https://d-nb.info/gnd/118595237</idno>
           <idno type="URI">https://www.trismegistos.org/author/698</idno>
-          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons">
-            <quote source="#bib5017-2">A Greek philosopher, historian, and biographer whose life is known mainly from remarks in his own writings. A Platonist thinker and priest at Delphi, he wrote extensively on ethics, religion, and philosophy in the collection known as the Moralia, and is best known for the Parallel Lives, a series of paired biographies comparing Greek and Roman statesmen.</quote>
-          </note>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib5017-2">A Greek philosopher, historian, and biographer whose life is known mainly from remarks in his own writings. A Platonist thinker and priest at Delphi, he wrote extensively on ethics, religion, and philosophy in the collection known as the Moralia, and is best known for the Parallel Lives, a series of paired biographies comparing Greek and Roman statesmen.</note>
           <bibl xml:id="bib5017-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">3</citedRange>

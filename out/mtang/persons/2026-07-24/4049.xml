@@ -97,9 +97,7 @@
           <idno type="URI">https://de.wikisource.org/wiki/Pythagoras</idno>
           <idno type="URI">https://d-nb.info/gnd/118597248</idno>
           <idno type="URI">https://www.trismegistos.org/author/803</idno>
-          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons">
-            <quote source="#bib4049-2">An Ionian Greek philosopher and polymath from Samos and founder of Pythagoreanism. He was associated with a community that combined religious teaching, communal and ascetic life, , and belief in immortality and transmigration. The tradition surrounding him generated a wide body of sacred books, hypomnemata, and later pseudepigraphic writings.</quote>
-          </note>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4049-2">An Ionian Greek philosopher and polymath from Samos and founder of Pythagoreanism. He was associated with a community that combined religious teaching, communal and ascetic life, , and belief in immortality and transmigration. The tradition surrounding him generated a wide body of sacred books, hypomnemata, and later pseudepigraphic writings.</note>
           <bibl xml:id="bib4049-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">3</citedRange>

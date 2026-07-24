@@ -98,9 +98,7 @@
           <idno type="URI">https://de.wikisource.org/wiki/Menander</idno>
           <idno type="URI">https://d-nb.info/gnd/118747525</idno>
           <idno type="URI">https://www.trismegistos.org/author/571</idno>
-          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons">
-            <quote source="#bib634-3">Menander was an Athenian comic poet of the New Comedy, probably born in 343/2 BCE and educated in the circle of Theophrastus. Ancient biographical tradition presents him as highly gifted and prolific, though only modestly successful in dramatic competitions during his lifetime. After his death, his reputation rose greatly, and later scholars treated him as a major literary authority.</quote>
-          </note>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib634-3">Menander was an Athenian comic poet of the New Comedy, probably born in 343/2 BCE and educated in the circle of Theophrastus. Ancient biographical tradition presents him as highly gifted and prolific, though only modestly successful in dramatic competitions during his lifetime. After his death, his reputation rose greatly, and later scholars treated him as a major literary authority.</note>
           <bibl xml:id="bib634-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">3</citedRange>
