@@ -89,7 +89,7 @@
   <text>
     <body>
       <listPerson>
-        <person>
+        <personGrp>
           <persName xml:lang="en" xml:id="name4016-1" srophe:tags="#syriaca-headword" resp="http://syriaca.org">The Bishops of Armenia Who Wrote to Proclus of Constantinople, Concerning the Writings of Theodore of Mopsuestia</persName>
           <persName xml:lang="en" xml:id="name4016-2" source="#bib4016-1">The bishops of Armenia</persName>
           <persName xml:lang="en" xml:id="name4016-3" source="#bib4016-2">The Bishops of Armenia</persName>
@@ -106,7 +106,7 @@
             <citedRange unit="p">1246</citedRange>
             <citedRange unit="entry">Armenia, the bishops of</citedRange>
           </bibl>
-        </person>
+        </personGrp>
       </listPerson>
     </body>
   </text>
