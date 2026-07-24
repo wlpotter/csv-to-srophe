@@ -50,7 +50,7 @@
         <collections>
             <!-- 2026-07-22 NOTE: The Indices are no longer available via syriaca.org, so removing them for now -->
             <collection name="places" record-URI-base="http://syriaca.org/place/" template="/templates/places-template.xml"/> <!--index="https://syriaca.org/documentation/indexes/places.xml"-->
-            <collection name="persons" record-URI-base="http://syriaca.org/person/"/><!--index="https://syriaca.org/documentation/indexes/persons.xml" -->
+            <collection name="persons" record-URI-base="http://syriaca.org/person/" template="/templates/persons-template.xml"/><!--index="https://syriaca.org/documentation/indexes/persons.xml" -->
             <collection name="subjects" record-URI-base="http://syriaca.org/keyword/" template="/templates/subjects-template.xml"/>
             <collection name="jeg_places" record-URI-base="http://syriaca.org/place/" template="/templates/jeg_places-template.xml" /><!-- inindex="https://syriaca.org/documentation/indexes/places.xml" -->
             <collection name="jeg_persons" record-URI-base="http://syriaca.org/person/" template="/templates/jeg_persons-template.xml" /><!-- index="https://syriaca.org/documentation/indexes/persons.xml" -->
