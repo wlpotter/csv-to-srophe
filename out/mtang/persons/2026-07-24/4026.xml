@@ -93,11 +93,20 @@
           <persName xml:lang="en" xml:id="name4026-1" srophe:tags="#syriaca-headword" resp="http://syriaca.org">Ben Sira</persName>
           <persName xml:lang="en" xml:id="name4026-2" source="#bib4026-1">Jesus the son of Sirach</persName>
           <idno type="URI">http://syriaca.org/person/4026</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4026-2">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 12,138</label>
+              <ptr target="https://bl.syriac.uk/ms/10"/>
+            </bibl>.</note>
           <bibl xml:id="bib4026-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">1</citedRange>
             <citedRange unit="p">102</citedRange>
             <citedRange unit="entry">CLXI</citedRange>
+          </bibl>
+          <bibl xml:id="bib4026-2">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 12,138</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/10">https://bl.syriac.uk/ms/10</citedRange>
           </bibl>
         </person>
       </listPerson>

@@ -95,6 +95,10 @@
           <persName xml:lang="syr" xml:id="name5006-3" source="#bib5006-1">ܐܪܐܟܬܝܘܣ</persName>
           <persName xml:lang="en" xml:id="name5006-4" source="#bib5006-2">Erechtheus, Bishop of Antioch in Pisidia</persName>
           <idno type="URI">http://syriaca.org/person/5006</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib5006-3">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 14,725, foll. 1–95</label>
+              <ptr target="https://bl.syriac.uk/ms/615"/>
+            </bibl>.</note>
           <bibl xml:id="bib5006-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">2</citedRange>
@@ -106,6 +110,11 @@
             <citedRange unit="vol">3</citedRange>
             <citedRange unit="p">1272</citedRange>
             <citedRange unit="entry">Erechtheus, bp. of Antioch in Pisidia </citedRange>
+          </bibl>
+          <bibl xml:id="bib5006-3">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 14,725, foll. 1–95</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/615">https://bl.syriac.uk/ms/615</citedRange>
           </bibl>
         </person>
       </listPerson>

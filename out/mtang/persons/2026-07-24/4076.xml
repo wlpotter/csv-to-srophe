@@ -94,6 +94,10 @@
           <persName xml:lang="en" xml:id="name4076-2" source="#bib4076-1">Zenobius, abbat of the convent of Mār Bîza</persName>
           <persName xml:lang="en" xml:id="name4076-3" source="#bib4076-2">Zenobius, abar of the Convent of Mar Bîza</persName>
           <idno type="URI">http://syriaca.org/person/4076</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4076-3">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 14,602</label>
+              <ptr target="https://bl.syriac.uk/ms/338"/>
+            </bibl>.</note>
           <bibl xml:id="bib4076-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">2</citedRange>
@@ -105,6 +109,11 @@
             <citedRange unit="vol">3</citedRange>
             <citedRange unit="p">1334</citedRange>
             <citedRange unit="entry">Zenobius, ab. of the c. of M. Bîza</citedRange>
+          </bibl>
+          <bibl xml:id="bib4076-3">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 14,602</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/338">https://bl.syriac.uk/ms/338</citedRange>
           </bibl>
         </person>
       </listPerson>

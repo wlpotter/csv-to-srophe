@@ -93,6 +93,10 @@
           <persName xml:lang="en" xml:id="name4078-1" srophe:tags="#syriaca-headword" source="#bib4078-1">Aretas</persName>
           <persName xml:lang="en" xml:id="name4078-2" source="#bib4078-2">Patricius Ḥareth</persName>
           <idno type="URI">http://syriaca.org/person/4078</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4078-3">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 14,602</label>
+              <ptr target="https://bl.syriac.uk/ms/338"/>
+            </bibl>.</note>
           <bibl xml:id="bib4078-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">3</citedRange>
@@ -104,6 +108,11 @@
             <citedRange unit="vol">2</citedRange>
             <citedRange unit="p">701-715</citedRange>
             <citedRange unit="entry">DCCLIV</citedRange>
+          </bibl>
+          <bibl xml:id="bib4078-3">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 14,602</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/338">https://bl.syriac.uk/ms/338</citedRange>
           </bibl>
         </person>
       </listPerson>

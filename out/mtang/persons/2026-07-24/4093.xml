@@ -94,6 +94,10 @@
           <persName xml:lang="en" xml:id="name4093-2" source="#bib4093-1">Thomas, abbat of the convent of Mār Isaac</persName>
           <persName xml:lang="en" xml:id="name4093-3" source="#bib4093-2">Thomas, abar of the Convent of Mar Isaac of Gabūla</persName>
           <idno type="URI">http://syriaca.org/person/4093</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4093-3">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 14,629, foll. 1–24</label>
+              <ptr target="https://bl.syriac.uk/ms/372"/>
+            </bibl>.</note>
           <bibl xml:id="bib4093-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">2</citedRange>
@@ -105,6 +109,11 @@
             <citedRange unit="vol">3</citedRange>
             <citedRange unit="p">1330</citedRange>
             <citedRange unit="entry">Thomas, ab. of the c. of M. Isaac of Gabūla</citedRange>
+          </bibl>
+          <bibl xml:id="bib4093-3">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 14,629, foll. 1–24</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/372">https://bl.syriac.uk/ms/372</citedRange>
           </bibl>
         </person>
       </listPerson>

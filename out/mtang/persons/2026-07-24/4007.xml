@@ -93,6 +93,10 @@
           <persName xml:lang="en" xml:id="name4007-1" srophe:tags="#syriaca-headword" source="#bib4007-1">George of Scythopolis</persName>
           <persName xml:lang="en" xml:id="name4007-2" source="#bib4007-2">George (of Baishan or Scythopolis)</persName>
           <idno type="URI">http://syriaca.org/person/4007</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4007-3">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 12,151</label>
+              <ptr target="https://bl.syriac.uk/ms/26"/>
+            </bibl>.</note>
           <bibl xml:id="bib4007-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">2</citedRange>
@@ -104,6 +108,11 @@
             <citedRange unit="vol">3</citedRange>
             <citedRange unit="p">1275</citedRange>
             <citedRange unit="entry">George, of Baishan or Scythopolis</citedRange>
+          </bibl>
+          <bibl xml:id="bib4007-3">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 12,151</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/26">https://bl.syriac.uk/ms/26</citedRange>
           </bibl>
         </person>
       </listPerson>

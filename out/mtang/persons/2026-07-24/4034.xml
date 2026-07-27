@@ -94,6 +94,10 @@
           <persName xml:lang="en" xml:id="name4034-2" source="#bib4034-1">Manṣūr</persName>
           <persName xml:lang="en" xml:id="name4034-3" source="#bib4034-2">Manṣūr, poss.</persName>
           <idno type="URI">http://syriaca.org/person/4034</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4034-3">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 14,736, foll. 49–52</label>
+              <ptr target="https://bl.syriac.uk/ms/664"/>
+            </bibl>.</note>
           <bibl xml:id="bib4034-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">1</citedRange>
@@ -105,6 +109,11 @@
             <citedRange unit="vol">3</citedRange>
             <citedRange unit="p">1305</citedRange>
             <citedRange unit="entry">Manṣūr, poss. </citedRange>
+          </bibl>
+          <bibl xml:id="bib4034-3">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 14,736, foll. 49–52</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/664">https://bl.syriac.uk/ms/664</citedRange>
           </bibl>
         </person>
       </listPerson>

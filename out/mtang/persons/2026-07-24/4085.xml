@@ -92,11 +92,20 @@
         <person>
           <persName xml:lang="en" xml:id="name4085-1" srophe:tags="#syriaca-headword" source="#bib4085-1">Dionysius of Alexandria</persName>
           <idno type="URI">http://syriaca.org/person/4085</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4085-2">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 14,536</label>
+              <ptr target="https://bl.syriac.uk/ms/263"/>
+            </bibl>.</note>
           <bibl xml:id="bib4085-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">3</citedRange>
             <citedRange unit="p">1269</citedRange>
             <citedRange unit="entry">Dionysius of Alexandria</citedRange>
+          </bibl>
+          <bibl xml:id="bib4085-2">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 14,536</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/263">https://bl.syriac.uk/ms/263</citedRange>
           </bibl>
         </person>
       </listPerson>

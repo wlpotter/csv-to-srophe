@@ -93,6 +93,10 @@
           <persName xml:lang="en" xml:id="name4036-1" srophe:tags="#syriaca-headword" source="#bib4036-1">Yuḥannā ibn Manṣūr al-Ḥimṣī</persName>
           <persName xml:lang="en" xml:id="name4036-2" source="#bib4036-2">Yuḥannā (John) ibn Manṣūr al-Ḥimṣī</persName>
           <idno type="URI">http://syriaca.org/person/4036</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4036-3">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 18,296</label>
+              <ptr target="https://bl.syriac.uk/ms/1114"/>
+            </bibl>.</note>
           <bibl xml:id="bib4036-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">2</citedRange>
@@ -104,6 +108,11 @@
             <citedRange unit="vol">3</citedRange>
             <citedRange unit="p">1334</citedRange>
             <citedRange unit="entry">Yuḥannā (John) ibn Manṣūr al-Ḥimṣī</citedRange>
+          </bibl>
+          <bibl xml:id="bib4036-3">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 18,296</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/1114">https://bl.syriac.uk/ms/1114</citedRange>
           </bibl>
         </person>
       </listPerson>

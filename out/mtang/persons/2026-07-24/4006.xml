@@ -93,6 +93,10 @@
           <persName xml:lang="en" xml:id="name4006-1" srophe:tags="#syriaca-headword" source="#bib4006-1">Sabinus of Constantina</persName>
           <persName xml:lang="en" xml:id="name4006-2" source="#bib4006-2">Sabinus, bishop of Constantina</persName>
           <idno type="URI">http://syriaca.org/person/4006</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4006-3">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 14,657</label>
+              <ptr target="https://bl.syriac.uk/ms/425"/>
+            </bibl>.</note>
           <bibl xml:id="bib4006-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">3</citedRange>
@@ -104,6 +108,11 @@
             <citedRange unit="vol">3</citedRange>
             <citedRange unit="p">1150</citedRange>
             <citedRange unit="entry">DCCCCLXXIV</citedRange>
+          </bibl>
+          <bibl xml:id="bib4006-3">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 14,657</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/425">https://bl.syriac.uk/ms/425</citedRange>
           </bibl>
         </person>
       </listPerson>

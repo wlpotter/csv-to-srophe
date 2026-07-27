@@ -93,6 +93,10 @@
           <persName xml:lang="en" xml:id="name4015-1" srophe:tags="#syriaca-headword" source="#bib4015-1">Rabban Daniel</persName>
           <persName xml:lang="en" xml:id="name4015-2" source="#bib4015-2">Daniel</persName>
           <idno type="URI">http://syriaca.org/person/4015</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4015-3">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 21,210</label>
+              <ptr target="https://bl.syriac.uk/ms/1136"/>
+            </bibl>.</note>
           <bibl xml:id="bib4015-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">2</citedRange>
@@ -104,6 +108,11 @@
             <citedRange unit="vol">3</citedRange>
             <citedRange unit="p">1267</citedRange>
             <citedRange unit="entry">Daniel (rabban) </citedRange>
+          </bibl>
+          <bibl xml:id="bib4015-3">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 21,210</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/1136">https://bl.syriac.uk/ms/1136</citedRange>
           </bibl>
         </person>
       </listPerson>

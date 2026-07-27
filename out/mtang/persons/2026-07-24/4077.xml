@@ -93,11 +93,20 @@
           <persName xml:lang="en" xml:id="name4077-1" srophe:tags="#syriaca-headword" resp="http://syriaca.org">Jacob, Abbot of the Convent of Aphtonaya</persName>
           <persName xml:lang="en" xml:id="name4077-2" source="#bib4077-1">Jacob, abbat of the convent of Aphtūnāyā</persName>
           <idno type="URI">http://syriaca.org/person/4077</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4077-2">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 14,602</label>
+              <ptr target="https://bl.syriac.uk/ms/338"/>
+            </bibl>.</note>
           <bibl xml:id="bib4077-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">2</citedRange>
             <citedRange unit="p">704</citedRange>
             <citedRange unit="entry">DCCLIV</citedRange>
+          </bibl>
+          <bibl xml:id="bib4077-2">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 14,602</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/338">https://bl.syriac.uk/ms/338</citedRange>
           </bibl>
         </person>
       </listPerson>

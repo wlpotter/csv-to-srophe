@@ -92,11 +92,20 @@
         <person>
           <persName xml:lang="en" xml:id="name4009-1" srophe:tags="#syriaca-headword" source="#bib4009-1">Isaac of Scete</persName>
           <idno type="URI">http://syriaca.org/person/4009</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4009-2">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 14,729, foll. 1–115</label>
+              <ptr target="https://bl.syriac.uk/ms/630"/>
+            </bibl>.</note>
           <bibl xml:id="bib4009-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">3</citedRange>
             <citedRange unit="p">1290</citedRange>
             <citedRange unit="entry">Isaac (?) of Scete</citedRange>
+          </bibl>
+          <bibl xml:id="bib4009-2">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 14,729, foll. 1–115</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/630">https://bl.syriac.uk/ms/630</citedRange>
           </bibl>
         </person>
       </listPerson>

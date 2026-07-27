@@ -93,6 +93,10 @@
           <persName xml:lang="en" xml:id="name4084-1" srophe:tags="#syriaca-headword" source="#bib4084-1">Timothy of Jerusalem</persName>
           <persName xml:lang="en" xml:id="name4084-2" source="#bib4084-2">Timotheus of Jerusalem</persName>
           <idno type="URI">http://syriaca.org/person/4084</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4084-3">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 14,664, foll. 3–7, 9–17, upper text</label>
+              <ptr target="https://bl.syriac.uk/ms/1187"/>
+            </bibl>.</note>
           <bibl xml:id="bib4084-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">3</citedRange>
@@ -104,6 +108,11 @@
             <citedRange unit="vol">1</citedRange>
             <citedRange unit="p">203</citedRange>
             <citedRange unit="entry">CCLIV</citedRange>
+          </bibl>
+          <bibl xml:id="bib4084-3">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 14,664, foll. 3–7, 9–17, upper text</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/1187">https://bl.syriac.uk/ms/1187</citedRange>
           </bibl>
         </person>
       </listPerson>

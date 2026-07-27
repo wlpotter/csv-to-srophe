@@ -94,6 +94,10 @@
           <persName xml:lang="en" xml:id="name4074-2" source="#bib4074-1">Eusebius, abbat of the convent of Mar Bassus</persName>
           <persName xml:lang="en" xml:id="name4074-3" source="#bib4074-2">Eusebius, abar of the Convent of Mar Bassus</persName>
           <idno type="URI">http://syriaca.org/person/4074</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4074-3">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 14,602</label>
+              <ptr target="https://bl.syriac.uk/ms/338"/>
+            </bibl>.</note>
           <bibl xml:id="bib4074-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">2</citedRange>
@@ -105,6 +109,11 @@
             <citedRange unit="vol">3</citedRange>
             <citedRange unit="p">1273</citedRange>
             <citedRange unit="entry">Eusebius, ab. of the c. of M. Bassus</citedRange>
+          </bibl>
+          <bibl xml:id="bib4074-3">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 14,602</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/338">https://bl.syriac.uk/ms/338</citedRange>
           </bibl>
         </person>
       </listPerson>

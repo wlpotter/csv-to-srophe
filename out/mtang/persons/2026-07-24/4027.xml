@@ -92,11 +92,20 @@
         <person>
           <persName xml:lang="en" xml:id="name4027-1" srophe:tags="#syriaca-headword" source="#bib4027-1">Thaumasias</persName>
           <idno type="URI">http://syriaca.org/person/4027</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4027-2">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 12,170, foll. 136–276</label>
+              <ptr target="https://bl.syriac.uk/ms/56"/>
+            </bibl>.</note>
           <bibl xml:id="bib4027-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">2</citedRange>
             <citedRange unit="p">748, 749</citedRange>
             <citedRange unit="entry">DCCLXXIV</citedRange>
+          </bibl>
+          <bibl xml:id="bib4027-2">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 12,170, foll. 136–276</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/56">https://bl.syriac.uk/ms/56</citedRange>
           </bibl>
         </person>
       </listPerson>

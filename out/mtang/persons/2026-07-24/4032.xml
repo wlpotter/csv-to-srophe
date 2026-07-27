@@ -95,6 +95,10 @@
           <persName xml:lang="syr" xml:id="name4032-3" source="#bib4032-1">Simeon the son of ܪܓܝܘ</persName>
           <persName xml:lang="en" xml:id="name4032-4" source="#bib4032-2">Simeon bar ܪܓܝܘ</persName>
           <idno type="URI">http://syriaca.org/person/4032</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4032-3">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 14,432, foll. 1–120, 122</label>
+              <ptr target="https://bl.syriac.uk/ms/1173"/>
+            </bibl>.</note>
           <bibl xml:id="bib4032-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">1</citedRange>
@@ -106,6 +110,11 @@
             <citedRange unit="vol">3</citedRange>
             <citedRange unit="p">1326</citedRange>
             <citedRange unit="entry">Simeon b. ܪܓܝܘ, r. </citedRange>
+          </bibl>
+          <bibl xml:id="bib4032-3">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 14,432, foll. 1–120, 122</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/1173">https://bl.syriac.uk/ms/1173</citedRange>
           </bibl>
         </person>
       </listPerson>

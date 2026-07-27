@@ -95,6 +95,10 @@
           <persName xml:lang="syr" xml:id="name4005-3" source="#bib4005-1">ܡܪܝ ܕܢܐܝܠ</persName>
           <persName xml:lang="en" xml:id="name4005-4" source="#bib4005-2">Daniel</persName>
           <idno type="URI">http://syriaca.org/person/4005</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4005-3">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 14,577</label>
+              <ptr target="https://bl.syriac.uk/ms/313"/>
+            </bibl>.</note>
           <bibl xml:id="bib4005-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">2</citedRange>
@@ -106,6 +110,11 @@
             <citedRange unit="vol">3</citedRange>
             <citedRange unit="p">1267</citedRange>
             <citedRange unit="entry">Daniel (M.)</citedRange>
+          </bibl>
+          <bibl xml:id="bib4005-3">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 14,577</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/313">https://bl.syriac.uk/ms/313</citedRange>
           </bibl>
         </person>
       </listPerson>

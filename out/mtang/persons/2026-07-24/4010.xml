@@ -93,11 +93,20 @@
           <persName xml:lang="en" xml:id="name4010-1" srophe:tags="#syriaca-headword" resp="http://syriaca.org">Eusebius the Monk</persName>
           <persName xml:lang="en" xml:id="name4010-2" source="#bib4010-1">Eusebius the monk</persName>
           <idno type="URI">http://syriaca.org/person/4010</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4010-2">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 17,193</label>
+              <ptr target="https://bl.syriac.uk/ms/849"/>
+            </bibl>.</note>
           <bibl xml:id="bib4010-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">3</citedRange>
             <citedRange unit="p">1273</citedRange>
             <citedRange unit="entry">Eusebius the monk </citedRange>
+          </bibl>
+          <bibl xml:id="bib4010-2">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 17,193</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/849">https://bl.syriac.uk/ms/849</citedRange>
           </bibl>
         </person>
       </listPerson>

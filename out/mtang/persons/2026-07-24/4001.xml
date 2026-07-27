@@ -94,6 +94,10 @@
           <persName xml:lang="en" xml:id="name4001-2" source="#bib4001-1">Ṣalībā bar Zechariah</persName>
           <persName xml:lang="en" xml:id="name4001-3" source="#bib4001-2">Saliba bar Zechariah</persName>
           <idno type="URI">http://syriaca.org/person/4001</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4001-3">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 17,273</label>
+              <ptr target="https://bl.syriac.uk/ms/1108"/>
+            </bibl>.</note>
           <bibl xml:id="bib4001-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">1</citedRange>
@@ -105,6 +109,11 @@
             <citedRange unit="vol">3</citedRange>
             <citedRange unit="p">1319</citedRange>
             <citedRange unit="entry">Ṣalībā bar Zechariah</citedRange>
+          </bibl>
+          <bibl xml:id="bib4001-3">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 17,273</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/1108">https://bl.syriac.uk/ms/1108</citedRange>
           </bibl>
         </person>
       </listPerson>

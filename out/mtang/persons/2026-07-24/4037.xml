@@ -93,6 +93,10 @@
           <persName xml:lang="en" xml:id="name4037-1" srophe:tags="#syriaca-headword" source="#bib4037-1">Narcissus, Bishop of ܩܢܛܘܣ  in Asia</persName>
           <persName xml:lang="en" xml:id="name4037-2" source="#bib4037-2">Narcissus, bishop of ܩܢܛܘܣ  in Asia</persName>
           <idno type="URI">http://syriaca.org/person/4037</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4037-3">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 17,142</label>
+              <ptr target="https://bl.syriac.uk/ms/771"/>
+            </bibl>.</note>
           <bibl xml:id="bib4037-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">3</citedRange>
@@ -104,6 +108,11 @@
             <citedRange unit="vol">3</citedRange>
             <citedRange unit="p">1042</citedRange>
             <citedRange unit="entry">DCCCCXVII</citedRange>
+          </bibl>
+          <bibl xml:id="bib4037-3">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 17,142</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/771">https://bl.syriac.uk/ms/771</citedRange>
           </bibl>
         </person>
       </listPerson>

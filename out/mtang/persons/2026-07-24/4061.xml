@@ -93,11 +93,20 @@
           <persName xml:lang="en" xml:id="name4061-1" srophe:tags="#syriaca-headword" resp="http://syriaca.org">Theodore the Monk</persName>
           <persName xml:lang="en" xml:id="name4061-2" source="#bib4061-1">Theodore the monk</persName>
           <idno type="URI">http://syriaca.org/person/4061</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4061-2">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 12,155</label>
+              <ptr target="https://bl.syriac.uk/ms/30"/>
+            </bibl>.</note>
           <bibl xml:id="bib4061-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">3</citedRange>
             <citedRange unit="p">1329</citedRange>
             <citedRange unit="entry">Theodore the monk</citedRange>
+          </bibl>
+          <bibl xml:id="bib4061-2">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 12,155</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/30">https://bl.syriac.uk/ms/30</citedRange>
           </bibl>
         </person>
       </listPerson>

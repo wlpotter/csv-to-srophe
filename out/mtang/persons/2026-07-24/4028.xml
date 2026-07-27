@@ -93,11 +93,20 @@
           <persName xml:lang="en" xml:id="name4028-1" srophe:tags="#syriaca-headword" resp="http://syriaca.org">The Brother of John Saba</persName>
           <persName xml:lang="en" xml:id="name4028-2" source="#bib4028-1">The brother of John Sābā</persName>
           <idno type="URI">http://syriaca.org/person/4028</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4028-2">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 14,729, foll. 1–115</label>
+              <ptr target="https://bl.syriac.uk/ms/630"/>
+            </bibl>.</note>
           <bibl xml:id="bib4028-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">2</citedRange>
             <citedRange unit="p">863</citedRange>
             <citedRange unit="entry">DCCCXXXII</citedRange>
+          </bibl>
+          <bibl xml:id="bib4028-2">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 14,729, foll. 1–115</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/630">https://bl.syriac.uk/ms/630</citedRange>
           </bibl>
         </person>
       </listPerson>

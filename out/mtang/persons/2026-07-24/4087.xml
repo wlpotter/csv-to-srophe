@@ -95,6 +95,10 @@
           <persName xml:lang="syr" xml:id="name4087-3" source="#bib4087-1">ܐܒܐ ܝܘܣܦ</persName>
           <persName xml:lang="en" xml:id="name4087-4" source="#bib4087-2">Joseph (Hymnographus or Studita)</persName>
           <idno type="URI">http://syriaca.org/person/4087</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4087-3">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 12,179</label>
+              <ptr target="https://bl.syriac.uk/ms/78"/>
+            </bibl>.</note>
           <bibl xml:id="bib4087-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">1</citedRange>
@@ -106,6 +110,11 @@
             <citedRange unit="vol">3</citedRange>
             <citedRange unit="p">1300</citedRange>
             <citedRange unit="entry"> Joseph (Hymnographus or Studita) </citedRange>
+          </bibl>
+          <bibl xml:id="bib4087-3">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 12,179</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/78">https://bl.syriac.uk/ms/78</citedRange>
           </bibl>
         </person>
       </listPerson>

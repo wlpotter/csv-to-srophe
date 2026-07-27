@@ -93,11 +93,20 @@
           <persName xml:lang="en" xml:id="name4072-1" srophe:tags="#syriaca-headword" resp="http://syriaca.org">Thomas Ellis</persName>
           <persName xml:lang="en" xml:id="name4072-2" source="#bib4072-1">Mr. Ellis</persName>
           <idno type="URI">http://syriaca.org/person/4072</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4072-2">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 17,212, upper text 2</label>
+              <ptr target="https://bl.syriac.uk/ms/1437"/>
+            </bibl>.</note>
           <bibl xml:id="bib4072-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">2</citedRange>
             <citedRange unit="p">480</citedRange>
             <citedRange unit="entry">DXCVIII</citedRange>
+          </bibl>
+          <bibl xml:id="bib4072-2">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 17,212, upper text 2</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/1437">https://bl.syriac.uk/ms/1437</citedRange>
           </bibl>
         </person>
       </listPerson>

@@ -94,6 +94,10 @@
           <persName xml:lang="en" xml:id="name4055-2" source="#bib4055-1">Jacob of Beth-ʿAbē</persName>
           <persName xml:lang="en" xml:id="name4055-3" source="#bib4055-2">Jacob of Bēth-ʿĀbē</persName>
           <idno type="URI">http://syriaca.org/person/4055</idno>
+          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4055-3">An author attested in William Wright’s description of one or more manuscripts in the British Library, including <bibl>
+              <label>Add. 14,675</label>
+              <ptr target="https://bl.syriac.uk/ms/529"/>
+            </bibl>.</note>
           <bibl xml:id="bib4055-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">1</citedRange>
@@ -105,6 +109,11 @@
             <citedRange unit="vol">3</citedRange>
             <citedRange unit="p">1294</citedRange>
             <citedRange unit="entry">Jacob of Bēth-ʿĀbē</citedRange>
+          </bibl>
+          <bibl xml:id="bib4055-3">
+            <ptr target="http://syriaca.org/cbss/N6G6W6IT"/>
+            <citedRange unit="entry">Add. 14,675</citedRange>
+            <citedRange unit="URL" target="https://bl.syriac.uk/ms/529">https://bl.syriac.uk/ms/529</citedRange>
           </bibl>
         </person>
       </listPerson>
