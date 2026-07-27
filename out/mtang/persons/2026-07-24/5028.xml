@@ -11,6 +11,18 @@
         <funder>The International Balzan Prize Foundation</funder>
         <funder>The National Endowment for the Humanities</funder>
         <editor role="creator" ref="http://syriaca.org/documentation/editors.xml#mtang">Mikey Tang</editor>
+        <respStmt xml:id="resp5028-1">
+          <resp when="2026-03-01">This prose was translated and abbreviated from <bibl>
+              <ref target="http://syriaca.org/cbss/7X46I6X5">
+                <title>Paulys Realencyclopädie der classischen Altertumswissenschaft</title>
+              </ref>
+            </bibl> by</resp>
+          <name type="AI" ref="http://syriaca.org/documentation/editors.xml#chatgpt">the AI model OpenAI ChatGPT-4o</name>
+        </respStmt>
+        <respStmt xml:id="resp5028-2">
+          <resp>AI generated text in this entry was revised and approved for publication by</resp>
+          <name type="person" ref="http://syriaca.org/documentation/editors.xml#mtang">Mikey Tang</name>
+        </respStmt>
         <respStmt>
           <resp>URI minted and initial data collected by</resp>
           <name ref="http://syriaca.org/documentation/editors.xml#mtang">Mikey Tang</name>
@@ -100,7 +112,7 @@
           <idno type="URI">https://it.wikisource.org/wiki/Autore:Diocle_di_Pepareto</idno>
           <idno type="URI">https://d-nb.info/gnd/102390649</idno>
           <idno type="URI">https://www.trismegistos.org/author/4395</idno>
-          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib5028-3">A Greek historian associated in later tradition with an early Greek version of Rome’s foundation legend, especially the story of Romulus and Remus. Although later antiquarian sources treat him as an important authority for the received narrative, his precise role remains uncertain, and the surviving excerpt attributed to him ends with the fall of Amulius rather than the founding of Rome.</note>
+          <note resp="#resp5028-1 #resp5028-2" ana="#syriaca-generative-AI" type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib5028-3">A Greek historian associated in later tradition with an early Greek version of Rome’s foundation legend, especially the story of Romulus and Remus. Although later antiquarian sources treat him as an important authority for the received narrative, his precise role remains uncertain, and the surviving excerpt attributed to him ends with the fall of Amulius rather than the founding of Rome.</note>
           <bibl xml:id="bib5028-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">2</citedRange>

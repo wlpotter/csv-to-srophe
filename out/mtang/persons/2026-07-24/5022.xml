@@ -11,6 +11,18 @@
         <funder>The International Balzan Prize Foundation</funder>
         <funder>The National Endowment for the Humanities</funder>
         <editor role="creator" ref="http://syriaca.org/documentation/editors.xml#mtang">Mikey Tang</editor>
+        <respStmt xml:id="resp5022-1">
+          <resp when="2026-03-01">This prose was translated and abbreviated from <bibl>
+              <ref target="http://syriaca.org/cbss/7X46I6X5">
+                <title>Paulys Realencyclopädie der classischen Altertumswissenschaft</title>
+              </ref>
+            </bibl> by</resp>
+          <name type="AI" ref="http://syriaca.org/documentation/editors.xml#chatgpt">the AI model OpenAI ChatGPT-4o</name>
+        </respStmt>
+        <respStmt xml:id="resp5022-2">
+          <resp>AI generated text in this entry was revised and approved for publication by</resp>
+          <name type="person" ref="http://syriaca.org/documentation/editors.xml#mtang">Mikey Tang</name>
+        </respStmt>
         <respStmt>
           <resp>URI minted and initial data collected by</resp>
           <name ref="http://syriaca.org/documentation/editors.xml#mtang">Mikey Tang</name>
@@ -93,7 +105,7 @@
           <persName xml:lang="en" xml:id="name5022-1" srophe:tags="#syriaca-headword" source="#bib5022-1">Plato</persName>
           <idno type="URI">http://syriaca.org/person/5022</idno>
           <idno type="URI">https://en.wikipedia.org/wiki/Plato</idno>
-          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib5022-2">An Athenian philosopher, born in the late fifth century BCE, and a devoted follower of Socrates. He founded the Academy, the school from which Platonism took its name. Ancient tradition presented him as a supremely wise and divinely favored teacher, and through biographies, dialogues, letters, and the school that continued after him, he became the central figure of the Platonic tradition.</note>
+          <note resp="#resp5022-1 #resp5022-2" ana="#syriaca-generative-AI" type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib5022-2">An Athenian philosopher, born in the late fifth century BCE, and a devoted follower of Socrates. He founded the Academy, the school from which Platonism took its name. Ancient tradition presented him as a supremely wise and divinely favored teacher, and through biographies, dialogues, letters, and the school that continued after him, he became the central figure of the Platonic tradition.</note>
           <bibl xml:id="bib5022-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">3</citedRange>

@@ -11,6 +11,18 @@
         <funder>The International Balzan Prize Foundation</funder>
         <funder>The National Endowment for the Humanities</funder>
         <editor role="creator" ref="http://syriaca.org/documentation/editors.xml#mtang">Mikey Tang</editor>
+        <respStmt xml:id="resp5032-1">
+          <resp when="2026-03-01">This prose was translated and abbreviated from <bibl>
+              <ref target="http://syriaca.org/cbss/7X46I6X5">
+                <title>Paulys Realencyclopädie der classischen Altertumswissenschaft</title>
+              </ref>
+            </bibl> by</resp>
+          <name type="AI" ref="http://syriaca.org/documentation/editors.xml#chatgpt">the AI model OpenAI ChatGPT-4o</name>
+        </respStmt>
+        <respStmt xml:id="resp5032-2">
+          <resp>AI generated text in this entry was revised and approved for publication by</resp>
+          <name type="person" ref="http://syriaca.org/documentation/editors.xml#mtang">Mikey Tang</name>
+        </respStmt>
         <respStmt>
           <resp>URI minted and initial data collected by</resp>
           <name ref="http://syriaca.org/documentation/editors.xml#mtang">Mikey Tang</name>
@@ -98,7 +110,7 @@
           <idno type="URI">https://de.wikisource.org/wiki/Lukian_von_Samosata</idno>
           <idno type="URI">https://d-nb.info/gnd/118575228</idno>
           <idno type="URI">https://www.trismegistos.org/author/524</idno>
-          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib5032-2">A Greek satirist and rhetorician from Samosata on the Euphrates. He described himself as a Syrian and rose from humble origins to become a prominent writer of the Second Sophistic. After training in rhetoric and traveling widely as a public speaker, he composed many satirical dialogues that mock philosophy, religion, and social pretensions with sharp wit and skepticism.</note>
+          <note resp="#resp5032-1 #resp5032-2" ana="#syriaca-generative-AI" type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib5032-2">A Greek satirist and rhetorician from Samosata on the Euphrates. He described himself as a Syrian and rose from humble origins to become a prominent writer of the Second Sophistic. After training in rhetoric and traveling widely as a public speaker, he composed many satirical dialogues that mock philosophy, religion, and social pretensions with sharp wit and skepticism.</note>
           <bibl xml:id="bib5032-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">3</citedRange>

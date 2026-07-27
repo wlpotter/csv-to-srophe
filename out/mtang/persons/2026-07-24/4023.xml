@@ -11,6 +11,18 @@
         <funder>The International Balzan Prize Foundation</funder>
         <funder>The National Endowment for the Humanities</funder>
         <editor role="creator" ref="http://syriaca.org/documentation/editors.xml#mtang">Mikey Tang</editor>
+        <respStmt xml:id="resp4023-1">
+          <resp when="2026-03-01">This prose was translated and abbreviated from <bibl>
+              <ref target="http://syriaca.org/cbss/7X46I6X5">
+                <title>Paulys Realencyclopädie der classischen Altertumswissenschaft</title>
+              </ref>
+            </bibl> by</resp>
+          <name type="AI" ref="http://syriaca.org/documentation/editors.xml#chatgpt">the AI model OpenAI ChatGPT-4o</name>
+        </respStmt>
+        <respStmt xml:id="resp4023-2">
+          <resp>AI generated text in this entry was revised and approved for publication by</resp>
+          <name type="person" ref="http://syriaca.org/documentation/editors.xml#mtang">Mikey Tang</name>
+        </respStmt>
         <respStmt>
           <resp>URI minted and initial data collected by</resp>
           <name ref="http://syriaca.org/documentation/editors.xml#mtang">Mikey Tang</name>
@@ -100,7 +112,7 @@
           <idno type="URI">https://en.wikisource.org/wiki/Portal:Socrates</idno>
           <idno type="URI">https://d-nb.info/gnd/118615270</idno>
           <idno type="URI">https://www.trismegistos.org/author/3623</idno>
-          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4023-3">Traditionally regarded as the founder of Attic philosophy. His life and teaching are difficult to reconstruct because of conflicting ancient traditions and later interpretations. He was remembered as the son of Sophroniscus and Phainarete, as a public opponent of injustice, and as the philosopher whose trial and execution in 399 BCE made him one of antiquity’s defining intellectual figures.</note>
+          <note resp="#resp4023-1 #resp4023-2" ana="#syriaca-generative-AI" type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4023-3">Traditionally regarded as the founder of Attic philosophy. His life and teaching are difficult to reconstruct because of conflicting ancient traditions and later interpretations. He was remembered as the son of Sophroniscus and Phainarete, as a public opponent of injustice, and as the philosopher whose trial and execution in 399 BCE made him one of antiquity’s defining intellectual figures.</note>
           <bibl xml:id="bib4023-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">2</citedRange>

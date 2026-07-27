@@ -11,6 +11,18 @@
         <funder>The International Balzan Prize Foundation</funder>
         <funder>The National Endowment for the Humanities</funder>
         <editor role="creator" ref="http://syriaca.org/documentation/editors.xml#mtang">Mikey Tang</editor>
+        <respStmt xml:id="resp4022-1">
+          <resp when="2026-03-01">This prose was translated and abbreviated from <bibl>
+              <ref target="http://syriaca.org/cbss/7X46I6X5">
+                <title>Paulys Realencyclopädie der classischen Altertumswissenschaft</title>
+              </ref>
+            </bibl> by</resp>
+          <name type="AI" ref="http://syriaca.org/documentation/editors.xml#chatgpt">the AI model OpenAI ChatGPT-4o</name>
+        </respStmt>
+        <respStmt xml:id="resp4022-2">
+          <resp>AI generated text in this entry was revised and approved for publication by</resp>
+          <name type="person" ref="http://syriaca.org/documentation/editors.xml#mtang">Mikey Tang</name>
+        </respStmt>
         <respStmt>
           <resp>URI minted and initial data collected by</resp>
           <name ref="http://syriaca.org/documentation/editors.xml#mtang">Mikey Tang</name>
@@ -100,7 +112,7 @@
           <idno type="URI">https://de.wikisource.org/wiki/Philon</idno>
           <idno type="URI">https://d-nb.info/gnd/118594001</idno>
           <idno type="URI">https://www.trismegistos.org/author/675</idno>
-          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4022-3">A prominent representative of Hellenistic-Jewish philosophy in Alexandria who sought to interpret the Hebrew Scriptures through Greek philosophical traditions, especially Platonism and Stoicism. A member of a wealthy and influential Jewish family, he is known for his allegorical commentaries on the Pentateuch and for leading a Jewish embassy to the emperor Caligula to protest anti-Jewish measures in Alexandria.</note>
+          <note resp="#resp4022-1 #resp4022-2" ana="#syriaca-generative-AI" type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4022-3">A prominent representative of Hellenistic-Jewish philosophy in Alexandria who sought to interpret the Hebrew Scriptures through Greek philosophical traditions, especially Platonism and Stoicism. A member of a wealthy and influential Jewish family, he is known for his allegorical commentaries on the Pentateuch and for leading a Jewish embassy to the emperor Caligula to protest anti-Jewish measures in Alexandria.</note>
           <bibl xml:id="bib4022-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">2</citedRange>

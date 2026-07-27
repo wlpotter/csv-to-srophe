@@ -11,6 +11,18 @@
         <funder>The International Balzan Prize Foundation</funder>
         <funder>The National Endowment for the Humanities</funder>
         <editor role="creator" ref="http://syriaca.org/documentation/editors.xml#mtang">Mikey Tang</editor>
+        <respStmt xml:id="resp4018-1">
+          <resp when="2026-03-01">This prose was translated and abbreviated from <bibl>
+              <ref target="http://syriaca.org/cbss/7X46I6X5">
+                <title>Paulys Realencyclopädie der classischen Altertumswissenschaft</title>
+              </ref>
+            </bibl> by</resp>
+          <name type="AI" ref="http://syriaca.org/documentation/editors.xml#chatgpt">the AI model OpenAI ChatGPT-4o</name>
+        </respStmt>
+        <respStmt xml:id="resp4018-2">
+          <resp>AI generated text in this entry was revised and approved for publication by</resp>
+          <name type="person" ref="http://syriaca.org/documentation/editors.xml#mtang">Mikey Tang</name>
+        </respStmt>
         <respStmt>
           <resp>URI minted and initial data collected by</resp>
           <name ref="http://syriaca.org/documentation/editors.xml#mtang">Mikey Tang</name>
@@ -98,7 +110,7 @@
           <idno type="URI">https://en.wikipedia.org/wiki/Gessius_of_Petra</idno>
           <idno type="URI">https://d-nb.info/gnd/1135949514</idno>
           <idno type="URI">https://www.trismegistos.org/author/7880</idno>
-          <note type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4018-3">A physician and teacher of medicine associated with the Gaza school of sophists in the late 5th–early 6th century CE. A student of the Jewish physician Domnos, he was initially hostile to Christianity and mocked Christian healing shrines, though he was later baptized and appears in accounts connected with the cult of Saints Cyrus and John at Menuthis.</note>
+          <note resp="#resp4018-1 #resp4018-2" ana="#syriaca-generative-AI" type="abstract" xml:lang="en" corresp="http://syriaca.org/persons" source="#bib4018-3">A physician and teacher of medicine associated with the Gaza school of sophists in the late 5th–early 6th century CE. A student of the Jewish physician Domnos, he was initially hostile to Christianity and mocked Christian healing shrines, though he was later baptized and appears in accounts connected with the cult of Saints Cyrus and John at Menuthis.</note>
           <bibl xml:id="bib4018-1">
             <ptr target="http://syriaca.org/cbss/9HGARXCQ"/>
             <citedRange unit="vol">3</citedRange>
